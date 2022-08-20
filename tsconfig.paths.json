@@ -10,6 +10,8 @@
       "@components/*": ["./src/components/*"],
       "@utils/*": ["./src/utils/*"],
       "@store/*": ["./src/redux/*"],
+      "@models/*": ["./src/models/*"],
+      "@apis/*": ["./src/apis/*"],
       "@hooks/*": ["./src/hooks/*"]
     }
   }
