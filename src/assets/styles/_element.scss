@@ -1,0 +1,189 @@
+@import 'variables';
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+::-moz-selection {
+  background: $color-tertiary;
+  color: $color-white;
+  text-shadow: none;
+}
+::selection {
+  background: $color-tertiary!important;
+  color: $color-white;
+  text-shadow: none;
+}
+html,
+body {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-size: 1rem;
+
+  &::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: $color-grey-444;
+    border-radius: 5px;
+  }
+
+  &::-webkit-scrollbar-thumb:hover {
+    background: $color-grey-444;
+  }
+}
+html {
+  font-family: sans-serif;
+  line-height: 1.15;
+  -webkit-text-size-adjust: 100%;
+  -webkit-tap-highlight-color: $color-transparent;
+}
+body,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+ol,
+ul {
+  margin: 0;
+  padding: 0;
+}
+article,
+aside,
+details,
+figcaption,
+figure,
+footer,
+header,
+hgroup,
+main,
+menu,
+nav,
+section {
+  display: block;
+}
+ol,
+ul {
+  list-style: none;
+}
+blockquote,
+q {
+  quotes: none;
+
+  &::before,
+  &::after {
+    content: none;
+  }
+}
+button,
+input {
+  &::-moz-focus-inner {
+    border: 0;
+    padding: 0;
+  }
+
+  border: 1px solid $color-grey-c0c0c0;
+  border-radius: 4px;
+
+  &:focus {
+    //color: $color-text-body;
+    outline: none;
+  }
+}
+input,
+button,
+select,
+optgroup,
+textarea {
+  margin: 0;
+  font-family: inherit;
+  line-height: inherit;
+}
+button {
+  &:focus {
+    outline: none;
+  }
+}
+b,
+strong {
+  font-weight: bold;
+}
+
+img {
+  width: 100%;
+}
+p { margin-bottom: 1rem; }
+
+$font-path: '../fonts/';
+@font-face {
+  font-family: 'Roboto';
+  src: url($font-path + 'Roboto-Light.ttf') format('truetype');
+  font-weight: 300;
+}
+@font-face {
+  font-family: 'Roboto';
+  src: url($font-path + 'Roboto-Regular.ttf') format('truetype');
+  font-weight: 400;
+}
+@font-face {
+  font-family: 'Roboto';
+  src: url($font-path + 'Roboto-Bold.ttf') format('truetype');
+  font-weight: 700;
+}
+@font-face {
+  font-family: 'Roboto';
+  src: url($font-path + 'Roboto-Black.ttf') format('truetype');
+  font-weight: 900;
+}
+@font-face {
+  font-family: 'norwester';
+  src: url($font-path + 'norwester.otf') format('opentype');
+  font-weight: 400;
+}
+@font-face {
+  font-family: 'EBGaramond';
+  src: url($font-path + 'EBGaramond-Regular.ttf') format('truetype');
+  font-weight: 400;
+}
+@font-face {
+  font-family: 'EBGaramond';
+  src: url($font-path + 'EBGaramond-Bold.ttf') format('truetype');
+  font-weight: 600;
+}
+
+body {
+  margin: 0;
+  font-family: $font-family-base;
+  font-weight: $font-weight-base;
+  line-height: $line-height-base;
+  color: $body-color;
+  text-align: left;
+}
+a {
+  color: $link-color;
+  background-color: transparent;
+  text-decoration: none;
+
+  &:focus {
+    outline: none;
+  }
+
+  &:hover {
+    color: $color-tertiary;
+  }
+}
+.h1, .h2, .h3,
+h1,
+h2,
+h3 {
+  font-weight: 600;
+}
+@keyframes spin {
+  from { transform: rotate(-360deg);}
+  to { transform: rotate(360deg);}
+}

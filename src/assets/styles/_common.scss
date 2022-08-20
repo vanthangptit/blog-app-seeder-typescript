@@ -1,0 +1,127 @@
+@import 'variables';
+
+.hidden-scroll {
+  overflow: hidden !important;
+}
+
+.message-error {
+  color: $color-text-error1;
+  margin-top: 25px;
+
+  h5 {
+    font-size: 16px;
+    font-weight: 400;
+  }
+}
+
+.hidden {
+  display: none !important;
+}
+
+.no-pointer {
+  pointer-events: none;
+  opacity: 0.6;
+}
+
+.container {
+  width: 100%;
+  padding-right: 15px;
+  padding-left: 15px;
+  margin-right: auto;
+  margin-left: auto;
+
+  @media #{$media-md-up} {
+    max-width: 960px;
+  }
+}
+
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  margin-right: -15px;
+  margin-left: -15px;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.padd-navbar {
+  @media #{$media-lg-up} {
+    padding-left: $width-navbar-desktop;
+  }
+}
+
+.scroll-bar {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  overflow-x: hidden;
+  overflow-y: scroll;
+
+  &::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: $color-grey-555;
+    border-radius: 5px;
+  }
+
+  &::-webkit-scrollbar-thumb:hover {
+    background: $color-grey-555;
+  }
+}
+
+.flex-aligin-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.div-content {
+  background-color: $color-white;
+  padding-top: 40px;
+  padding-bottom: 40px;
+  border-radius: 5px;
+}
+
+@each $color, $value in $text-colors {
+  .text-#{$color} {
+    color: $value;
+  }
+}
+
+@each $color, $value in $backgrounds {
+  .bg-#{$color} {
+    background-color: $value !important;
+
+    //* {
+    //  color: map-get($text-bg, $color);
+    //}
+  }
+}
+
+.maintenance-page {
+  background-color: #d85537;
+
+  h1 {
+    text-align: center;
+    font-size: 67px;
+    font-weight: 300;
+    line-height: 80px;
+    color: $color-white;
+
+    @media #{$media-sm-up} and #{$media-lg-down} {
+      font-size: calc(54px + (67 - 54) * (100vw - 768px) / (1199 - 768));
+      line-height: calc(68px + (80 - 68) * (100vw - 768px) / (1199 - 768));
+    }
+
+    @media #{$media-sm-down} {
+      font-size: calc(28px + (54 - 28) * (100vw - 375px) / (767 - 375));
+      line-height: calc(36px + (68 - 36) * (100vw - 375px) / (767 - 375));
+    }
+  }
+}
