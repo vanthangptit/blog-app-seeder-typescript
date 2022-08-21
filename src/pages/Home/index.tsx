@@ -1,10 +1,16 @@
 import * as React from 'react';
 
-const Home = () => {
+interface Props {
+  customClass: string
+}
+
+const Home = (props: Props) => {
+  const { customClass } = props;
+
   return (
-    <div>
+    <section className={customClass}>
       <h1>Home Page</h1>
-    </div>
+    </section>
   );
 };
 
