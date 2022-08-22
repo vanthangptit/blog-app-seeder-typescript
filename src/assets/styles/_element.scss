@@ -1,5 +1,42 @@
 @import 'variables';
 
+$font-path: '../fonts/';
+@font-face {
+  font-family: 'Roboto';
+  src: url($font-path + 'Roboto-Light.ttf') format('truetype');
+  font-weight: 300;
+}
+@font-face {
+  font-family: 'Roboto';
+  src: url($font-path + 'Roboto-Regular.ttf') format('truetype');
+  font-weight: 400;
+}
+@font-face {
+  font-family: 'Roboto';
+  src: url($font-path + 'Roboto-Bold.ttf') format('truetype');
+  font-weight: 700;
+}
+@font-face {
+  font-family: 'Roboto';
+  src: url($font-path + 'Roboto-Black.ttf') format('truetype');
+  font-weight: 900;
+}
+@font-face {
+  font-family: 'norwester';
+  src: url($font-path + 'norwester.otf') format('opentype');
+  font-weight: 400;
+}
+@font-face {
+  font-family: 'EBGaramond';
+  src: url($font-path + 'EBGaramond-Regular.ttf') format('truetype');
+  font-weight: 400;
+}
+@font-face {
+  font-family: 'EBGaramond';
+  src: url($font-path + 'EBGaramond-Bold.ttf') format('truetype');
+  font-weight: 600;
+}
+
 *,
 *::before,
 *::after {
@@ -117,43 +154,9 @@ strong {
 img {
   width: 100%;
 }
-p { margin-bottom: 1rem; }
 
-$font-path: '../fonts/';
-@font-face {
-  font-family: 'Roboto';
-  src: url($font-path + 'Roboto-Light.ttf') format('truetype');
-  font-weight: 300;
-}
-@font-face {
-  font-family: 'Roboto';
-  src: url($font-path + 'Roboto-Regular.ttf') format('truetype');
-  font-weight: 400;
-}
-@font-face {
-  font-family: 'Roboto';
-  src: url($font-path + 'Roboto-Bold.ttf') format('truetype');
-  font-weight: 700;
-}
-@font-face {
-  font-family: 'Roboto';
-  src: url($font-path + 'Roboto-Black.ttf') format('truetype');
-  font-weight: 900;
-}
-@font-face {
-  font-family: 'norwester';
-  src: url($font-path + 'norwester.otf') format('opentype');
-  font-weight: 400;
-}
-@font-face {
-  font-family: 'EBGaramond';
-  src: url($font-path + 'EBGaramond-Regular.ttf') format('truetype');
-  font-weight: 400;
-}
-@font-face {
-  font-family: 'EBGaramond';
-  src: url($font-path + 'EBGaramond-Bold.ttf') format('truetype');
-  font-weight: 600;
+p {
+  margin-bottom: 1rem;
 }
 
 body {
