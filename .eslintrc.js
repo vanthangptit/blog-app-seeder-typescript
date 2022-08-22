@@ -101,7 +101,8 @@ module.exports = {
     'import/resolver': {
       'typescript': {},
       'node': {
-        'paths': ['src']
+        'paths': ['src'],
+        'extensions': ['.js', '.jsx', '.ts', '.tsx']
       }
     }
   }
