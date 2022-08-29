@@ -15,6 +15,9 @@ import NotFound from './pages/NotFound';
 import Register from './pages/Register';
 import User from './pages/Users';
 
+// ** Components
+import SignIn from './components/SignIn';
+
 // ** Constant
 import { SITES_URL } from '@src/constants';
 
@@ -53,6 +56,8 @@ function App() {
           <Route path={SITES_URL.REGISTER} element={<Register />} />
           <Route path='*' element={<NotFound />} />
         </Routes>
+
+        <SignIn />
       </main>
     </Router>
   );

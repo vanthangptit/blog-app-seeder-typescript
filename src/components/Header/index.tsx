@@ -156,7 +156,7 @@ const Header = () => {
     justifyContent: 'center',
     padding: '20px 0',
     borderBottom: '1px solid #38404a',
-    position: 'relative',
+    position: 'relative'
   });
 
   const NavbarBrand = styled(Link)({
@@ -217,10 +217,10 @@ const Header = () => {
           </NavbarBrand>
         </NavbarInner>
 
-        <List sx={{padding: '20px 0'}}>
+        <List sx={{ padding: '20px 0' }}>
           {
             listMenu.map((item) => (
-              <ListItem key={item.href}>
+              <ListItem key={item.href} sx={{ padding: 0 }}>
                 <NavbarLink to={item.href} className={({ isActive }) => isActive ? 'is-active' : ''}>
                   {item.label}
                 </NavbarLink>

@@ -201,10 +201,10 @@ const Home = (props: Props) => {
     zIndex: 2,
     color: '#fff',
     fontSize: '54px',
-    // fontFamily: '$font-roboto',
     fontWeight: 600,
     paddingBottom: '15px',
     lineHeight: 0.8,
+    textAlign: 'center',
 
     'span': {
       color: '#0b9b99'
@@ -223,20 +223,20 @@ const Home = (props: Props) => {
     position: 'relative',
     zIndex: 2,
     color: '#fff',
-    fontSize: '36px',
     fontWeight: 300,
 
     'p': {
       lineHeight: 1.2,
-      marginBottom: '1.4rem'
-    },
+      marginBottom: '1.4rem',
+      fontSize: '36px',
 
-    '@media (min-width: 768px) and (max-width: 991px)': {
-      fontSize: 'calc(24px + (36 - 24) * (100vw - 768px) / (991 - 768))'
-    },
+      '@media (min-width: 768px) and (max-width: 991px)': {
+        fontSize: 'calc(24px + (36 - 24) * (100vw - 768px) / (991 - 768))'
+      },
 
-    '@media (max-width: 767px)': {
-      fontSize: 'calc(14px + (24 - 14) * (100vw - 360px) / (767 - 360))'
+      '@media (max-width: 767px)': {
+        fontSize: 'calc(14px + (24 - 14) * (100vw - 360px) / (767 - 360))'
+      }
     }
   });
 
@@ -274,10 +274,6 @@ const Home = (props: Props) => {
         width: '100%'
       }
     }
-  });
-
-  const PageAbout = styled(Box)({
-    width: '100%'
   });
 
   const BlockTitle = styled('div')({
@@ -336,7 +332,11 @@ const Home = (props: Props) => {
     '@media (max-width: 767px)': {
       'h2': {
         marginBottom: '7px',
-        fontSize: 'calc(28px + (41 - 28) * (100vw - 360px) / (767 - 360))'
+        fontSize: 'calc(28px + (41 - 28) * (100vw - 360px) / (767 - 360))',
+
+        '&::after': {
+          display: 'none'
+        }
       },
 
       'p': {
@@ -363,19 +363,17 @@ const Home = (props: Props) => {
   const AboutImageBox = styled('div')({
     width: '40%',
     padding: '0 35px 5px 0',
+    float: 'left',
 
-    '@media (min-width: 768px) and (max-width: 991px)': {
+    '@media (min-width: 576px) and (max-width: 991px)': {
       paddingRight: '20px'
     },
 
-    '@media (max-width: 767px)': {
-      padding: '0 0 30px 0',
+    '@media (max-width: 575px)': {
+      padding: '0 20px 30px 0',
       width: '65%',
-      margin: 'auto'
-    },
-
-    '@media (max-width: 576px)': {
-      float: 'left'
+      margin: 'auto',
+      float: 'none'
     }
   });
 
@@ -446,18 +444,6 @@ const Home = (props: Props) => {
     }
   });
 
-  const ResumeBlockTitle = styled('div')({
-    'h3': {
-      color: '#fff'
-    }
-  });
-
-  const ResumeListCard = styled('div')({
-    '.card:last-of-type .card__bottom': {
-      borderBottom: 'none'
-    }
-  });
-
   const CardBox = styled('div')({
     position: 'relative',
     paddingBottom: '30px',
@@ -523,9 +509,10 @@ const Home = (props: Props) => {
       paddingLeft: '20px'
     },
 
-    '& > ul > li': {
+    'ul li': {
       listStyleType: 'disc',
-      listStylePosition: 'outside'
+      listStylePosition: 'outside',
+      display: 'list-item'
     }
   });
 
@@ -541,7 +528,7 @@ const Home = (props: Props) => {
     margin: '0 10px 20px',
 
     '&:hover': {
-      'img': {
+      '.skill__image img': {
         filter: 'grayscale(0%)'
       },
 
@@ -580,6 +567,22 @@ const Home = (props: Props) => {
     }
   });
 
+  const CustomTypographyH3 = styled(Typography)({
+    fontSize: '33px',
+    fontWeight: 400,
+    marginBottom: '10px'
+  });
+
+  const CustomTypographyParagraph = styled(Typography)({
+    fontSize: '1rem',
+    marginBottom: '1rem',
+    fontWeight: 300,
+
+    'strong': {
+      fontWeight: 600
+    }
+  });
+
   return (
     <section className={customClass}>
       {
@@ -592,7 +595,7 @@ const Home = (props: Props) => {
                 </GreetingBox>
 
                 <IntroText>
-                  <Typography variant="body2">
+                  <Typography variant="body2" sx={{ textAlign: 'center' }}>
                     <Typed strings={[ 'I am a Frontend Developer' ]} typeSpeed={40} />
                   </Typography>
 
@@ -607,7 +610,7 @@ const Home = (props: Props) => {
             </div>
           </PageHome>
         ) : (
-          <PageAbout className={'about padd-navbar scroll-bar bg-secondary'}>
+          <Box className={'about padd-navbar scroll-bar bg-secondary'} sx={{ width: '100%' }}>
             <div className="container">
               <BlockTitle>
                 <Typography variant={'h2'}>
@@ -624,43 +627,45 @@ const Home = (props: Props) => {
                 </AboutImageBox>
 
                 <AboutDescriptionBox>
-                  <Typography variant={'h3'}>
+                  <CustomTypographyH3 variant={'h3'}>
                     WHO AM I?
-                  </Typography>
-                  <Typography variant="body2">
+                  </CustomTypographyH3>
+                  <CustomTypographyParagraph variant="body2">
                     My name is Thang.
                     I’m living and working in Ha Noi city. I graduated from Posts and Telecommunications Institute of Technology in 2018.
-                  </Typography>
-                  <Typography variant="body2">
+                  </CustomTypographyParagraph>
+                  <CustomTypographyParagraph variant="body2">
                     I’m a front-end Developer with 3 years of experience; I work mainly with <strong>HTML</strong>, <strong>CSS</strong>, <strong>JavaScript</strong>, <strong>JSON</strong> and <strong>AJAX</strong>.
                     In addition, I can also work with <strong>ReactJS</strong>, <strong>React Hook</strong>, <strong>Redux Saga</strong>; server side like NodeJS (using ExpressJS)
                     and database manipulation like MySQL, MongoDB.
-                  </Typography>
-                  <Typography variant="body2">
+                  </CustomTypographyParagraph>
+                  <CustomTypographyParagraph variant="body2">
                     The main work I am doing is completing development tasks for the user interface; update and maintain
                     application features; support other team members to complete the task.
-                  </Typography>
-                  <Typography variant="body2">
+                  </CustomTypographyParagraph>
+                  <CustomTypographyParagraph variant="body2">
                     That’s all about me and thank you so much.
-                  </Typography>
+                  </CustomTypographyParagraph>
                 </AboutDescriptionBox>
               </AboutIntroBox>
 
               <AboutSkillsBox>
-                <Typography variant={'h3'}>WHAT CAN I DO?</Typography>
+                <CustomTypographyH3 variant={'h3'}>WHAT CAN I DO?</CustomTypographyH3>
 
-                <List>{canIDo.map((work, key) => (<ListItem key={key}>{work.label}</ListItem>))}
+                <List>{canIDo.map((work, key) => (
+                  <ListItem key={key} sx={{ padding: '0 0 8px' }}>
+                    <span>+/</span> {work.label}
+                  </ListItem>
+                ))}
                 </List>
               </AboutSkillsBox>
 
               <ResumeBox className="resume">
-                <ResumeBlockTitle>
-                  <Typography variant={'h3'}>
-                    WORKING EXPERIENCE
-                  </Typography>
-                </ResumeBlockTitle>
+                <CustomTypographyH3 variant={'h3'} sx={{ color: '#fff' }}>
+                  WORKING EXPERIENCE
+                </CustomTypographyH3>
 
-                <ResumeListCard>
+                <Box>
                   <CardBox>
                     <CardHeader>
                       <YearCard>
@@ -673,7 +678,7 @@ const Home = (props: Props) => {
                     </CardHeader>
                     <CardBodyBox>
                       <List>
-                        {kyberDesc.jobs.map((desc, key) => <ListItem key={key}>{desc.label}</ListItem>)}
+                        {kyberDesc.jobs.map((desc, key) => <ListItem key={key} sx={{ padding: '0 0 5px' }}>{desc.label}</ListItem>)}
                       </List>
                     </CardBodyBox>
                     <CardBottom>
@@ -706,10 +711,10 @@ const Home = (props: Props) => {
                     </CardHeader>
                     <CardBodyBox>
                       <List>
-                        {qtsDesc.jobs.map((desc, key) => <ListItem key={key}>{desc.label}</ListItem>)}
+                        {qtsDesc.jobs.map((desc, key) => <ListItem key={key} sx={{ padding: '0 0 5px' }}>{desc.label}</ListItem>)}
                       </List>
                     </CardBodyBox>
-                    <CardBottom>
+                    <CardBottom sx={{ borderBottom: 'none' }}>
                       {qtsDesc.images.map((item, key) => (
                         <SkillBox className="skill" key={key}>
                           <div className="skill__top">
@@ -725,10 +730,10 @@ const Home = (props: Props) => {
                       ))}
                     </CardBottom>
                   </CardBox>
-                </ResumeListCard>
+                </Box>
               </ResumeBox>
             </div>
-          </PageAbout>
+          </Box>
         )
       }
     </section>

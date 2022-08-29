@@ -88,6 +88,10 @@
   border-radius: 5px;
 }
 
+.about {
+  @include fluid-padding-top(80px, 150px);
+}
+
 @each $color, $value in $text-colors {
   .text-#{$color} {
     color: $value;
@@ -101,27 +105,5 @@
     //* {
     //  color: map-get($text-bg, $color);
     //}
-  }
-}
-
-.maintenance-page {
-  background-color: #d85537;
-
-  h1 {
-    text-align: center;
-    font-size: 67px;
-    font-weight: 300;
-    line-height: 80px;
-    color: $color-white;
-
-    @media #{$media-sm-up} and #{$media-lg-down} {
-      font-size: calc(54px + (67 - 54) * (100vw - 768px) / (1199 - 768));
-      line-height: calc(68px + (80 - 68) * (100vw - 768px) / (1199 - 768));
-    }
-
-    @media #{$media-sm-down} {
-      font-size: calc(28px + (54 - 28) * (100vw - 375px) / (767 - 375));
-      line-height: calc(36px + (68 - 36) * (100vw - 375px) / (767 - 375));
-    }
   }
 }
