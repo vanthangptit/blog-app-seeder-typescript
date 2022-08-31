@@ -39,12 +39,32 @@ function App() {
         <Routes>
           <Route path='/' element={<Home customClass="home-page"/>} />
           <Route path={SITES_URL.ABOUT} element={<Home customClass="about-page"/>} />
-          <Route path={SITES_URL.BLOG} element={<Blog/>} />
-          <Route path={SITES_URL.BLOG_DETAIL} element={<BlogDetail />}/>
           <Route path={SITES_URL.CONTACT} element={<Contact/>} />
-          <Route path={SITES_URL.ACCOUNT} element={<User/>} />
+          <Route path={SITES_URL.BLOG}
+            element={
+              <PrivateRoute>
+                <Blog />
+              </PrivateRoute>
+            }
+          />
 
-          <Route path='/dashboard'
+          <Route path={SITES_URL.BLOG_DETAIL}
+            element={
+              <PrivateRoute>
+                <BlogDetail />
+              </PrivateRoute>
+            }
+          />
+
+          <Route path={SITES_URL.ACCOUNT}
+            element={
+              <PrivateRoute>
+                <User />
+              </PrivateRoute>
+            }
+          />
+
+          <Route path={SITES_URL.DASHBOARD}
             element={
               <PrivateRoute>
                 <Dashboard />
@@ -56,8 +76,6 @@ function App() {
           <Route path={SITES_URL.REGISTER} element={<Register />} />
           <Route path='*' element={<NotFound />} />
         </Routes>
-
-        <SignIn />
       </main>
     </Router>
   );
