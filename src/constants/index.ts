@@ -46,3 +46,8 @@ export const SITES_URL = {
   ACCOUNT: '/account',
   DASHBOARD: '/dashboard'
 };
+
+export const LAYOUT = {
+  widthNavDesktop: '330px',
+  widthNavMobile: '260px'
+};
