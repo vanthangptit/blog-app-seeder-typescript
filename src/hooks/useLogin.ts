@@ -30,5 +30,5 @@ export const useLogin = () => {
     errorCode,
     loading,
     loginApi
-  }
+  };
 };

@@ -36,9 +36,9 @@ export const guestContactApi = createAsyncThunk<any, IGuestContactParams>(GUEST_
     return {
       ...response,
       successfully: true
-    }
+    };
   } catch (error: any) {
-    return thunkAPI.rejectWithValue({ error: error.data })
+    return thunkAPI.rejectWithValue({ error: error.data });
   }
 });
 
@@ -54,13 +54,13 @@ export const appGuestContactSlice = createSlice({
         state.status = action.payload.status;
         state.loading = false;
       })
-      .addCase(guestContactApi.pending, (state, action:PayloadAction<any>) => {
+      .addCase(guestContactApi.pending, (state) => {
         state.loading = true;
       })
       .addCase(guestContactApi.rejected, (state, action:PayloadAction<any>) => {
         state.errorCode = action.payload.errorCode;
         state.loading = false;
-      })
+      });
   }
 });
 

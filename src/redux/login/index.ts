@@ -39,9 +39,9 @@ export const loginApi = createAsyncThunk<any, ILoginParams>(LOGIN.ACTION_TYPES.L
     return {
       ...response,
       successfully: true
-    }
+    };
   } catch (error: any) {
-    return thunkAPI.rejectWithValue({ error: error.data })
+    return thunkAPI.rejectWithValue({ error: error.data });
   }
 });
 
@@ -58,13 +58,13 @@ export const appLoginSlice = createSlice({
         state.status = action.payload.status;
         state.loading = false;
       })
-      .addCase(loginApi.pending, (state, action:PayloadAction<any>) => {
+      .addCase(loginApi.pending, (state) => {
         state.loading = true;
       })
       .addCase(loginApi.rejected, (state, action:PayloadAction<any>) => {
         state.errorCode = action.payload.errorCode;
         state.loading = false;
-      })
+      });
   }
 });
 
