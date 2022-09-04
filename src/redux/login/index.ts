@@ -36,6 +36,13 @@ export const loginApi = createAsyncThunk<any, ILoginParams>(LOGIN.ACTION_TYPES.L
   try {
     const response: ILoginResponse = await api.loginApi(params);
 
+    if (response.errorCode && response.status !== 200) {
+      return {
+        ...response,
+        successfully: false
+      };
+    }
+
     return {
       ...response,
       successfully: true
@@ -52,11 +59,16 @@ export const appLoginSlice = createSlice({
   extraReducers: builder => {
     builder
       .addCase(loginApi.fulfilled, (state, action:PayloadAction<any>) => {
-        state.data = action.payload.data;
-        state.successfully = action.payload.successfully;
+        state.successfully = true;
         state.message = action.payload.message;
         state.status = action.payload.status;
         state.loading = false;
+
+        if (action.payload.errorCode && action.payload.status !== 200) {
+          state.errorCode = action.payload.errorCode;
+        } else {
+          state.data = action.payload.data;
+        }
       })
       .addCase(loginApi.pending, (state) => {
         state.loading = true;

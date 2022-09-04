@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { useForm, SubmitHandler } from 'react-hook-form';
+import { useLogin } from '@hooks/useLogin';
 import { SITES_URL } from '@src/constants';
 import {
   Avatar,
@@ -18,10 +19,8 @@ import { BiLock } from 'react-icons/bi';
 import { MessageError } from '@components/MessageError';
 // import { Layout, CustomContainer } from '@components/Layout';
 
-interface IFormInput {
-  username: string;
-  password: string;
-}
+import { ILoginParams } from '@src/models/ILogin';
+
 const LoginBox = styled(Box)({
   backgroundColor: '#1e464a'
 });
@@ -33,10 +32,19 @@ const Login = () => {
       errors
     },
     handleSubmit
-  } = useForm<IFormInput>();
-  const onSubmit: SubmitHandler<IFormInput> = data => {
-    // eslint-disable-next-line no-console
-    console.log(data);
+  } = useForm<ILoginParams>();
+
+  const {
+    message,
+    data,
+    successfully,
+    errorCode,
+    loading,
+    loginApi
+  } = useLogin();
+
+  const onSubmit: SubmitHandler<ILoginParams> = data => {
+    loginApi(data);
   };
 
   return (
@@ -62,13 +70,13 @@ const Login = () => {
               margin="normal"
               required
               fullWidth
-              id="username"
-              label="Enter your username"
-              autoComplete="username"
+              id="account"
+              label="Enter your account"
+              autoComplete="account"
               autoFocus
-              {...register('username', { required: true, minLength: 5, pattern: /^[a-zA-Z]{1,}[a-zA-Z0-9_]{4,}$/ })}
+              {...register('account', { required: true, minLength: 5, pattern: /^[a-zA-Z]{1,}[a-zA-Z0-9_]{4,}$/ })}
             />
-            <MessageError>{ errors.username && 'Username cannot contain special characters and more 5 characters' }</MessageError>
+            <MessageError>{ errors.account && 'Account cannot contain special characters and more 5 characters' }</MessageError>
             <TextField
               margin="normal"
               required
@@ -79,7 +87,9 @@ const Login = () => {
               autoComplete="current-password"
               {...register('password', { required: true, pattern: /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z]{8,}$/, minLength: 8 })}
             />
-            <MessageError>{errors.password && 'Password must contain at least one lower case, upper case letter and number.'}</MessageError>
+            <MessageError>
+              {errors.password && 'Password must contain at least one lower case, upper case letter and number.'}
+            </MessageError>
             <FormControlLabel
               control={<Checkbox value="remember" color="primary" />}
               label="Remember me"
@@ -88,10 +98,19 @@ const Login = () => {
               type="submit"
               fullWidth
               variant="contained"
-              sx={{ mt: 3, mb: 2, bgcolor: '#bc2e1d' }}
+              {...(loading && !successfully && { disabled: true })}
+              sx={{
+                mt: 3,
+                mb: 2,
+                bgcolor: '#bc2e1d',
+                '&:hover': {
+                  bgcolor: '#bc2e1d'
+                }
+              }}
             >
               Sign In
             </Button>
+            {!data && errorCode && <MessageError sx={{ textAlign: 'center' }}>{message}</MessageError>}
             <Grid container>
               <Grid item xs>
                 <Link href="#" variant="body2">

@@ -15,9 +15,6 @@ import NotFound from './pages/NotFound';
 import Register from './pages/Register';
 import User from './pages/Users';
 
-// ** Components
-import SignIn from './components/SignIn';
-
 // ** Constant
 import { SITES_URL } from '@src/constants';
 

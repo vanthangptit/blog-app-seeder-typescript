@@ -21,12 +21,12 @@ export const getToken = () => {
 
 const config:AxiosRequestConfig = {
   headers: {
-    Authorization: `Bearer ${getToken()}`
+    'content-type': 'application/json'
   }
 };
 
 const loginApi = {
-  loginApi: (params: ILoginParams) => requester.get(URL_API.LOGIN_API, params, config)
+  loginApi: (params: ILoginParams) => requester.post(URL_API.LOGIN_API, JSON.stringify(params), config)
 };
 
 export default loginApi;
