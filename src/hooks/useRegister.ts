@@ -28,5 +28,5 @@ export const useUser = () => {
     errorCode,
     loading,
     addUserApi
-  }
+  };
 };

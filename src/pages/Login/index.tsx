@@ -1,14 +1,20 @@
 import * as React from 'react';
 import { useForm, SubmitHandler } from 'react-hook-form';
+import { NavLink, useNavigate } from 'react-router-dom';
 import { useLogin } from '@hooks/useLogin';
+import {
+  setAccessTokenCookie,
+  setUsernameCookie,
+  getAccessTokenCookie
+} from '@utils/RGSCookies';
 import { SITES_URL } from '@src/constants';
+
 import {
   Avatar,
   Button,
   TextField,
   FormControlLabel,
   Checkbox,
-  Link,
   Grid,
   Container,
   Box,
@@ -26,6 +32,9 @@ const LoginBox = styled(Box)({
 });
 
 const Login = () => {
+  const navigate = useNavigate();
+
+  // ** Hooks
   const {
     register,
     formState: {
@@ -46,6 +55,20 @@ const Login = () => {
   const onSubmit: SubmitHandler<ILoginParams> = data => {
     loginApi(data);
   };
+
+  React.useEffect(() => {
+    if (data && successfully) {
+      setAccessTokenCookie(data.accessToken);
+      setUsernameCookie(data.username);
+
+      // eslint-disable-next-line no-console
+      console.log(navigate, getAccessTokenCookie);
+    }
+  }, [ data, successfully ]);
+
+  React.useEffect(() => {
+    document.title = 'Thang Nguyen | Login';
+  }, []);
 
   return (
     <LoginBox className="login padd-navbar scroll-bar flex-aligin-center">
@@ -76,7 +99,7 @@ const Login = () => {
               autoFocus
               {...register('account', { required: true, minLength: 5, pattern: /^[a-zA-Z]{1,}[a-zA-Z0-9_]{4,}$/ })}
             />
-            <MessageError>{ errors.account && 'Account cannot contain special characters and more 5 characters' }</MessageError>
+            {errors.account && <MessageError>Account cannot contain special characters and more 5 characters.</MessageError>}
             <TextField
               margin="normal"
               required
@@ -87,14 +110,13 @@ const Login = () => {
               autoComplete="current-password"
               {...register('password', { required: true, pattern: /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z]{8,}$/, minLength: 8 })}
             />
-            <MessageError>
-              {errors.password && 'Password must contain at least one lower case, upper case letter and number.'}
-            </MessageError>
+            {errors.password && <MessageError>Password must contain at least one lower case, upper case letter and number.</MessageError>}
             <FormControlLabel
               control={<Checkbox value="remember" color="primary" />}
               label="Remember me"
             />
             <Button
+              size="large"
               type="submit"
               fullWidth
               variant="contained"
@@ -113,14 +135,14 @@ const Login = () => {
             {!data && errorCode && <MessageError sx={{ textAlign: 'center' }}>{message}</MessageError>}
             <Grid container>
               <Grid item xs>
-                <Link href="#" variant="body2">
+                <NavLink to={'#'}>
                   Forgot password?
-                </Link>
+                </NavLink>
               </Grid>
               <Grid item>
-                <Link href={SITES_URL.REGISTER} variant="body2">
+                <NavLink to={SITES_URL.REGISTER}>
                   {'Don\'t have an account? Sign Up'}
-                </Link>
+                </NavLink>
               </Grid>
             </Grid>
           </Box>

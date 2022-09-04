@@ -35,7 +35,7 @@ export const addUserApi = createAsyncThunk<any, IUserParams>(USER.ACTION_TYPES.A
 
     return {
       ...response,
-      successfully: true
+      successfully: !(response.errorCode && response.status !== 200)
     };
   } catch (error: any) {
     return thunkAPI.rejectWithValue({ error: error.data });
@@ -49,10 +49,16 @@ export const appUsersSlice = createSlice({
   extraReducers: builder => {
     builder
       .addCase(addUserApi.fulfilled, (state, action:PayloadAction<any>) => {
-        state.successfully = action.payload.successfully;
         state.message = action.payload.message;
         state.status = action.payload.status;
         state.loading = false;
+
+        if (action.payload.errorCode && action.payload.status !== 200) {
+          state.errorCode = action.payload.errorCode;
+          state.successfully = false;
+        } else {
+          state.successfully = true;
+        }
       })
       .addCase(addUserApi.pending, (state) => {
         state.loading = true;

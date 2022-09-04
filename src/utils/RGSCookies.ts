@@ -6,7 +6,7 @@ export const getAccessTokenCookie = () => {
 };
 
 export const setAccessTokenCookie = (accessToken: string) => {
-  return Cookies.set(ACCESS_TOKEN, accessToken, { expires: 1 });
+  return Cookies.set(ACCESS_TOKEN, accessToken, { expires: 7 });
 };
 
 export const removeAccessTokenCookie = () => {
@@ -14,7 +14,7 @@ export const removeAccessTokenCookie = () => {
 };
 
 export const setUsernameCookie = (username: any) => {
-  return Cookies.set(USERNAME_COOKIE, username, { expires: 1 });
+  return Cookies.set(USERNAME_COOKIE, username, { expires: 7 });
 };
 
 export const getUsernameCookie = () => {
