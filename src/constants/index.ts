@@ -6,7 +6,12 @@ export const AWS_S3_URL = process.env.REACT_APP_AWS_S3_URL;
 
 export const ACCESS_TOKEN = 'accessToken';
 export const USERNAME_COOKIE = 'username';
-export const USER_INFO = 'user';
+
+export const COMMON_ACTION_TYPES = {
+  SET_TOKEN: 'APPS/SET_TOKEN',
+  GET_TOKEN: 'APPS/GET_TOKEN',
+  REMOVE_TOKEN: 'APPS/REMOVE_TOKEN'
+};
 
 export const USER = {
   ACTION_TYPES: {

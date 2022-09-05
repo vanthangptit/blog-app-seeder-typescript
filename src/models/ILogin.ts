@@ -13,5 +13,5 @@ export interface ILoginResponse {
 
 export interface IDataLogin {
   accessToken: string
-  username: any
+  username: string
 }

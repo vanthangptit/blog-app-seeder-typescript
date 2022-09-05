@@ -17,12 +17,15 @@ import User from './pages/Users';
 
 // ** Constant
 import { SITES_URL } from '@src/constants';
-
-// ** Utils
-import { getAccessTokenCookie } from '@utils/RGSCookies';
+import { useTokenUser } from '@hooks/useTokenUser';
 
 const PrivateRoute = ({ children }: any) => {
-  const accessToken = getAccessTokenCookie();
+  const {
+    getAccessTokenUsernameCookie
+  } = useTokenUser();
+
+  const rs: any = getAccessTokenUsernameCookie();
+  const { accessToken } = rs;
 
   return accessToken ? children : <Navigate to={SITES_URL.LOGIN} replace />;
 };

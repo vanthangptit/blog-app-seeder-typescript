@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { Link, useLocation } from 'react-router-dom';
+import { useTokenUser } from '@hooks/useTokenUser';
 import { SITES_URL } from '@src/constants';
-import { getAccessTokenCookie, getUsernameCookie } from '@utils/RGSCookies';
 import { styled } from '@mui/system';
 import {
   List,
@@ -15,10 +15,16 @@ import { FiLogIn } from 'react-icons/fi';
 const SignIn = () => {
   const location = useLocation();
 
+  // ** Hooks
+  const {
+    username,
+    loggedIn,
+    getAccessTokenUsernameCookie,
+    removeAccessTokenUsernameCookie
+  } = useTokenUser();
+
   // ** States
   const [ isOpen, setOpen ] = React.useState<boolean | null>(null);
-  const [ username, setSetUsername ] = React.useState<string | undefined>(undefined);
-  const [ loggedIn, setLoggedIn ] = React.useState<boolean | null>(null);
 
   const handleShowAccountInfo = (e: any) => {
     e.preventDefault();
@@ -29,17 +35,12 @@ const SignIn = () => {
   const handleClick = (e: any) => {
     e.preventDefault();
 
-    if (loggedIn) {
-      setLoggedIn(false);
-    }
+    removeAccessTokenUsernameCookie();
   };
 
   React.useEffect(() => {
-    if (getUsernameCookie() && getAccessTokenCookie()) {
-      setSetUsername(getUsernameCookie());
-      setLoggedIn(true);
-    }
-  }, [ location ]);
+    getAccessTokenUsernameCookie();
+  }, [ location, username, loggedIn ]);
 
   // ** Styled
   const UserBox = styled('div')({

@@ -1,12 +1,8 @@
 import * as React from 'react';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { NavLink, useNavigate } from 'react-router-dom';
+import { useTokenUser } from '@hooks/useTokenUser';
 import { useLogin } from '@hooks/useLogin';
-import {
-  setAccessTokenCookie,
-  setUsernameCookie,
-  getAccessTokenCookie
-} from '@utils/RGSCookies';
 import { SITES_URL } from '@src/constants';
 
 import {
@@ -52,19 +48,29 @@ const Login = () => {
     loginApi
   } = useLogin();
 
+  const {
+    navigateTo,
+    setAccessTokenUsernameCookie
+  } = useTokenUser();
+
   const onSubmit: SubmitHandler<ILoginParams> = data => {
     loginApi(data);
   };
 
   React.useEffect(() => {
     if (data && successfully) {
-      setAccessTokenCookie(data.accessToken);
-      setUsernameCookie(data.username);
-
-      // eslint-disable-next-line no-console
-      console.log(navigate, getAccessTokenCookie);
+      setAccessTokenUsernameCookie({
+        username: data.accessToken,
+        accessToken: data.username
+      });
     }
   }, [ data, successfully ]);
+
+  React.useEffect(() => {
+    if (navigateTo) {
+      navigate(SITES_URL.DASHBOARD);
+    }
+  }, [ navigateTo ]);
 
   React.useEffect(() => {
     document.title = 'Thang Nguyen | Login';

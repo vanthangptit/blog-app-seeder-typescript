@@ -5,9 +5,11 @@ import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux';
 import { appGuestContactSlice } from './contact';
 import { appLoginSlice } from './login';
 import { appUsersSlice } from './register';
+import { appCommonSlice } from './common';
 
 export const store = configureStore({
   reducer: {
+    common: appCommonSlice.reducer,
     guestContact: appGuestContactSlice.reducer,
     login: appLoginSlice.reducer,
     register: appUsersSlice.reducer
