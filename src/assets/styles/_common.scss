@@ -37,8 +37,10 @@
 }
 
 .padd-navbar {
+  padding-left: 16px;
+
   @media #{$media-lg-up} {
-    padding-left: $width-navbar-desktop;
+    padding-left: $width-navbar-desktop + 16px;
   }
 }
 
@@ -50,6 +52,7 @@
   height: 100%;
   overflow-x: hidden;
   overflow-y: scroll;
+  padding-right: 16px;
 
   &::-webkit-scrollbar {
     width: 6px;

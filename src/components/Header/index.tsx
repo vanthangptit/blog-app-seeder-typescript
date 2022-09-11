@@ -73,7 +73,7 @@ const ButtonHamburger = styled('span')<{ showStatements: boolean | undefined}>((
     height: '3px',
     width: '30px',
     transition: 'background 0s',
-    background: `${showStatements ? 'transparent': '#fefefe'}`,
+    background: `${showStatements ? 'rgba(255, 255, 255, 0)': '#fefefe'}`,
     position: 'relative',
     borderRadius: '2px',
 

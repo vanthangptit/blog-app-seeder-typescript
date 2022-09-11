@@ -1,7 +1,6 @@
 
 export interface IGuestContactParams {
-  firstName?: string
-  lastName?: string
+  fullName?: string
   email: string
   message: string
 }

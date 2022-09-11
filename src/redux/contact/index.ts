@@ -49,10 +49,16 @@ export const appGuestContactSlice = createSlice({
   extraReducers: builder => {
     builder
       .addCase(guestContactApi.fulfilled, (state, action:PayloadAction<any>) => {
-        state.successfully = action.payload.successfully;
         state.message = action.payload.message;
         state.status = action.payload.status;
         state.loading = false;
+
+        if (action.payload.errorCode && action.payload.status !== 200) {
+          state.errorCode = action.payload.errorCode;
+          state.successfully = false;
+        } else {
+          state.successfully = true;
+        }
       })
       .addCase(guestContactApi.pending, (state) => {
         state.loading = true;

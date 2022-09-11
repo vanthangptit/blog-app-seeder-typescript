@@ -28,5 +28,5 @@ export const useContact = () => {
     errorCode,
     loading,
     guestContactApi
-  }
+  };
 };

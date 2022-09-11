@@ -169,7 +169,7 @@ body {
 }
 a {
   color: $link-color;
-  background-color: transparent;
+  background-color: $color-transparent;
   text-decoration: none;
 
   &:focus {
