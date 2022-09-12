@@ -53,6 +53,6 @@ export const SITES_URL = {
 };
 
 export const LAYOUT = {
-  widthNavDesktop: '330px',
-  widthNavMobile: '260px'
+  widthNavDesktop: 330,
+  widthNavMobile: 260
 };

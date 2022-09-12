@@ -4,24 +4,10 @@ import { SITES_URL } from '@src/constants';
 import {
   Button,
   Grid,
-  Box,
   Typography
 } from '@mui/material';
 import { styled } from '@mui/system';
-
-
-const NotFoundPage = styled(Box)({
-  backgroundColor: '#a71c1c',
-  paddingTop: '75px',
-  paddingBottom: '150px',
-  height: '100vh',
-  width: '100%',
-  display: 'flex',
-  justifyContent: 'center',
-  alignItems: 'center',
-  color: '#fff',
-  flexDirection: 'column'
-});
+import { Layout } from '@src/components/Common';
 
 const TitlePage = styled(Typography)({
   fontSize: '100px',
@@ -55,8 +41,23 @@ const NotFound = () => {
   }, []);
 
   return (
-    <NotFoundPage className="padd-navbar scroll-bar flex-aligin-center">
-      <TitlePage variant={'h1'}>404 <p>I AM SORRY, BUT THE PAGE YOU REQUESTED WAS NOT FOUND!</p></TitlePage>
+    <Layout
+      paddingNav={true}
+      scrollBar={true}
+      flexMiddle={true}
+      styles={{
+        backgroundColor: '#a71c1c',
+        paddingTop: '75px',
+        paddingBottom: '150px',
+        height: '100vh',
+        width: '100%',
+        color: '#fff',
+        flexDirection: 'column'
+      }}
+    >
+      <TitlePage variant={'h1'}>
+        404 <p>I AM SORRY, BUT THE PAGE YOU REQUESTED WAS NOT FOUND!</p>
+      </TitlePage>
 
       <Grid container justifyContent="center" className="bottom-link">
         <Grid item>
@@ -65,7 +66,7 @@ const NotFound = () => {
           </NavLink>
         </Grid>
       </Grid>
-    </NotFoundPage>
+    </Layout>
   );
 };
 

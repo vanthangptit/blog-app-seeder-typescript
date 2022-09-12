@@ -2,12 +2,12 @@ import * as React from 'react';
 import { NavLink } from 'react-router-dom';
 import SignIn from '@components/SignIn';
 import { MessageError } from '@components/MessageError';
+import { Layout, CustomContainer } from '@components/Common';
 import {
   Avatar,
   Button,
   TextField,
   TextareaAutosize,
-  Container,
   Box,
   Typography
 } from '@mui/material';
@@ -17,10 +17,6 @@ import { SITES_URL } from '@src/constants';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { useContact } from '@hooks/useContact';
 import { IGuestContactParams } from '@models/IContact';
-
-const ContactBox = styled(Box)({
-  backgroundColor: '#1e464a'
-});
 
 const TextareaAutosizeCustom = styled(TextareaAutosize)({
   padding: '16.5px 14px',
@@ -101,9 +97,22 @@ const Contact = () => {
   }, []);
 
   return (
-    <ContactBox className="padd-navbar scroll-bar flex-aligin-center">
+    <Layout
+      paddingNav={true}
+      scrollBar={true}
+      flexMiddle={true}
+      styles={{ backgroundColor: '#1e464a' }}
+    >
       {!successfully &&
-        <Container component="div" maxWidth="sm" className="div-content">
+        <CustomContainer
+          flexMiddle={true}
+          styles={{
+            backgroundColor: '#fff',
+            padding: '40px 25px',
+            borderRadius: '5px',
+            maxWidth: '600px'
+          }}
+        >
           <Avatar sx={{ m: 1, bgcolor: '#bc2e1d' }}>
             <BiLock />
           </Avatar>
@@ -162,11 +171,19 @@ const Contact = () => {
             </Button>
             {errorCode && <MessageError sx={{ textAlign: 'center' }}>{message}</MessageError>}
           </Box>
-        </Container>
+        </CustomContainer>
       }
 
       {successfully &&
-        <Container component="div" maxWidth="sm" className="div-content">
+        <CustomContainer
+          styles={{
+            backgroundColor: '#fff',
+            paddingTop: '40px',
+            paddingBottom: '40px',
+            borderRadius: '5px',
+            maxWidth: '600px'
+          }}
+        >
           <MessageSuccess>
             <h3>Thank you!</h3>
             <Typography variant="body2">Thanks for contacting me with your messages and questions.<br/> I&apos;m going to respond to you very soon!</Typography>
@@ -176,11 +193,11 @@ const Contact = () => {
               </NavLink>
             </Typography>
           </MessageSuccess>
-        </Container>
+        </CustomContainer>
       }
 
       <SignIn />
-    </ContactBox>
+    </Layout>
   );
 };
 

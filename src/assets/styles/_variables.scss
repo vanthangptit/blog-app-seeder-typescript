@@ -37,46 +37,10 @@ $text-colors: map_merge(
     )
 );
 
-$color-not-found:   #a71c1c;
-$color-about-page:  #ea912d;
-$color-resume-page: #0b9b99;
-$color-bg-main:     #001c37;
-
 $color-grey-444:    #444444;
-$color-grey-555:    #555555;
-$color-grey-666:    #666666;
-$color-grey-999:    #999999;
-$color-grey-b3b3b3: #b3b3b3;
 $color-grey-c0c0c0: #c0c0c0;
-$color-grey-ccc:    #cccccc;
-$color-grey-dee2e6: #dee2e6;
-$color-grey-fefefe: #fefefe;
-$color-grey-f8f9fa: #f8f9fa;
-$color-grey-f1f1f1: #f1f1f1;
-
-$color-green-dark:  #1e464a;
-$color-green-light: #78bb7b;
-$color-blue:        #0d6efd;
 $color-transparent: rgba(255, 255, 255, 0);
 $link-color:        $color-primary;
-$color-box-shadow:  rgba(0, 0,  0, .3);
-$color-head-table:  #2a2a2a;
-$bg-nav-mobile:     #001c37;
-$color-logo-footer: #222;
-$bg-opacity:        #212529;
-$color-text-error:  #cf0000;
-$color-text-error1: #f44336;
-$bg-color-navbar:   #232323;
-
-$color-border-logo:       #2e344e;
-$color-border-38404a:     #38404a;
-$bg-color-active-link:    rgba(11, 155, 153, 0.2);
-$color-border-default:      $color-grey-c0c0c0;
-$color-hover-default:     rgba(0, 0, 0, 0.87);
-$color-focus-primary:     #3f51b5;
-$color-placeholder-input: rgba(0, 0, 0, 0.55);
-$color-backdrop-menu:     rgba(0, 29, 56, 0.7);
-$color-border-hamburger:  rgba(129, 171, 170, 0.2);
 
 // break points
 $break-point-360: 360px;
@@ -107,13 +71,8 @@ $font-base: 16px;
 
 $min-vw: 360px;
 $max-vw: 1200px;
-$headings-line-height:  1.2;
-$container-max-width: $break-max-point;
 
 $z-index-1: 1;
 $z-index-2: 2;
 $z-index-3: 3;
 $z-index-topmost: 1200;
-
-$width-navbar-desktop: 300px;
-$width-navbar-mobile: 260px;

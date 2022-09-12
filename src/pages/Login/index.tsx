@@ -12,20 +12,15 @@ import {
   FormControlLabel,
   Checkbox,
   Grid,
-  Container,
   Box,
   Typography
 } from '@mui/material';
-import { styled } from '@mui/system';
+
 import { BiLock } from 'react-icons/bi';
 import { MessageError } from '@components/MessageError';
-// import { Layout, CustomContainer } from '@components/Layout';
+import { CustomContainer, Layout } from '@components/Common';
 
 import { ILoginParams } from '@src/models/ILogin';
-
-const LoginBox = styled(Box)({
-  backgroundColor: '#1e464a'
-});
 
 const Login = () => {
   const navigate = useNavigate();
@@ -77,8 +72,20 @@ const Login = () => {
   }, []);
 
   return (
-    <LoginBox className="login padd-navbar scroll-bar flex-aligin-center">
-      <Container component="div" maxWidth="xs" className="div-content">
+    <Layout
+      paddingNav={true}
+      scrollBar={true}
+      flexMiddle={true}
+      styles={{ backgroundColor: '#1e464a' }}
+    >
+      <CustomContainer
+        styles={{
+          backgroundColor: '#fff',
+          padding: '40px 25px',
+          borderRadius: '5px',
+          maxWidth: '444px'
+        }}
+      >
         <Box
           sx={{
             display: 'flex',
@@ -153,8 +160,8 @@ const Login = () => {
             </Grid>
           </Box>
         </Box>
-      </Container>
-    </LoginBox>
+      </CustomContainer>
+    </Layout>
   );
 };
 

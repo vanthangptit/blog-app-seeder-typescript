@@ -10,6 +10,7 @@ import {
   ListItem
 } from '@mui/material';
 import { BiCalendar } from 'react-icons/bi';
+import { CustomContainer, Layout } from '@components/Common';
 
 interface Props {
   customClass: string
@@ -166,27 +167,6 @@ const qtsDesc = {
 };
 
 // ** Styled
-const PageHome = styled(Box)({
-  backgroundImage: `url("${AWS_S3_URL}home.png")`,
-  backgroundPosition: '50%',
-  backgroundRepeat: 'no-repeat',
-  backgroundSize: 'cover',
-
-  'h3': {
-    marginBottom: '10px',
-    fontSize: '33px',
-    fontWeight: 400,
-
-    '@media (min-width: 768px) and (max-width: 991px)': {
-      fontSize: 'calc(22px + (33 - 22) * (100vw - 768px) / (991 - 768))'
-    },
-
-    '@media (max-width: 767px)': {
-      fontSize: 'calc(18px + (23 - 18) * (100vw - 360px) / (767 - 360))'
-    }
-  }
-});
-
 const HomeIntroContent = styled(Box)({
   width: 'calc(86%)',
   margin: 'auto'
@@ -423,21 +403,7 @@ const AboutSkillsBox = styled('article')({
 const ResumeBox = styled('article')({
   width: '100%',
   float: 'left',
-  paddingBottom: '35px',
-
-  'h3': {
-    marginBottom: '10px',
-    fontSize: '33px',
-    fontWeight: 400,
-
-    '@media (min-width: 768px) and (max-width: 991px)': {
-      fontSize: 'calc(22px + (33 - 22) * (100vw - 768px) / (991 - 768))'
-    },
-
-    '@media (max-width: 767px)': {
-      fontSize: 'calc(18px + (23 - 18) * (100vw - 360px) / (767 - 360))'
-    }
-  }
+  paddingBottom: '35px'
 });
 
 const CardBox = styled('div')({
@@ -566,7 +532,15 @@ const SkillBox = styled('div')({
 const CustomTypographyH3 = styled(Typography)({
   fontSize: '33px',
   fontWeight: 400,
-  marginBottom: '10px'
+  marginBottom: '10px',
+
+  '@media (min-width: 768px) and (max-width: 991px)': {
+    fontSize: 'calc(22px + (33 - 22) * (100vw - 768px) / (991 - 768))'
+  },
+
+  '@media (max-width: 767px)': {
+    fontSize: 'calc(18px + (23 - 18) * (100vw - 360px) / (767 - 360))'
+  }
 });
 
 const CustomTypographyParagraph = styled(Typography)({
@@ -592,8 +566,18 @@ const Home = (props: Props) => {
     <section className={customClass}>
       {
         customClass === 'home-page' ? (
-          <PageHome className={'padd-navbar scroll-bar flex-aligin-center'}>
-            <div className="container">
+          <Layout
+            paddingNav={true}
+            scrollBar={true}
+            flexMiddle={true}
+            styles={{
+              backgroundImage: `url("${AWS_S3_URL}home.png")`,
+              backgroundPosition: '50%',
+              backgroundRepeat: 'no-repeat',
+              backgroundSize: 'cover'
+            }}
+          >
+            <CustomContainer>
               <HomeIntroContent>
                 <GreetingBox>
                   Hi, I am <span>Thang Nguyen</span>
@@ -612,11 +596,19 @@ const Home = (props: Props) => {
                   </CtaBox>
                 </IntroText>
               </HomeIntroContent>
-            </div>
-          </PageHome>
+            </CustomContainer>
+          </Layout>
         ) : (
-          <Box className={'about padd-navbar scroll-bar bg-secondary'} sx={{ width: '100%' }}>
-            <div className="container">
+          <Layout
+            className={'about'}
+            paddingNav={true}
+            scrollBar={true}
+            styles={{
+              width: '100%',
+              backgroundColor: '#ea912d'
+            }}
+          >
+            <CustomContainer>
               <BlockTitle>
                 <Typography variant={'h2'}>
                   <strong className="bg-secondary">About <span>me</span></strong>
@@ -737,8 +729,8 @@ const Home = (props: Props) => {
                   </CardBox>
                 </Box>
               </ResumeBox>
-            </div>
-          </Box>
+            </CustomContainer>
+          </Layout>
         )
       }
 

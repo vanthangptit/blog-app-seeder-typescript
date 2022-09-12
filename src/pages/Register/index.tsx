@@ -3,6 +3,7 @@ import { NavLink, useNavigate } from 'react-router-dom';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { useUser } from '@hooks/useRegister';
 import { MessageError } from '@components/MessageError';
+import { CustomContainer, Layout } from '@components/Common';
 import { SITES_URL } from '@src/constants';
 
 import Avatar from '@mui/material/Avatar';
@@ -12,14 +13,8 @@ import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import { BiLock } from 'react-icons/bi';
 import Typography from '@mui/material/Typography';
-import Container from '@mui/material/Container';
-import { styled } from '@mui/system';
 
 import { IUserParams } from '@src/models/IUser';
-
-const SignUpBox = styled(Box)({
-  backgroundColor: '#1e464a'
-});
 
 const Register = () => {
   const navigate = useNavigate();
@@ -56,8 +51,20 @@ const Register = () => {
   }, []);
 
   return (
-    <SignUpBox className="padd-navbar scroll-bar flex-aligin-center">
-      <Container component="div" maxWidth="sm" className="div-content">
+    <Layout
+      paddingNav={true}
+      scrollBar={true}
+      flexMiddle={true}
+      styles={{ backgroundColor: '#1e464a' }}
+    >
+      <CustomContainer
+        styles={{
+          backgroundColor: '#fff',
+          padding: '40px 25px',
+          borderRadius: '5px',
+          maxWidth: '600px'
+        }}
+      >
         <Box
           sx={{
             marginTop: 2,
@@ -162,8 +169,8 @@ const Register = () => {
             </Grid>
           </Box>
         </Box>
-      </Container>
-    </SignUpBox>
+      </CustomContainer>
+    </Layout>
   );
 };
 
