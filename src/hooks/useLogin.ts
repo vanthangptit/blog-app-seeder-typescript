@@ -11,9 +11,7 @@ export const useLogin = () => {
   const dispatch = useAppDispatch();
   const {
     message,
-    status,
     data,
-    successfully,
     errorCode,
     loading
   } = useAppSelector((state: RootState) => state.login);
@@ -24,9 +22,7 @@ export const useLogin = () => {
 
   return {
     message,
-    status,
     data,
-    successfully,
     errorCode,
     loading,
     loginApi

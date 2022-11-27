@@ -1,10 +1,6 @@
 import * as React from 'react';
 import { BrowserRouter as Router, Navigate, Route, Routes } from 'react-router-dom';
-
-// ** Components
 import Header from '@components/Header';
-
-// ** Pages
 import Home from './pages/Home';
 import Blog from './pages/Blogs';
 import BlogDetail from './pages/BlogDetail';
@@ -15,17 +11,11 @@ import NotFound from './pages/NotFound';
 import Register from './pages/Register';
 import User from './pages/Users';
 
-// ** Constant
-import { SITES_URL } from '@src/constants';
-import { useTokenUser } from '@hooks/useTokenUser';
+import { ACCESS_TOKEN, SITES_URL } from '@src/constants';
+import Cookies from 'js-cookie';
 
 const PrivateRoute = ({ children }: any) => {
-  const {
-    getAccessTokenUsernameCookie
-  } = useTokenUser();
-
-  const rs: any = getAccessTokenUsernameCookie();
-  const { accessToken } = rs;
+  const accessToken = Cookies.get(ACCESS_TOKEN);
 
   return accessToken ? children : <Navigate to={SITES_URL.LOGIN} replace />;
 };

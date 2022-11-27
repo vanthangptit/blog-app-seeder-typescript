@@ -25,26 +25,34 @@ const Register = () => {
     formState: {
       errors
     },
-    handleSubmit
+    handleSubmit,
+    reset
   } = useForm<IUserParams>();
 
   const {
     message,
-    successfully,
     errorCode,
     loading,
+    user,
     addUserApi
   } = useUser();
 
   const onSubmit: SubmitHandler<IUserParams> = data => {
-    addUserApi(data);
-  };
+    addUserApi(data)
+      .unwrap()
+      .then((rs) => {
+        if (rs.status === 200) {
+          navigate(SITES_URL.LOGIN);
 
-  React.useEffect(() => {
-    if (successfully) {
-      navigate(SITES_URL.LOGIN);
-    }
-  }, [ successfully ]);
+          reset({
+            firstName: '',
+            lastName: '',
+            username: '',
+            email: ''
+          });
+        }
+      });
+  };
 
   React.useEffect(() => {
     document.title = 'Thang Nguyen | Sign up';
@@ -114,7 +122,7 @@ const Register = () => {
                   id="username"
                   label="Username"
                   autoComplete="Username"
-                  {...register('username', { required: true, minLength: 5, pattern: /^[a-zA-Z]{1,}[a-zA-Z0-9_]{4,}$/ })}
+                  {...register('username', { required: true, minLength: 5, pattern: /^[a-zA-Z]+[a-zA-Z0-9_]{4,}$/ })}
                 />
                 {errors.username && <MessageError sx={{ mt: 1 }}>Username cannot contain special characters and more 5 characters.</MessageError>}
               </Grid>
@@ -155,7 +163,7 @@ const Register = () => {
                 }
               }}
               size="large"
-              {...(loading && !successfully && { disabled: true })}
+              {...(loading && !user && { disabled: true })}
             >
               Sign Up
             </Button>

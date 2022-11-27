@@ -16,19 +16,15 @@ import { LOGIN } from '@src/constants';
 
 interface IFLoginState {
   message: string
-  status: number | null
-  data: IDataLogin | null
-  successfully: boolean
-  errorCode?: string | null
+  data?: IDataLogin
+  errorCode?: string
   loading: boolean
 }
 
 const initialState: IFLoginState = {
   message: '',
-  status: null,
-  data: null,
-  successfully: false,
-  errorCode: null,
+  data: undefined,
+  errorCode: undefined,
   loading: false
 };
 
@@ -37,8 +33,7 @@ export const loginApi = createAsyncThunk<any, ILoginParams>(LOGIN.ACTION_TYPES.L
     const response: ILoginResponse = await api.loginApi(params);
 
     return {
-      ...response,
-      successfully: !(response.errorCode && response.status !== 200)
+      ...response
     };
   } catch (error: any) {
     return thunkAPI.rejectWithValue({ error: error.data });
@@ -53,15 +48,12 @@ export const appLoginSlice = createSlice({
     builder
       .addCase(loginApi.fulfilled, (state, action:PayloadAction<any>) => {
         state.message = action.payload.message;
-        state.status = action.payload.status;
         state.loading = false;
 
         if (action.payload.errorCode && action.payload.status !== 200) {
           state.errorCode = action.payload.errorCode;
-          state.successfully = false;
         } else {
           state.data = action.payload.data;
-          state.successfully = true;
         }
       })
       .addCase(loginApi.pending, (state) => {

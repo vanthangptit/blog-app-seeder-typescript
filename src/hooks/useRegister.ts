@@ -11,10 +11,9 @@ export const useUser = () => {
   const dispatch = useAppDispatch();
   const {
     message,
-    status,
-    successfully,
     errorCode,
-    loading
+    loading,
+    user
   } = useAppSelector((state: RootState) => state.register);
 
   const addUserApi = (params: IUserParams) => {
@@ -23,10 +22,9 @@ export const useUser = () => {
 
   return {
     message,
-    status,
-    successfully,
     errorCode,
     loading,
+    user,
     addUserApi
   };
 };

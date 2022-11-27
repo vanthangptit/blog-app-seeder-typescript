@@ -14,18 +14,22 @@ import {
 import { USER } from '@src/constants';
 
 interface IFUserState {
-  message: string | null
-  status: number | null
-  successfully: boolean
-  errorCode: string | null
+  message?: string
+  user?: {
+    firstName: string
+    lastName: string
+    username: string
+    email: string
+    password: string
+  }
+  errorCode?: string
   loading: boolean
 }
 
 const initialState: IFUserState = {
-  message: null,
-  status: null,
-  successfully: false,
-  errorCode: null,
+  message: undefined,
+  user: undefined,
+  errorCode: undefined,
   loading: false
 };
 
@@ -34,8 +38,7 @@ export const addUserApi = createAsyncThunk<any, IUserParams>(USER.ACTION_TYPES.A
     const response: IUserResponse = await api.addUserApi(user);
 
     return {
-      ...response,
-      successfully: !(response.errorCode && response.status !== 200)
+      ...response
     };
   } catch (error: any) {
     return thunkAPI.rejectWithValue({ error: error.data });
@@ -43,21 +46,19 @@ export const addUserApi = createAsyncThunk<any, IUserParams>(USER.ACTION_TYPES.A
 });
 
 export const appUsersSlice = createSlice({
-  name: 'appLogin',
+  name: 'appRegister',
   initialState,
   reducers: {},
   extraReducers: builder => {
     builder
       .addCase(addUserApi.fulfilled, (state, action:PayloadAction<any>) => {
         state.message = action.payload.message;
-        state.status = action.payload.status;
         state.loading = false;
 
         if (action.payload.errorCode && action.payload.status !== 200) {
           state.errorCode = action.payload.errorCode;
-          state.successfully = false;
         } else {
-          state.successfully = true;
+          state.user = action.payload?.data?.user;
         }
       })
       .addCase(addUserApi.pending, (state) => {

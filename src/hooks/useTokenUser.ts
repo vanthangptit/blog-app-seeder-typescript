@@ -9,32 +9,25 @@ import * as commonStore from '@store/common';
 
 export const useTokenUser = () => {
   const dispatch = useAppDispatch();
-  const {
-    accessToken,
-    username,
-    navigateTo,
-    loggedIn
-  } = useAppSelector((state: RootState) => state.common);
+  const { accessToken, username } = useAppSelector((state: RootState) => state.common);
 
-  const setAccessTokenUsernameCookie = (params: IDataTokenUserParams) => {
-    return dispatch(commonStore.setAccessTokenUsernameCookie(params));
+  const setTokenCookie = (params: IDataTokenUserParams) => {
+    return dispatch(commonStore.setToken(params));
   };
 
-  const getAccessTokenUsernameCookie = () => {
-    return dispatch(commonStore.getAccessTokenUsernameCookie());
+  const getTokenCookie = () => {
+    return dispatch(commonStore.getToken());
   };
 
-  const removeAccessTokenUsernameCookie = () => {
-    return dispatch(commonStore.removeAccessTokenUsernameCookie());
+  const removeTokenCookie = () => {
+    return dispatch(commonStore.removeToken());
   };
 
   return {
     accessToken,
     username,
-    navigateTo,
-    loggedIn,
-    setAccessTokenUsernameCookie,
-    getAccessTokenUsernameCookie,
-    removeAccessTokenUsernameCookie
+    setTokenCookie,
+    getTokenCookie,
+    removeTokenCookie
   };
 };

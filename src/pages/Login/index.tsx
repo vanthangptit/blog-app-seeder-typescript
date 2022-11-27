@@ -3,6 +3,7 @@ import { useForm, SubmitHandler } from 'react-hook-form';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { useTokenUser } from '@hooks/useTokenUser';
 import { useLogin } from '@hooks/useLogin';
+import { useUser } from '@hooks/useRegister';
 import { SITES_URL } from '@src/constants';
 
 import {
@@ -31,45 +32,49 @@ const Login = () => {
     formState: {
       errors
     },
-    handleSubmit
+    handleSubmit,
+    setValue,
+    reset
   } = useForm<ILoginParams>();
 
   const {
     message,
     data,
-    successfully,
     errorCode,
     loading,
     loginApi
   } = useLogin();
 
-  const {
-    navigateTo,
-    setAccessTokenUsernameCookie
-  } = useTokenUser();
+  const { user } = useUser();
+  const { setTokenCookie } = useTokenUser();
 
   const onSubmit: SubmitHandler<ILoginParams> = data => {
-    loginApi(data);
-  };
-
-  React.useEffect(() => {
-    if (data && successfully) {
-      setAccessTokenUsernameCookie({
-        username: data.accessToken,
-        accessToken: data.username
+    loginApi(data)
+      .unwrap()
+      .then((rs) => {
+        if (rs.status === 200) {
+          setTokenCookie({
+            username: rs.data.username,
+            accessToken: rs.data.accessToken
+          });
+          navigate(SITES_URL.DASHBOARD);
+          reset({
+            account: '',
+            password: ''
+          });
+        }
       });
-    }
-  }, [ data, successfully ]);
-
-  React.useEffect(() => {
-    if (navigateTo) {
-      navigate(SITES_URL.DASHBOARD);
-    }
-  }, [ navigateTo ]);
+  };
 
   React.useEffect(() => {
     document.title = 'Thang Nguyen | Login';
   }, []);
+
+  React.useEffect(() => {
+    if (user) {
+      setValue('account', user.username);
+    }
+  }, [ user, setValue ]);
 
   return (
     <Layout
@@ -109,8 +114,8 @@ const Login = () => {
               id="account"
               label="Enter your account"
               autoComplete="account"
-              autoFocus
-              {...register('account', { required: true, minLength: 5, pattern: /^[a-zA-Z]{1,}[a-zA-Z0-9_]{4,}$/ })}
+              {...(!user && { autoFocus: true })}
+              {...register('account', { required: true })}
             />
             {errors.account && <MessageError>Account cannot contain special characters and more 5 characters.</MessageError>}
             <TextField
@@ -121,7 +126,8 @@ const Login = () => {
               type="password"
               id="password"
               autoComplete="current-password"
-              {...register('password', { required: true, pattern: /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z]{8,}$/, minLength: 8 })}
+              {...(user && { autoFocus: true })}
+              {...register('password', { required: true })}
             />
             {errors.password && <MessageError>Password must contain at least one lower case, upper case letter and number.</MessageError>}
             <FormControlLabel
@@ -133,7 +139,7 @@ const Login = () => {
               type="submit"
               fullWidth
               variant="contained"
-              {...(loading && !successfully && { disabled: true })}
+              {...(loading && { disabled: true })}
               sx={{
                 mt: 3,
                 mb: 2,
