@@ -18,9 +18,6 @@ export const appCommonSlice = createSlice({
   initialState,
   reducers: {
     setToken(state, action) {
-      // eslint-disable-next-line no-console
-      console.log('action.payload: ', action.payload);
-
       Cookies.set(ACCESS_TOKEN, action.payload.accessToken, { expires: 7 });
       Cookies.set(USERNAME_COOKIE, action.payload.username, { expires: 7 });
     },
