@@ -117,7 +117,7 @@ const ListItemBox = styled(ListItem)({
 });
 
 const UseName = styled('span')({
-  width: '150px',
+  maxWidth: '150px',
   textOverflow: 'ellipsis',
   overflow: 'hidden',
   height: '24px',

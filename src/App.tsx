@@ -14,10 +14,10 @@ import User from './pages/Users';
 import { ACCESS_TOKEN, SITES_URL } from '@src/constants';
 import Cookies from 'js-cookie';
 
-const PrivateRoute = ({ children }: any) => {
+const PrivateRoute = ({ children, path }: any) => {
   const accessToken = Cookies.get(ACCESS_TOKEN);
 
-  return accessToken ? children : <Navigate to={SITES_URL.LOGIN} replace />;
+  return accessToken ? children : <Navigate to={SITES_URL.LOGIN} replace state={{ path }}/>;
 };
 
 function App() {
@@ -32,7 +32,7 @@ function App() {
           <Route path={SITES_URL.CONTACT} element={<Contact/>} />
           <Route path={SITES_URL.BLOG}
             element={
-              <PrivateRoute>
+              <PrivateRoute path={SITES_URL.BLOG}>
                 <Blog />
               </PrivateRoute>
             }
@@ -40,7 +40,7 @@ function App() {
 
           <Route path={SITES_URL.BLOG_DETAIL}
             element={
-              <PrivateRoute>
+              <PrivateRoute path={SITES_URL.BLOG_DETAIL}>
                 <BlogDetail />
               </PrivateRoute>
             }
@@ -48,7 +48,7 @@ function App() {
 
           <Route path={SITES_URL.ACCOUNT}
             element={
-              <PrivateRoute>
+              <PrivateRoute path={SITES_URL.ACCOUNT}>
                 <User />
               </PrivateRoute>
             }
@@ -56,7 +56,7 @@ function App() {
 
           <Route path={SITES_URL.DASHBOARD}
             element={
-              <PrivateRoute>
+              <PrivateRoute path={SITES_URL.DASHBOARD}>
                 <Dashboard />
               </PrivateRoute>
             }

@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { useForm, SubmitHandler } from 'react-hook-form';
-import { NavLink, useNavigate } from 'react-router-dom';
+import { NavLink, useNavigate, useLocation } from 'react-router-dom';
 import { useTokenUser } from '@hooks/useTokenUser';
 import { useLogin } from '@hooks/useLogin';
 import { useUser } from '@hooks/useRegister';
@@ -25,6 +25,8 @@ import { ILoginParams } from '@src/models/ILogin';
 
 const Login = () => {
   const navigate = useNavigate();
+  const location: any = useLocation();
+  const [ navigateTo, setNavigateTo ] = React.useState<string>(SITES_URL.DASHBOARD);
 
   // ** Hooks
   const {
@@ -37,13 +39,7 @@ const Login = () => {
     reset
   } = useForm<ILoginParams>();
 
-  const {
-    message,
-    data,
-    errorCode,
-    loading,
-    loginApi
-  } = useLogin();
+  const { message, data, errorCode, loading, loginApi } = useLogin();
 
   const { user } = useUser();
   const { setTokenCookie } = useTokenUser();
@@ -57,7 +53,7 @@ const Login = () => {
             username: rs.data.username,
             accessToken: rs.data.accessToken
           });
-          navigate(SITES_URL.DASHBOARD);
+          navigate(navigateTo);
           reset({
             account: '',
             password: ''
@@ -67,14 +63,23 @@ const Login = () => {
   };
 
   React.useEffect(() => {
-    document.title = 'Thang Nguyen | Login';
-  }, []);
+    if (location?.state?.path) {
+      setNavigateTo(location.state.path);
+      delete location.state.path;
+    } else {
+      setNavigateTo(SITES_URL.DASHBOARD);
+    }
+  }, [ location ]);
 
   React.useEffect(() => {
     if (user) {
       setValue('account', user.username);
     }
   }, [ user, setValue ]);
+
+  React.useEffect(() => {
+    document.title = 'Thang Nguyen | Login';
+  }, []);
 
   return (
     <Layout
