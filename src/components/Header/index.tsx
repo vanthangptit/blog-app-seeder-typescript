@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Link, NavLink } from 'react-router-dom';
+import { Link, NavLink, useLocation } from 'react-router-dom';
 import { SITES_URL, AWS_S3_URL } from '@src/constants';
 import { styled } from '@mui/system';
 import {
@@ -16,10 +16,10 @@ const listMenu = [
     href: SITES_URL.ABOUT,
     label: 'About Me'
   },
-  {
-    href: SITES_URL.BLOG,
-    label: 'Blog'
-  },
+  // {
+  //   href: SITES_URL.BLOG,
+  //   label: 'Blog'
+  // },
   {
     href: SITES_URL.CONTACT,
     label: 'Contact'
@@ -187,11 +187,15 @@ const NavbarCopyright = styled('div')({
 });
 
 const Header = () => {
+  const location = useLocation();
   const [ showStatements, setShowStatements ] = React.useState<boolean | undefined>(false);
   const onClick = () => setShowStatements(!showStatements);
 
   return (
-    <HeaderComponent showStatements={showStatements}>
+    <HeaderComponent
+      showStatements={showStatements}
+      className={location && (location.pathname === '/' || location.pathname === '/about' || location.pathname === '/contact') ? '' : 'hidden'}
+    >
       <ButtonHamburger showStatements={showStatements} className={'button-hamburger'} onClick={onClick}>
         <span/>
       </ButtonHamburger>
