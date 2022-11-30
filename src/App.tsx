@@ -10,6 +10,7 @@ import Login from './pages/Login';
 import NotFound from './pages/NotFound';
 import Register from './pages/Register';
 import User from './pages/Users';
+import CreatePost from '@src/pages/CreatePost';
 
 import { ACCESS_TOKEN, SITES_URL } from '@src/constants';
 import Cookies from 'js-cookie';
@@ -42,6 +43,14 @@ function App() {
             element={
               <PrivateRoute path={SITES_URL.BLOG_DETAIL}>
                 <BlogDetail />
+              </PrivateRoute>
+            }
+          />
+
+          <Route path={SITES_URL.CREATE_POST}
+            element={
+              <PrivateRoute path={SITES_URL.CREATE_POST}>
+                <CreatePost />
               </PrivateRoute>
             }
           />

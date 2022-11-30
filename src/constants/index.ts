@@ -44,6 +44,7 @@ export const SITES_URL = {
   HOME: '/',
   ABOUT: '/about',
   BLOG: '/blog',
+  CREATE_POST: '/create-post',
   BLOG_DETAIL: '/blog/detail',
   CONTACT: '/contact',
   LOGIN: '/login',
