@@ -102,10 +102,10 @@ export const otherOption = [
       },
       {
         className: 'ql-link'
-      },
-      {
-        className: 'ql-image'
       }
+      // {
+      //   className: 'ql-image'
+      // }
     ]
   },
   {

@@ -112,6 +112,7 @@ const RichTextEditor = (props: IRichTextProps) => {
         placeholder={placeholder}
         formats={formats}
         modules={modules}
+        theme='snow'
       />
     </TextEditor>
   );

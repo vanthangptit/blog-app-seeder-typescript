@@ -11,8 +11,7 @@ const CreatePost = () => {
         toolbarId={'create-post'}
         value={value}
         setValueRichText={setValue}
-        placeholder={'Hello'}
-        customClass={'abcd'}
+        placeholder={'Enter reduced information about the post...'}
       />
     </div>
   );
