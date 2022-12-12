@@ -47,14 +47,15 @@ const TextEditor = styled('div')<{ widthEditor?: string}>(({ widthEditor }) => (
 }));
 
 const TextEditorLabel = styled('div')({
+  fontSize: '16px',
+  textTransform: 'uppercase',
+  fontFamily: 'Roboto-bold,sans-serif',
+  marginBottom: '12px',
   display: 'flex',
   flexDirection: 'row',
-  textTransform: 'uppercase',
   textAlign: 'left',
   justifyContent: 'space-between',
-  rowGap: '10px',
-  color: '#7f7f7f',
-  marginBottom: '10px'
+  rowGap: '10px'
 });
 
 const ToolbarRichText = styled('div')({
@@ -185,6 +186,7 @@ const RichTextEditor = (props: IRichTextProps) => {
         matchVisual: false
       }
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   ), [ toolbarId ]);
 
   React.useEffect(() => {

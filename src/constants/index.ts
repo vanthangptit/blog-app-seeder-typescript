@@ -1,7 +1,7 @@
 
-export const TEST_MODE = process.env.REACT_APP_TEST_MODE;
 export const API_CONTACT_URL = process.env.REACT_APP_API_CONTACT_URL;
 export const API_USER_URL = process.env.REACT_APP_API_USER_URL;
+export const API_POST_URL = process.env.REACT_APP_API_POST_URL;
 export const AWS_S3_REGION = process.env.REACT_APP_AWS_S3_REGION;
 export const AWS_S3_NAME = process.env.REACT_APP_AWS_S3_NAME;
 export const AWS_S3_IDENTITY_POOL_ID = process.env.REACT_APP_AWS_S3_IDENTITY_POOL_ID;
@@ -11,10 +11,15 @@ export const AWS_S3_URL_BLOG = process.env.REACT_APP_AWS_S3_URL_BLOG;
 export const ACCESS_TOKEN = 'accessToken';
 export const USERNAME_COOKIE = 'username';
 
-export const COMMON_ACTION_TYPES = {
-  SET_TOKEN: 'APPS/SET_TOKEN',
-  GET_TOKEN: 'APPS/GET_TOKEN',
-  REMOVE_TOKEN: 'APPS/REMOVE_TOKEN'
+export const POST = {
+  ACTION_TYPES: {
+    CREATE_POST: 'APPS/CREATE_POST',
+    EDIT_POST: 'APPS/EDIT_POST'
+  },
+  URL_API: {
+    CREATE_POST_API: `${API_POST_URL}/create-blog`,
+    EDIT_POST_API: `${API_POST_URL}/edit-blog`
+  }
 };
 
 export const USER = {
@@ -61,3 +66,22 @@ export const LAYOUT = {
   widthNavDesktop: 330,
   widthNavMobile: 260
 };
+
+export const TYPE_BLOG = [
+  {
+    label: 'Your Life',
+    value: 'life'
+  },
+  {
+    label: 'True Love',
+    value: 'love'
+  },
+  {
+    label: 'Healthy',
+    value: 'healthy'
+  },
+  {
+    label: 'Society',
+    value: 'society'
+  }
+];

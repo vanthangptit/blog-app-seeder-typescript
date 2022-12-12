@@ -163,8 +163,11 @@ const SignIn = () => {
       </Link>
 
       <ListBox className={isOpen ? 'is-open' : ''}>
-        <ListItemBox button={false} className="border-bottom">
+        <ListItemBox button={false}>
           <Link to={SITES_URL.BLOG}>Your Blog</Link>
+        </ListItemBox>
+        <ListItemBox button={false} className="border-bottom">
+          <Link to={SITES_URL.CREATE_POST}>Create Blog</Link>
         </ListItemBox>
         <ListItemBox button={false}>
           <Link to={SITES_URL.DASHBOARD}>Dashboard</Link>

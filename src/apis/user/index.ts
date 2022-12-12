@@ -1,8 +1,8 @@
 import requester from '../requester';
-import { getToken } from '@apis/login';
 import { USER } from '@src/constants';
 import { IUserParams } from '@models/IUser';
 import { AxiosRequestConfig } from 'axios';
+import { getToken } from '@apis/getToken';
 
 const { URL_API } = USER;
 

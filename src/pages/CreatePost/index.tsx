@@ -5,12 +5,15 @@ import { Layout } from '@components/Common';
 import SignIn from '@components/SignIn';
 
 import { styled } from '@mui/system';
-import { Box, Button, TextField, TextareaAutosize } from '@mui/material';
+import { Box, Button, TextField, TextareaAutosize, InputLabel, MenuItem, FormControl  } from '@mui/material';
 import { MessageError } from '@components/MessageError';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { IPostParams } from '@models/IPosts';
-import { AWS_S3_URL_BLOG } from '@src/constants';
+import { AWS_S3_URL_BLOG, TYPE_BLOG } from '@src/constants';
 import { uploadFile } from '@utils/uploadFile';
+import { usePost } from '@hooks/usePost';
+import { useNavigate } from 'react-router-dom';
+import Select, { SelectChangeEvent } from '@mui/material/Select';
 
 const Heading = styled('h1')({
   textAlign: 'center',
@@ -44,7 +47,7 @@ const SubHeading = styled('p')({
 
 const FormContainer = styled('div')({
   maxWidth: '1100px',
-  margin: 'auto'
+  margin: '100px auto'
 });
 
 const TextareaAutosizeCustom = styled(TextareaAutosize)({
@@ -109,7 +112,7 @@ const DivBoxImage = styled('div')({
 
   'label': {
     display: 'flex',
-    height: '315px',
+    height: '380px',
     justifyContent: 'center',
     alignItems: 'center',
     position: 'relative',
@@ -130,7 +133,11 @@ const DivImageNote = styled('div')({
   justifyContent: 'space-between',
   fontFamily: 'Roboto-light, sans-serif',
   fontStyle: 'italic',
-  fontSize: '14px'
+  fontSize: '14px',
+
+  'p': {
+    marginBottom: '0'
+  }
 });
 
 const PostImage = styled('img')({
@@ -153,47 +160,82 @@ const ButtonBox = styled('div')({
 });
 
 const CreatePost = () => {
-  const [ value, setValue ] = useState('');
+  const navigate = useNavigate();
+  const [ valueDescription, setValueDescription ] = useState('');
   const [ errorMessage, setErrorMessage ] = useState<string>();
   const [ fileUploaded, setFileUpload ] = useState<ManagedUpload.SendData[]>();
-  const [ loading, setLoading ] = useState<boolean>(false);
   const [ featuredImageChanged, setFeaturedImageChanged ] = useState<boolean>(false);
   const [ srcImage, setSrcImage ] = useState<string>();
   const [ file, setFile ] = useState<any>({
     name: ''
   });
+  const [ valuePostType, setPostType ] = useState<string>();
 
   const {
     register,
     formState: {
       errors
     },
+    reset,
     handleSubmit
   } = useForm<IPostParams>();
 
-  const onSubmit: SubmitHandler<IPostParams> = async data => {
-    setLoading(true);
+  const {
+    message,
+    // dataPost,
+    errorCode,
+    loading,
+    // editPostApi,
+    createPostApi
+  } = usePost();
 
-    const callback = (rs?: ManagedUpload.SendData, data?: IPostParams) => {
+  const resetState = () => {
+    setFeaturedImageChanged(false);
+    setSrcImage(undefined);
+    setFileUpload(undefined);
+    reset({
+      title: '',
+      excerpt: '',
+      imageUrl: ''
+    });
+    setFile({
+      name: ''
+    });
+  };
+
+  const onSubmit: SubmitHandler<IPostParams> = async data => {
+    const callback = (rs?: ManagedUpload.SendData) => {
       if (rs) {
         setErrorMessage(undefined);
         const newData = { ...data, imageUrl: rs.Location };
-        // handle call api here
-        // eslint-disable-next-line no-console
-        console.log('newData: ', newData);
-      } else if (data) {
-        // handle call api here
-        // eslint-disable-next-line no-console
-        console.log('data: ', data);
+        if (valueDescription) {
+          newData.description = valueDescription;
+        }
+
+        createPostApi(newData)
+          .unwrap()
+          .then(({ status, post }) => {
+            if (status === 200) {
+              // eslint-disable-next-line no-console
+              console.log('Redirect page.', navigate);
+              // eslint-disable-next-line no-console
+              console.log('post: ', post);
+              resetState();
+            }
+          });
       } else {
-        setErrorMessage('Did an error occurred');
+        if (data?.imageUrl) {
+          createPostApi({ ...data, description: valueDescription });
+        } else {
+          setErrorMessage('The imageUrl field is required.');
+        }
       }
     };
 
     if (featuredImageChanged) {
       await uploadFile({ file, callback, setErrorMessage });
     } else {
-      callback(undefined, data);
+      callback(undefined);
     }
   };
 
@@ -211,10 +253,14 @@ const CreatePost = () => {
     };
   };
 
+  const handleChange = (event: SelectChangeEvent) => {
+    setPostType(event.target.value as string);
+  };
+
   return (
     <Layout>
       <Heading>Create Post</Heading>
-      <SubHeading>What do you want to keep?</SubHeading>
+      <SubHeading>What do you want to keep something?</SubHeading>
 
       <FormContainer>
         <Box component="form" noValidate sx={{ mt: 1, width: '100%' }} onSubmit={handleSubmit(onSubmit)}>
@@ -229,9 +275,9 @@ const CreatePost = () => {
                   label="Enter a title.."
                   autoComplete="title"
                   autoFocus
-                  {...register('title', { minLength: 5, pattern: /^[a-zA-Z!?&.\-\s]+$/ })}
+                  {...register('title', { minLength: 5, pattern: /^[a-zA-Z0-9!?&.\-\s]+$/ })}
                 />
-                {errors.title && <MessageError style={{ margin: '0' }}>Excerpt must between 25 - 255.</MessageError>}
+                {errors.title && <MessageError style={{ margin: '0' }}>Excerpt must between 5 - 255 .</MessageError>}
               </GroupField>
 
               <GroupField>
@@ -247,6 +293,40 @@ const CreatePost = () => {
                 />
                 {errors.excerpt && <MessageError style={{ margin: '0' }}>Excerpt required and must between 25 - 255 characters.</MessageError>}
               </GroupField>
+              <RowField>
+                <ColumnField>
+                  <GroupField>
+                    <LabelField>Short Url</LabelField>
+                    <TextField
+                      fullWidth
+                      id="shortUrl"
+                      label="Enter a short url.."
+                      autoComplete="shortUrl"
+                      {...register('shortUrl', { required: true, pattern: /^[a-zA-Z0-9-_\s]*.{5,50}$/ })}
+                    />
+                    {errors.shortUrl && <MessageError style={{ margin: '0' }}>Invalid short url! It can only contain letters, numbers, hyphens (-), and underscores (_), and between 5-50 characters.</MessageError>}
+                  </GroupField>
+                </ColumnField>
+                <ColumnField>
+                  <GroupField sx={{ pb: 0 }}>
+                    <LabelField>Post Type</LabelField>
+                    <FormControl fullWidth>
+                      <InputLabel id="post-type-select-label">Type</InputLabel>
+                      <Select
+                        labelId="post-type-select-label"
+                        id="post-type-select"
+                        value={valuePostType}
+                        label="Type"
+                        onChange={handleChange}
+                      >
+                        {TYPE_BLOG?.map((item, index) => (
+                          <MenuItem value={item.value} key={index}>{item.label}</MenuItem>
+                        ))}
+                      </Select>
+                    </FormControl>
+                  </GroupField>
+                </ColumnField>
+              </RowField>
             </ColumnField>
 
             <ColumnField>
@@ -286,10 +366,11 @@ const CreatePost = () => {
           </RowField>
 
           <RichTextEditor
+            label={'Description'}
             widthEditor={'360px'}
             toolbarId={'create-post'}
-            value={value}
-            setValueRichText={setValue}
+            value={valueDescription}
+            setValueRichText={setValueDescription}
             setFileUpload={setFileUpload}
             fileUploaded={fileUploaded}
             placeholder={'What are you thinking...'}
@@ -313,7 +394,7 @@ const CreatePost = () => {
               CREATE
             </Button>
           </ButtonBox>
-          {errorMessage && <MessageError sx={{ textAlign: 'center' }}>{errorMessage}</MessageError>}
+          {(errorMessage || errorCode) && <MessageError sx={{ textAlign: 'center' }}>{errorMessage ?? message}</MessageError>}
         </Box>
       </FormContainer>
       <SignIn />

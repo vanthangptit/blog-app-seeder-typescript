@@ -1,8 +1,8 @@
 import requester from '../requester';
 import { GUEST_CONTACT } from '@src/constants';
 import { AxiosRequestConfig } from 'axios';
-import { getToken } from '@apis/login';
 import { IGuestContactParams } from '@models/IContact';
+import { getToken } from '@apis/getToken';
 
 const { URL_API } = GUEST_CONTACT;
 

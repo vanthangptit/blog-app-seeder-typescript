@@ -18,8 +18,8 @@ export const appCommonSlice = createSlice({
   initialState,
   reducers: {
     setToken(state, action) {
-      Cookies.set(ACCESS_TOKEN, action.payload.accessToken, { expires: 7 });
-      Cookies.set(USERNAME_COOKIE, action.payload.username, { expires: 7 });
+      Cookies.set(ACCESS_TOKEN, action.payload.accessToken, { expires: 0.1 });
+      Cookies.set(USERNAME_COOKIE, action.payload.username, { expires: 0.1 });
     },
     getToken(state) {
       state.accessToken = Cookies.get(ACCESS_TOKEN);

@@ -26,7 +26,7 @@ import { ILoginParams } from '@src/models/ILogin';
 const Login = () => {
   const navigate = useNavigate();
   const location: any = useLocation();
-  const [ navigateTo, setNavigateTo ] = React.useState<string>(SITES_URL.DASHBOARD);
+  const [ navigateTo, setNavigateTo ] = React.useState<string>();
 
   // ** Hooks
   const {
@@ -53,7 +53,7 @@ const Login = () => {
             username: rs.data.username,
             accessToken: rs.data.accessToken
           });
-          navigate(navigateTo);
+          navigate(navigateTo ?? SITES_URL.DASHBOARD);
           reset({
             account: '',
             password: ''
@@ -65,9 +65,6 @@ const Login = () => {
   React.useEffect(() => {
     if (location?.state?.path) {
       setNavigateTo(location.state.path);
-      delete location.state.path;
-    } else {
-      setNavigateTo(SITES_URL.DASHBOARD);
     }
   }, [ location ]);
 

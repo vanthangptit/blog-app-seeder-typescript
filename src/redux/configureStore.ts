@@ -6,12 +6,14 @@ import { appGuestContactSlice } from './contact';
 import { appLoginSlice } from './login';
 import { appUsersSlice } from './register';
 import { appCommonSlice } from './common';
+import { appPostSlice } from './post';
 
 export const store = configureStore({
   reducer: {
     common: appCommonSlice.reducer,
     guestContact: appGuestContactSlice.reducer,
     login: appLoginSlice.reducer,
+    post: appPostSlice.reducer,
     register: appUsersSlice.reducer
   },
   middleware: getDefaultMiddleware => {
