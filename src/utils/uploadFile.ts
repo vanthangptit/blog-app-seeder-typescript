@@ -1,10 +1,10 @@
 import AWS from 'aws-sdk';
+import { ManagedUpload } from 'aws-sdk/clients/s3';
 import {
   AWS_S3_REGION,
   AWS_S3_IDENTITY_POOL_ID,
   AWS_S3_NAME
 } from '@src/constants';
-import { ManagedUpload } from 'aws-sdk/clients/s3';
 
 export const getKeyByDatetime = () => {
   const m = new Date();
@@ -51,29 +51,25 @@ const validationSize = (file: any) => {
     || (fileSize.unit === 'MB' && fileSize.size > 5)
   ) {
     return {
-      message: 'File too big'
+      message: 'File too big. Maximum file size is 5MB.'
     };
   }
 };
 
-export const uploadFile = ({ file, callback }: { file: any; callback: any }) => {
+export const uploadFile = ({ file, callback, setErrorMessage }: { file: any; callback: any, setErrorMessage: any }) => {
   try {
     if (!file) {
-      // eslint-disable-next-line no-console
-      console.log('Please choose a file to upload first.');
       return;
     }
 
     const validateSize = validationSize(file);
     if (validateSize) {
-      // eslint-disable-next-line no-console
-      console.log(validateSize.message);
+      setErrorMessage(validateSize.message);
       return;
     }
 
     if (!validateFileTypes.find(type => type === file.type)) {
-      // eslint-disable-next-line no-console
-      console.log('File invalid. File must be in JPG/PNG format.');
+      setErrorMessage('File invalid. File must be in JPG/PNG format.');
       return;
     }
 
@@ -88,16 +84,20 @@ export const uploadFile = ({ file, callback }: { file: any; callback: any }) => 
       }
     });
 
-    upload.promise().then((data: ManagedUpload.SendData) => {
-        callback(data)
+    upload.promise().then(
+      (rs: ManagedUpload.SendData) => {
+        callback(rs);
       },
       (err) => {
-        // eslint-disable-next-line no-console
-        console.log('There was an error uploading your photo: ', err);
+        setErrorMessage('There was an error uploading your photo: ' + err.message);
       }
     );
   } catch (e) {
-    // eslint-disable-next-line no-console
-    console.log('Cannot publish to S3: ', e);
+    setErrorMessage('Cannot upload image: ' + e);
   }
+};
+
+export const deleteFile = (data: ManagedUpload.SendData[], valueRichText: string) => {
+  // eslint-disable-next-line no-console
+  console.log(data, valueRichText);
 };

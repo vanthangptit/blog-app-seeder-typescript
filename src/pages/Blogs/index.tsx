@@ -58,7 +58,7 @@ const SectionTitle = styled('div')({
 
   '& h3': {
     fontSize: '48px',
-    fontFamily: 'EBGaramond-Bold'
+    fontFamily: 'EBGaramond-Bold, sans-serif'
   },
 
   '& p': {
@@ -149,7 +149,7 @@ const Blogs = () => {
   };
 
   React.useEffect(() => {
-    document.title = 'Thang Nguyen | Blogs';
+    document.title = 'Thang Nguyen | Blog';
   }, []);
 
   return (

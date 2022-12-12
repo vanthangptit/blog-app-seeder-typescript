@@ -1,27 +1,50 @@
 import 'react-quill/dist/quill.snow.css';
 import './styles.scss';
 
-import React from 'react';
+import React, { useRef, useState } from 'react';
 import ReactQuill, { Quill } from 'react-quill';
 import { styled } from '@mui/system';
 import {
-  formats,
-  fontSizeArr,
-  headerArr,
-  alignmentArr,
-  otherOption
+  formats, fontSizeArr, headerArr, alignmentArr, otherOption, IOptions
 } from '@constants/RichtextEditor';
+import { uploadFile } from '@utils/uploadFile';
+import { ManagedUpload } from 'aws-sdk/clients/s3';
 
 interface IRichTextProps {
+  widthEditor?: string
   toolbarId: string
   value?: string
   setValueRichText: any
   label?: string
   placeholder: string
   customClass?: string
+  fileUploaded?: ManagedUpload.SendData[]
+  setFileUpload?: any
 }
 
-const TextEditor = styled('div')({});
+const TextEditor = styled('div')<{ widthEditor?: string}>(({ widthEditor }) => ({
+  '& .ql-editor': {
+    height: `${widthEditor ? widthEditor : '460px'}`,
+
+    '&::-webkit-scrollbar': {
+      width: '6px'
+    },
+
+    '&::-webkit-scrollbar-thumb': {
+      background: '#555555',
+      borderRadius: '5px'
+    },
+
+    '&::-webkit-scrollbar-thumb:hover': {
+      background: '#555555'
+    },
+
+    '& img': {
+      maxWidth: '100%',
+      width: 'auto'
+    }
+  }
+}));
 
 const TextEditorLabel = styled('div')({
   display: 'flex',
@@ -47,10 +70,21 @@ const QLAvailable = styled('div')({
   display: 'flex',
   justifyContent: 'start',
   flex: '1 1 auto',
-  marginRight: '5px'
+  marginRight: '5px',
+
+  '& .ql-header:hover': {
+    backgroundColor: 'transparent'
+  }
+});
+
+const ErrorMessage = styled('div')({
+  color: '#e30000',
+  fontSize: '15px',
+  margin: '10px 0 24px'
 });
 
 const Size = Quill.import('formats/size');
+
 Size.whitelist = fontSizeArr;
 Quill.register(Size, true);
 
@@ -77,8 +111,14 @@ const CustomToolbar = ({ toolbarId }: { toolbarId: string }) => {
         </span>
         {otherOption?.map((item, index) => (
           <span className={item.classNameGroup} key={index}>
-            {item.options?.map((option, indx) => option?.value ? (
+            {item.options?.map((option: IOptions, indx) => option?.value ? (
               <button className={option.className} key={indx} value={option.value} />
+            ) : option?.valueArray ? (
+              <select className={option.className} defaultValue={option.valueArray[0]} key={indx}>
+                {option.valueArray?.map((item, index) => (
+                  <option value={item} key={index} />
+                ))}
+              </select>
             ) : (
               <button className={option.className} key={indx} />
             ))}
@@ -90,23 +130,73 @@ const CustomToolbar = ({ toolbarId }: { toolbarId: string }) => {
 };
 
 const RichTextEditor = (props: IRichTextProps) => {
-  const { toolbarId, value, setValueRichText, label, placeholder, customClass } = props;
+  const {
+    widthEditor,
+    toolbarId,
+    value,
+    setValueRichText,
+    label,
+    placeholder,
+    customClass,
+    fileUploaded,
+    setFileUpload
+  } = props;
+  const [ errorMessage, setErrorMessage ] = useState<string>();
+  const quillRef = useRef<any>();
+
+  const imageHandler = async () => {
+    const quillObj = quillRef.current.getEditor();
+    const input = document.createElement('input');
+
+    input.setAttribute('type', 'file');
+    input.setAttribute('accept', 'image/*');
+    input.click();
+
+    const callback = (rs: ManagedUpload.SendData) => {
+      if (fileUploaded) {
+        setFileUpload([ ...fileUploaded, rs ]);
+      }
+      const range = quillObj.getSelection();
+      quillObj.editor.insertEmbed(range.index, 'image', rs.Location);
+      quillObj.setSelection(range.index + 1);
+      setErrorMessage(undefined);
+    };
+
+    input.onchange = async () => {
+      const file: any = input && input.files ? input.files[0] : null;
+      await uploadFile({ file, callback, setErrorMessage });
+    };
+  };
 
   const handleChange = (html: string) => {
     setValueRichText(html);
   };
 
-  const modules = {
-    toolbar: {
-      container: '#editor-' + toolbarId
+  const modules = React.useMemo(() => (
+    {
+      toolbar: {
+        container: '#editor-' + toolbarId,
+        'handlers': {
+          'image': imageHandler
+        }
+      },
+      clipboard: {
+        // toggle to add extra line breaks when pasting HTML:
+        matchVisual: false
+      }
     }
-  };
+  ), [ toolbarId ]);
+
+  React.useEffect(() => {
+    quillRef.current?.editor.root.setAttribute('spellcheck', 'false');
+  }, []);
 
   return (
-    <TextEditor className={'text-editor ' + (customClass ?? '')}>
+    <TextEditor className={'text-editor ' + (customClass ?? '')} widthEditor={widthEditor}>
       {label ? <TextEditorLabel>{label}</TextEditorLabel> : ''}
       <CustomToolbar toolbarId={toolbarId} />
       <ReactQuill
+        ref={quillRef}
         defaultValue={value}
         onChange={handleChange}
         placeholder={placeholder}
@@ -114,6 +204,7 @@ const RichTextEditor = (props: IRichTextProps) => {
         modules={modules}
         theme='snow'
       />
+      {errorMessage && errorMessage?.length && <ErrorMessage>{errorMessage}</ErrorMessage>}
     </TextEditor>
   );
 };
