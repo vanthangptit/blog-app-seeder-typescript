@@ -16,6 +16,14 @@ export const usePost = () => {
     loading
   } = useAppSelector((state: RootState) => state.post);
 
+  const getAllPostApi = () => {
+    return dispatch(registerStore.getAllPostApi());
+  };
+
+  const getPostByShortUrlApi = (params:  { shortUrl: string }) => {
+    return dispatch(registerStore.getPostByShortUrlApi(params));
+  };
+
   const createPostApi = (params: IPostParams) => {
     return dispatch(registerStore.createPostApi(params));
   };
@@ -29,6 +37,8 @@ export const usePost = () => {
     dataPost,
     errorCode,
     loading,
+    getAllPostApi,
+    getPostByShortUrlApi,
     createPostApi,
     editPostApi
   };

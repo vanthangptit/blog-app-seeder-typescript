@@ -1,11 +1,17 @@
 export interface IPostParams {
-  _id?: string
   title: string
   shortUrl: string
-  postType: string
   excerpt: string
+  postType: string
   imageUrl: string
   description?: string
+  postId?: string
+}
+
+export interface IPostForm {
+  title: string
+  shortUrl: string
+  excerpt: string
 }
 
 export interface IPostAuthor {

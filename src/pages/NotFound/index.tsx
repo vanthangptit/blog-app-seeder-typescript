@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { NavLink } from 'react-router-dom';
-import { SITES_URL } from '@src/constants';
+import { SITES_URL, MODE_CV } from '@src/constants';
 import {
   Button,
   Grid,
@@ -42,7 +42,7 @@ const NotFound = () => {
 
   return (
     <Layout
-      paddingNav={true}
+      paddingNav={MODE_CV}
       scrollBar={true}
       flexMiddle={true}
       styles={{
@@ -61,8 +61,8 @@ const NotFound = () => {
 
       <Grid container justifyContent="center" className="bottom-link">
         <Grid item>
-          <NavLink to={SITES_URL.HOME}>
-            <CustomButton variant="contained" size="large">Go Home</CustomButton>
+          <NavLink to={MODE_CV ? SITES_URL.HOME : SITES_URL.DASHBOARD}>
+            <CustomButton variant="contained" size="large">{MODE_CV ? 'Go Home' : 'Go Dashboard'}</CustomButton>
           </NavLink>
         </Grid>
       </Grid>

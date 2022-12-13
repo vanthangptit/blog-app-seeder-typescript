@@ -190,20 +190,22 @@ const RichTextEditor = (props: IRichTextProps) => {
   }, []);
 
   return (
-    <TextEditor className={'text-editor ' + (customClass ?? '')} widthEditor={widthEditor}>
-      {label ? <TextEditorLabel>{label}</TextEditorLabel> : ''}
-      <CustomToolbar toolbarId={toolbarId} />
-      <ReactQuill
-        ref={quillRef}
-        defaultValue={value}
-        onChange={handleChange}
-        placeholder={placeholder}
-        formats={formats}
-        modules={modules}
-        theme='snow'
-      />
-      {errorMessage && errorMessage?.length && <ErrorMessage>{errorMessage}</ErrorMessage>}
-    </TextEditor>
+    <>
+      <TextEditor className={'text-editor ' + (customClass ?? '')} widthEditor={widthEditor}>
+        {label ? <TextEditorLabel>{label}</TextEditorLabel> : ''}
+        <CustomToolbar toolbarId={toolbarId} />
+        <ReactQuill
+          ref={quillRef}
+          value={value}
+          onChange={handleChange}
+          placeholder={placeholder}
+          formats={formats}
+          modules={modules}
+          theme='snow'
+        />
+        {errorMessage && errorMessage?.length && <ErrorMessage>{errorMessage}</ErrorMessage>}
+      </TextEditor>
+    </>
   );
 };
 

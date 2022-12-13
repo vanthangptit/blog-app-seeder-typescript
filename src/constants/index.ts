@@ -7,16 +7,21 @@ export const AWS_S3_NAME = process.env.REACT_APP_AWS_S3_NAME;
 export const AWS_S3_IDENTITY_POOL_ID = process.env.REACT_APP_AWS_S3_IDENTITY_POOL_ID;
 export const AWS_S3_URL = process.env.REACT_APP_AWS_S3_URL;
 export const AWS_S3_URL_BLOG = process.env.REACT_APP_AWS_S3_URL_BLOG;
+export const MODE_CV = process.env.REACT_APP_MODE_CV === 'true';
 
 export const ACCESS_TOKEN = 'accessToken';
 export const USERNAME_COOKIE = 'username';
 
 export const POST = {
   ACTION_TYPES: {
+    GET_ALL_POST: 'APPS/GET_ALL_POST',
+    GET_BY_URL_POST: 'APPS/GET_BY_URL_POST',
     CREATE_POST: 'APPS/CREATE_POST',
     EDIT_POST: 'APPS/EDIT_POST'
   },
   URL_API: {
+    GET_ALL_POST: `${API_POST_URL}/all`,
+    GET_BY_URL_POST: `${API_POST_URL}/get-by-short-url`,
     CREATE_POST_API: `${API_POST_URL}/create-blog`,
     EDIT_POST_API: `${API_POST_URL}/edit-blog`
   }
@@ -54,7 +59,8 @@ export const SITES_URL = {
   ABOUT: '/about',
   BLOG: '/blog',
   CREATE_POST: '/create-post',
-  BLOG_DETAIL: '/blog/detail',
+  EDIT_POST: '/edit-post/:shortUrl',
+  BLOG_DETAIL: '/blog/:shortUrl',
   CONTACT: '/contact',
   LOGIN: '/login',
   REGISTER: '/register',

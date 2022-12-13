@@ -1,18 +1,18 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import RichTextEditor from '@components/RichTextEditor';
 import { ManagedUpload } from 'aws-sdk/clients/s3';
 import { Layout } from '@components/Common';
 import SignIn from '@components/SignIn';
+import { useNavigate, useParams } from 'react-router-dom';
 
 import { styled } from '@mui/system';
 import { Box, Button, TextField, TextareaAutosize, InputLabel, MenuItem, FormControl  } from '@mui/material';
 import { MessageError } from '@components/MessageError';
 import { SubmitHandler, useForm } from 'react-hook-form';
-import { IPostParams } from '@models/IPosts';
+import { IPostParams, IPostForm } from '@models/IPosts';
 import { AWS_S3_URL_BLOG, TYPE_BLOG } from '@src/constants';
 import { uploadFile, deleteFile } from '@utils/uploadFile';
 import { usePost } from '@hooks/usePost';
-import { useNavigate } from 'react-router-dom';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 
 const Heading = styled('h1')({
@@ -161,6 +161,9 @@ const ButtonBox = styled('div')({
 
 const CreatePost = () => {
   const navigate = useNavigate();
+  const { shortUrl } = useParams();
+  const shortUrlJson = useRef<any>();
+
   const [ valueDescription, setValueDescription ] = useState('');
   const [ fileUploaded, setFileUpload ] = useState<ManagedUpload.SendData>();
   const [ fileUploadedArray, setFileUploadArray ] = useState<ManagedUpload.SendData[]>();
@@ -170,9 +173,21 @@ const CreatePost = () => {
     name: ''
   });
   const [ valuePostType, setPostType ] = useState<string>('');
+  const [ postId, setPostId ] = useState<string>();
+
   const [ errorMessage, setErrorMessage ] = useState<string>();
   const [ errorMessagePostType, setErrorMessagePostType ] = useState<string>();
   const [ errorMessageImageUrl, setErrorMessageImageUrl ] = useState<string>();
+
+  const {
+    message,
+    dataPost,
+    errorCode,
+    loading,
+    editPostApi,
+    getPostByShortUrlApi,
+    createPostApi
+  } = usePost();
 
   const {
     register,
@@ -180,17 +195,9 @@ const CreatePost = () => {
       errors
     },
     reset,
+    setValue,
     handleSubmit
-  } = useForm<IPostParams>();
-
-  const {
-    message,
-    // dataPost,
-    errorCode,
-    loading,
-    // editPostApi,
-    createPostApi
-  } = usePost();
+  } = useForm<IPostForm>();
 
   const resetState = () => {
     setFeaturedImageChanged(false);
@@ -208,31 +215,72 @@ const CreatePost = () => {
     });
   };
 
-  const onSubmit: SubmitHandler<IPostParams> = async data => {
+  const onSubmit: SubmitHandler<IPostForm> = async data => {
     const callback = (rs?: ManagedUpload.SendData) => {
       if (rs) {
         if (valuePostType && valuePostType.length > 0) {
           setErrorMessage(undefined);
-          const newData = { ...data, imageUrl: rs.Location, postType: valuePostType };
+          const newData: IPostParams = { ...data, imageUrl: rs.Location, postType: valuePostType };
           if (valueDescription) {
             newData.description = valueDescription;
           }
 
-          createPostApi(newData)
-            .unwrap()
-            .then(({ status, post }) => {
-              if (status === 200) {
-                navigate(post.shortUrl);
-                resetState();
-              }
-            });
+          if (shortUrl) {
+            newData.postId = postId;
+            editPostApi(newData)
+              .unwrap()
+              .then(({ status, post }) => {
+                if (status === 200) {
+                  navigate(`/blog/${post.shortUrl}`);
+                  resetState();
+                }
+              });
+          } else {
+            createPostApi(newData)
+              .unwrap()
+              .then(({ status, post }) => {
+                if (status === 200) {
+                  navigate(`/blog/${post.shortUrl}`);
+                  resetState();
+                }
+              });
+          }
         } else {
           setErrorMessagePostType('Post type can not empty.');
         }
       } else {
-        if (data?.imageUrl) {
+        if (srcImage) {
           if (valuePostType && valuePostType.length > 0) {
-            createPostApi({ ...data, description: valueDescription, postType: valuePostType });
+            if (shortUrl) {
+              editPostApi({
+                ...data,
+                imageUrl: srcImage,
+                description: valueDescription,
+                postType: valuePostType,
+                postId
+              })
+                .unwrap()
+                .then(({ status, post }) => {
+                  if (status === 200) {
+                    navigate(`/blog/${post.shortUrl}`);
+                    resetState();
+                  }
+                });
+            } else {
+              createPostApi({
+                ...data,
+                imageUrl: srcImage,
+                description: valueDescription,
+                postType: valuePostType
+              })
+                .unwrap()
+                .then(({ status, post }) => {
+                  if (status === 200) {
+                    navigate(`/blog/${post.shortUrl}`);
+                    resetState();
+                  }
+                });
+            }
           } else {
             setErrorMessagePostType('Post type can not empty.');
           }
@@ -242,15 +290,13 @@ const CreatePost = () => {
       }
     };
 
+    if (fileUploadedArray) {
+      await deleteFile(fileUploadedArray, valueDescription);
+    }
+
     if (featuredImageChanged) {
-      if (fileUploadedArray) {
-        await deleteFile(fileUploadedArray, valueDescription);
-      }
       await uploadFile({ file, callback, setErrorMessage });
     } else {
-      if (fileUploadedArray) {
-        await deleteFile(fileUploadedArray, valueDescription);
-      }
       callback(undefined);
     }
   };
@@ -281,7 +327,29 @@ const CreatePost = () => {
         setFileUploadArray([ fileUploaded ]);
       }
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [ fileUploaded ]);
+
+  useEffect(() => {
+    if (shortUrl && shortUrlJson.current !== shortUrl) {
+      getPostByShortUrlApi({ shortUrl });
+      shortUrlJson.current = shortUrl;
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [ shortUrl ]);
+
+  useEffect(() => {
+    if (dataPost) {
+      setValue('title', dataPost?.title ?? '');
+      setValue('excerpt', dataPost?.excerpt ?? '');
+      setValue('shortUrl', dataPost?.shortUrl ?? '');
+      setPostType(dataPost?.postType ?? '');
+      setSrcImage(dataPost?.imageUrl ?? '');
+      setValueDescription(dataPost?.description ?? '');
+      setPostId(dataPost?._id ?? '');
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [ dataPost ]);
 
   return (
     <Layout>
@@ -368,7 +436,6 @@ const CreatePost = () => {
                     accept="image/*"
                     id={'imageFile'}
                     hidden={true}
-                    {...register('imageUrl', { required: true })}
                     onChange={ async (event: React.ChangeEvent<HTMLInputElement>) => {
                       await handleChangeFeaturedImage(event);
                     }}
@@ -417,7 +484,7 @@ const CreatePost = () => {
                 }
               }}
             >
-              CREATE
+              {shortUrl ? 'SAVE CHANGES' : 'CREATE'}
             </Button>
           </ButtonBox>
           {(errorMessage || errorCode) && <MessageError sx={{ textAlign: 'center' }}>{errorMessage ?? message}</MessageError>}

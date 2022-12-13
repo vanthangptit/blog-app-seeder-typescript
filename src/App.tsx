@@ -12,7 +12,7 @@ import Register from './pages/Register';
 import User from './pages/Users';
 import CreatePost from '@src/pages/CreatePost';
 
-import { ACCESS_TOKEN, SITES_URL } from '@src/constants';
+import { ACCESS_TOKEN, MODE_CV, SITES_URL } from '@src/constants';
 import Cookies from 'js-cookie';
 
 const PrivateRoute = ({ children, path }: any) => {
@@ -24,13 +24,18 @@ const PrivateRoute = ({ children, path }: any) => {
 function App() {
   return (
     <Router>
-      <Header />
+      {MODE_CV && <Header />}
 
       <main className="main">
         <Routes>
-          <Route path='/' element={<Home customClass="home-page"/>} />
-          <Route path={SITES_URL.ABOUT} element={<Home customClass="about-page"/>} />
-          <Route path={SITES_URL.CONTACT} element={<Contact/>} />
+          {MODE_CV && (
+            <>
+              <Route path='/' element={<Home customClass="home-page"/>} />
+              <Route path={SITES_URL.ABOUT} element={<Home customClass="about-page"/>} />
+              <Route path={SITES_URL.CONTACT} element={<Contact/>} />
+            </>
+          )}
+
           <Route path={SITES_URL.BLOG}
             element={
               <PrivateRoute path={SITES_URL.BLOG}>
@@ -50,6 +55,14 @@ function App() {
           <Route path={SITES_URL.CREATE_POST}
             element={
               <PrivateRoute path={SITES_URL.CREATE_POST}>
+                <CreatePost />
+              </PrivateRoute>
+            }
+          />
+
+          <Route path={SITES_URL.EDIT_POST}
+            element={
+              <PrivateRoute path={SITES_URL.EDIT_POST}>
                 <CreatePost />
               </PrivateRoute>
             }
