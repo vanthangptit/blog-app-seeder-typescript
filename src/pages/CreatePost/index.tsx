@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import RichTextEditor from '@components/RichTextEditor';
 import { ManagedUpload } from 'aws-sdk/clients/s3';
 import { Layout } from '@components/Common';
@@ -10,7 +10,7 @@ import { MessageError } from '@components/MessageError';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { IPostParams } from '@models/IPosts';
 import { AWS_S3_URL_BLOG, TYPE_BLOG } from '@src/constants';
-import { uploadFile } from '@utils/uploadFile';
+import { uploadFile, deleteFile } from '@utils/uploadFile';
 import { usePost } from '@hooks/usePost';
 import { useNavigate } from 'react-router-dom';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
@@ -162,14 +162,17 @@ const ButtonBox = styled('div')({
 const CreatePost = () => {
   const navigate = useNavigate();
   const [ valueDescription, setValueDescription ] = useState('');
-  const [ errorMessage, setErrorMessage ] = useState<string>();
-  const [ fileUploaded, setFileUpload ] = useState<ManagedUpload.SendData[]>();
+  const [ fileUploaded, setFileUpload ] = useState<ManagedUpload.SendData>();
+  const [ fileUploadedArray, setFileUploadArray ] = useState<ManagedUpload.SendData[]>();
   const [ featuredImageChanged, setFeaturedImageChanged ] = useState<boolean>(false);
   const [ srcImage, setSrcImage ] = useState<string>();
   const [ file, setFile ] = useState<any>({
     name: ''
   });
-  const [ valuePostType, setPostType ] = useState<string>();
+  const [ valuePostType, setPostType ] = useState<string>('');
+  const [ errorMessage, setErrorMessage ] = useState<string>();
+  const [ errorMessagePostType, setErrorMessagePostType ] = useState<string>();
+  const [ errorMessageImageUrl, setErrorMessageImageUrl ] = useState<string>();
 
   const {
     register,
@@ -193,10 +196,12 @@ const CreatePost = () => {
     setFeaturedImageChanged(false);
     setSrcImage(undefined);
     setFileUpload(undefined);
+    setPostType('');
+    setValueDescription('');
     reset({
       title: '',
       excerpt: '',
-      imageUrl: ''
+      shortUrl: ''
     });
     setFile({
       name: ''
@@ -206,35 +211,46 @@ const CreatePost = () => {
   const onSubmit: SubmitHandler<IPostParams> = async data => {
     const callback = (rs?: ManagedUpload.SendData) => {
       if (rs) {
-        setErrorMessage(undefined);
-        const newData = { ...data, imageUrl: rs.Location };
-        if (valueDescription) {
-          newData.description = valueDescription;
-        }
+        if (valuePostType && valuePostType.length > 0) {
+          setErrorMessage(undefined);
+          const newData = { ...data, imageUrl: rs.Location, postType: valuePostType };
+          if (valueDescription) {
+            newData.description = valueDescription;
+          }
 
-        createPostApi(newData)
-          .unwrap()
-          .then(({ status, post }) => {
-            if (status === 200) {
-              // eslint-disable-next-line no-console
-              console.log('Redirect page.', navigate);
-              // eslint-disable-next-line no-console
-              console.log('post: ', post);
-              resetState();
-            }
-          });
+          createPostApi(newData)
+            .unwrap()
+            .then(({ status, post }) => {
+              if (status === 200) {
+                navigate(post.shortUrl);
+                resetState();
+              }
+            });
+        } else {
+          setErrorMessagePostType('Post type can not empty.');
+        }
       } else {
         if (data?.imageUrl) {
-          createPostApi({ ...data, description: valueDescription });
+          if (valuePostType && valuePostType.length > 0) {
+            createPostApi({ ...data, description: valueDescription, postType: valuePostType });
+          } else {
+            setErrorMessagePostType('Post type can not empty.');
+          }
         } else {
-          setErrorMessage('The imageUrl field is required.');
+          setErrorMessageImageUrl('The imageUrl field is required.');
         }
       }
     };
 
     if (featuredImageChanged) {
+      if (fileUploadedArray) {
+        await deleteFile(fileUploadedArray, valueDescription);
+      }
       await uploadFile({ file, callback, setErrorMessage });
     } else {
+      if (fileUploadedArray) {
+        await deleteFile(fileUploadedArray, valueDescription);
+      }
       callback(undefined);
     }
   };
@@ -256,6 +272,16 @@ const CreatePost = () => {
   const handleChange = (event: SelectChangeEvent) => {
     setPostType(event.target.value as string);
   };
+
+  useEffect(() => {
+    if (fileUploaded) {
+      if (fileUploadedArray && fileUploadedArray.length > 0) {
+        setFileUploadArray([ ...fileUploadedArray, fileUploaded ]);
+      } else {
+        setFileUploadArray([ fileUploaded ]);
+      }
+    }
+  }, [ fileUploaded ]);
 
   return (
     <Layout>
@@ -324,6 +350,7 @@ const CreatePost = () => {
                         ))}
                       </Select>
                     </FormControl>
+                    {errorMessagePostType && <MessageError>This is a required field.</MessageError>}
                   </GroupField>
                 </ColumnField>
               </RowField>
@@ -350,7 +377,7 @@ const CreatePost = () => {
                     <PostImage src={srcImage} alt={'Post image'} />
                   )}
                 </DivBoxImage>
-                {errors.imageUrl && <MessageError>This is a required field!</MessageError>}
+                {errorMessageImageUrl && <MessageError>This is a required field.</MessageError>}
                 <DivImageNote>
                   <p>
                     Formats supported:
@@ -372,7 +399,6 @@ const CreatePost = () => {
             value={valueDescription}
             setValueRichText={setValueDescription}
             setFileUpload={setFileUpload}
-            fileUploaded={fileUploaded}
             placeholder={'What are you thinking...'}
           />
           <ButtonBox>

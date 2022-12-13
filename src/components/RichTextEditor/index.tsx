@@ -18,7 +18,6 @@ interface IRichTextProps {
   label?: string
   placeholder: string
   customClass?: string
-  fileUploaded?: ManagedUpload.SendData[]
   setFileUpload?: any
 }
 
@@ -139,7 +138,6 @@ const RichTextEditor = (props: IRichTextProps) => {
     label,
     placeholder,
     customClass,
-    fileUploaded,
     setFileUpload
   } = props;
   const [ errorMessage, setErrorMessage ] = useState<string>();
@@ -154,9 +152,7 @@ const RichTextEditor = (props: IRichTextProps) => {
     input.click();
 
     const callback = (rs: ManagedUpload.SendData) => {
-      if (fileUploaded) {
-        setFileUpload([ ...fileUploaded, rs ]);
-      }
+      setFileUpload(rs);
       const range = quillObj.getSelection();
       quillObj.editor.insertEmbed(range.index, 'image', rs.Location);
       quillObj.setSelection(range.index + 1);

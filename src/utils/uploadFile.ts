@@ -97,7 +97,43 @@ export const uploadFile = ({ file, callback, setErrorMessage }: { file: any; cal
   }
 };
 
-export const deleteFile = (data: ManagedUpload.SendData[], valueRichText: string) => {
-  // eslint-disable-next-line no-console
-  console.log(data, valueRichText);
+export const deleteFile = (fileUploadedArray: ManagedUpload.SendData[], valueDescription: string) => {
+  if (fileUploadedArray.length === 0) {
+    return;
+  }
+
+  const fileDeleted: ManagedUpload.SendData[] = [];
+  fileUploadedArray.forEach((item) => {
+    if (valueDescription.indexOf(item.Location) === -1) {
+      fileDeleted.push(item);
+    }
+  });
+
+  if (fileDeleted.length > 0) {
+    const objects: { Key: string }[] = [];
+
+    fileDeleted.forEach((item) => {
+      objects.push({
+        Key: item.Key
+      });
+    });
+
+    const deleteParam = {
+      Bucket: AWS_S3_NAME ?? '',
+      Delete: {
+        Objects: objects
+      }
+    };
+
+    const s3 = new AWS.S3();
+    s3.deleteObjects(deleteParam, function(err, data) {
+      if (err) {
+        // eslint-disable-next-line no-console
+        console.log(err, err.stack);
+      } else {
+        // eslint-disable-next-line no-console
+        console.log('Deleted images is successfully', data);
+      }
+    });
+  }
 };

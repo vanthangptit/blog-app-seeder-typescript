@@ -31,7 +31,7 @@ export const createPostApi = createAsyncThunk<any, IPostParams>(POST.ACTION_TYPE
 
 export const editPostApi = createAsyncThunk<any, IPostParams>(POST.ACTION_TYPES.EDIT_POST, async (params, thunkAPI) => {
   try {
-    const response: any = await api.editPostApi(params);
+    const response: IPostCreateResponse = await api.editPostApi(params);
 
     return {
       ...response

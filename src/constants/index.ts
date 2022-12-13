@@ -83,5 +83,9 @@ export const TYPE_BLOG = [
   {
     label: 'Society',
     value: 'society'
+  },
+  {
+    label: 'Poems',
+    value: 'poem'
   }
 ];
