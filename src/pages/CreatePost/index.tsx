@@ -1,7 +1,6 @@
 import React, { useEffect, useState, useRef } from 'react';
 import RichTextEditor from '@components/RichTextEditor';
 import { ManagedUpload } from 'aws-sdk/clients/s3';
-import { Layout } from '@components/Common';
 import SignIn from '@components/SignIn';
 import { useNavigate, useParams } from 'react-router-dom';
 
@@ -16,6 +15,15 @@ import { usePost } from '@hooks/usePost';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 import LoadingSection from '@components/LoadingSection';
 import NotFound from '@components/NotFound';
+import HeaderSearch from '@components/Header/search';
+
+const Layout = styled('div')<{ isStyle: boolean }>(({ isStyle }) => ({
+  ...(isStyle && {
+    height: 'calc(100vh - 72.5px)',
+    display: 'flex',
+    flexDirection: 'column'
+  })
+}));
 
 const Heading = styled('h1')({
   textAlign: 'center',
@@ -180,12 +188,12 @@ const CreatePost = () => {
   const [ errorMessage, setErrorMessage ] = useState<string>();
   const [ errorMessagePostType, setErrorMessagePostType ] = useState<string>();
   const [ errorMessageImageUrl, setErrorMessageImageUrl ] = useState<string>();
+  const [ loading, setLoading ] = useState<boolean>(true);
 
   const {
     message,
     dataPost,
     errorCode,
-    loading,
     editPostApi,
     getPostByShortUrlApi,
     createPostApi
@@ -334,7 +342,14 @@ const CreatePost = () => {
 
   useEffect(() => {
     if (shortUrl && shortUrlJson.current !== shortUrl) {
-      getPostByShortUrlApi({ shortUrl });
+      getPostByShortUrlApi({ shortUrl })
+        .unwrap()
+        .then(() => {
+
+          setTimeout(() => {
+            setLoading(false);
+          }, 700);
+        });
       shortUrlJson.current = shortUrl;
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -353,153 +368,159 @@ const CreatePost = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [ dataPost ]);
 
-  return shortUrl && loading ? (
-    <LoadingSection />
-  ) : shortUrl && !dataPost ? (
-    <NotFound
-      color={'#212529'}
-      bgColor={'#fff'}
-      message={'I AM SORRY, <br /> BUT THE POST YOU REQUESTED WAS NOT FOUND!'}
-    />
-  ) : (
-    <Layout>
-      <Heading>Create Post</Heading>
-      <SubHeading>What do you want to keep something?</SubHeading>
+  return (
+    <Layout isStyle={!dataPost || loading}>
+      <HeaderSearch />
 
-      <FormContainer>
-        <Box component="form" noValidate sx={{ mt: 1, width: '100%' }} onSubmit={handleSubmit(onSubmit)}>
-          <RowField>
-            <ColumnField>
-              <GroupField>
-                <LabelField>TITLE</LabelField>
-                <TextField
-                  style={{ margin: '0 0 7px' }}
-                  fullWidth
-                  id="title"
-                  label="Enter a title.."
-                  autoComplete="title"
-                  autoFocus
-                  {...register('title', { minLength: 5, pattern: /^[a-zA-Z0-9!?&.\-\s]+$/ })}
-                />
-                {errors.title && <MessageError style={{ margin: '0' }}>Excerpt must between 5 - 255 .</MessageError>}
-              </GroupField>
+      {shortUrl && loading ? (
+        <LoadingSection />
+      ) : shortUrl && !dataPost ? (
+        <NotFound
+          color={'#212529'}
+          message={'I AM SORRY, <br /> BUT THE POST YOU REQUESTED WAS NOT FOUND!'}
+        />
+      ) : (
+        <>
+          <Heading>Create Post</Heading>
+          <SubHeading>What do you want to keep something?</SubHeading>
 
-              <GroupField>
-                <LabelField>EXCERPT</LabelField>
-                <TextareaAutosizeCustom
-                  defaultValue={''}
-                  minRows={7}
-                  maxRows={11}
-                  id="excerpt"
-                  placeholder="Enter reduced information about the post..."
-                  autoComplete="excerpt"
-                  {...register('excerpt', { required: true, minLength: 5, maxLength: 255 })}
-                />
-                {errors.excerpt && <MessageError style={{ margin: '0' }}>Excerpt required and must between 25 - 255 characters.</MessageError>}
-              </GroupField>
+          <FormContainer>
+            <Box component="form" noValidate sx={{ mt: 1, width: '100%' }} onSubmit={handleSubmit(onSubmit)}>
               <RowField>
                 <ColumnField>
                   <GroupField>
-                    <LabelField>Short Url</LabelField>
+                    <LabelField>TITLE</LabelField>
                     <TextField
+                      style={{ margin: '0 0 7px' }}
                       fullWidth
-                      id="shortUrl"
-                      label="Enter a short url.."
-                      autoComplete="shortUrl"
-                      {...register('shortUrl', { required: true, pattern: /^[a-zA-Z0-9-_\s]*.{5,50}$/ })}
+                      id="title"
+                      label="Enter a title.."
+                      autoComplete="title"
+                      autoFocus
+                      {...register('title', { minLength: 5, pattern: /^[a-zA-Z0-9!?&.\-\s]+$/ })}
                     />
-                    {errors.shortUrl && <MessageError style={{ margin: '0' }}>Invalid short url! It can only contain letters, numbers, hyphens (-), and underscores (_), and between 5-50 characters.</MessageError>}
+                    {errors.title && <MessageError style={{ margin: '0' }}>Excerpt must between 5 - 255 .</MessageError>}
                   </GroupField>
+
+                  <GroupField>
+                    <LabelField>EXCERPT</LabelField>
+                    <TextareaAutosizeCustom
+                      defaultValue={''}
+                      minRows={7}
+                      maxRows={11}
+                      id="excerpt"
+                      placeholder="Enter reduced information about the post..."
+                      autoComplete="excerpt"
+                      {...register('excerpt', { required: true, minLength: 5, maxLength: 255 })}
+                    />
+                    {errors.excerpt && <MessageError style={{ margin: '0' }}>Excerpt required and must between 25 - 255 characters.</MessageError>}
+                  </GroupField>
+                  <RowField>
+                    <ColumnField>
+                      <GroupField>
+                        <LabelField>Short Url</LabelField>
+                        <TextField
+                          fullWidth
+                          id="shortUrl"
+                          label="Enter a short url.."
+                          autoComplete="shortUrl"
+                          {...register('shortUrl', { required: true, pattern: /^[a-zA-Z0-9-_\s]*.{5,50}$/ })}
+                        />
+                        {errors.shortUrl && <MessageError style={{ margin: '0' }}>Invalid short url! It can only contain letters, numbers, hyphens (-), and underscores (_), and between 5-50 characters.</MessageError>}
+                      </GroupField>
+                    </ColumnField>
+                    <ColumnField>
+                      <GroupField sx={{ pb: 0 }}>
+                        <LabelField>Post Type</LabelField>
+                        <FormControl fullWidth>
+                          <InputLabel id="post-type-select-label">Type</InputLabel>
+                          <Select
+                            labelId="post-type-select-label"
+                            id="post-type-select"
+                            value={valuePostType}
+                            label="Type"
+                            onChange={handleChange}
+                          >
+                            {TYPE_BLOG?.map((item, index) => (
+                              <MenuItem value={item.value} key={index}>{item.label}</MenuItem>
+                            ))}
+                          </Select>
+                        </FormControl>
+                        {errorMessagePostType && <MessageError>This is a required field.</MessageError>}
+                      </GroupField>
+                    </ColumnField>
+                  </RowField>
                 </ColumnField>
+
                 <ColumnField>
-                  <GroupField sx={{ pb: 0 }}>
-                    <LabelField>Post Type</LabelField>
-                    <FormControl fullWidth>
-                      <InputLabel id="post-type-select-label">Type</InputLabel>
-                      <Select
-                        labelId="post-type-select-label"
-                        id="post-type-select"
-                        value={valuePostType}
-                        label="Type"
-                        onChange={handleChange}
-                      >
-                        {TYPE_BLOG?.map((item, index) => (
-                          <MenuItem value={item.value} key={index}>{item.label}</MenuItem>
-                        ))}
-                      </Select>
-                    </FormControl>
-                    {errorMessagePostType && <MessageError>This is a required field.</MessageError>}
-                  </GroupField>
+                  <LabelField>POST IMAGE</LabelField>
+                  <DivImageContainer>
+                    <DivBoxImage>
+                      <label htmlFor={'imageFile'}>
+                        <img src={`${AWS_S3_URL_BLOG}icon-edit.svg`} alt={'Change the post image!'} />
+                      </label>
+                      <input
+                        type={'file'}
+                        accept="image/*"
+                        id={'imageFile'}
+                        hidden={true}
+                        onChange={ async (event: React.ChangeEvent<HTMLInputElement>) => {
+                          await handleChangeFeaturedImage(event);
+                        }}
+                      />
+                      {srcImage && (
+                        <PostImage src={srcImage} alt={'Post image'} />
+                      )}
+                    </DivBoxImage>
+                    {errorMessageImageUrl && <MessageError>This is a required field.</MessageError>}
+                    <DivImageNote>
+                      <p>
+                        Formats supported:
+                        <br />
+                        JPG, PNG
+                      </p>
+                      <p>
+                        Max 5 MB
+                      </p>
+                    </DivImageNote>
+                  </DivImageContainer>
                 </ColumnField>
               </RowField>
-            </ColumnField>
 
-            <ColumnField>
-              <LabelField>POST IMAGE</LabelField>
-              <DivImageContainer>
-                <DivBoxImage>
-                  <label htmlFor={'imageFile'}>
-                    <img src={`${AWS_S3_URL_BLOG}icon-edit.svg`} alt={'Change the post image!'} />
-                  </label>
-                  <input
-                    type={'file'}
-                    accept="image/*"
-                    id={'imageFile'}
-                    hidden={true}
-                    onChange={ async (event: React.ChangeEvent<HTMLInputElement>) => {
-                      await handleChangeFeaturedImage(event);
-                    }}
-                  />
-                  {srcImage && (
-                    <PostImage src={srcImage} alt={'Post image'} />
-                  )}
-                </DivBoxImage>
-                {errorMessageImageUrl && <MessageError>This is a required field.</MessageError>}
-                <DivImageNote>
-                  <p>
-                    Formats supported:
-                    <br />
-                    JPG, PNG
-                  </p>
-                  <p>
-                    Max 5 MB
-                  </p>
-                </DivImageNote>
-              </DivImageContainer>
-            </ColumnField>
-          </RowField>
+              <RichTextEditor
+                label={'Description'}
+                widthEditor={'360px'}
+                toolbarId={'create-post'}
+                value={valueDescription}
+                setValueRichText={setValueDescription}
+                setFileUpload={setFileUpload}
+                placeholder={'What are you thinking...'}
+              />
+              <ButtonBox>
+                <Button
+                  size="large"
+                  type="submit"
+                  fullWidth
+                  variant="contained"
+                  {...(loading && { disabled: true })}
+                  sx={{
+                    mt: 3,
+                    mb: 2,
+                    bgcolor: '#bc2e1d',
+                    '&:hover': {
+                      bgcolor: '#bc2e1d'
+                    }
+                  }}
+                >
+                  {shortUrl ? 'SAVE CHANGES' : 'CREATE'}
+                </Button>
+              </ButtonBox>
+              {(errorMessage || errorCode) && <MessageError sx={{ textAlign: 'center' }}>{errorMessage ?? message}</MessageError>}
+            </Box>
+          </FormContainer>
+        </>
+      )}
 
-          <RichTextEditor
-            label={'Description'}
-            widthEditor={'360px'}
-            toolbarId={'create-post'}
-            value={valueDescription}
-            setValueRichText={setValueDescription}
-            setFileUpload={setFileUpload}
-            placeholder={'What are you thinking...'}
-          />
-          <ButtonBox>
-            <Button
-              size="large"
-              type="submit"
-              fullWidth
-              variant="contained"
-              {...(loading && { disabled: true })}
-              sx={{
-                mt: 3,
-                mb: 2,
-                bgcolor: '#bc2e1d',
-                '&:hover': {
-                  bgcolor: '#bc2e1d'
-                }
-              }}
-            >
-              {shortUrl ? 'SAVE CHANGES' : 'CREATE'}
-            </Button>
-          </ButtonBox>
-          {(errorMessage || errorCode) && <MessageError sx={{ textAlign: 'center' }}>{errorMessage ?? message}</MessageError>}
-        </Box>
-      </FormContainer>
       <SignIn />
     </Layout>
   );

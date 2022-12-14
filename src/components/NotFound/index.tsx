@@ -7,13 +7,21 @@ import {
   Typography
 } from '@mui/material';
 import { styled } from '@mui/system';
-import { Layout } from '@src/components/Common';
 
-const TitlePage = styled(Typography)({
+const NotFoundComponent = styled('div')({
+  flex: '1 1 auto',
+  display: 'flex',
+  justifyContent: 'center',
+  alignItems: 'center',
+  flexDirection: 'column'
+});
+
+const TitlePage = styled(Typography)<{ color: string }>(({ color }) => ({
   fontSize: '100px',
   fontWeight: 600,
   fontFamily: 'norwester, sans-serif',
   textAlign: 'center',
+  color,
 
   'p': {
     fontFamily: 'Roboto, sans-serif',
@@ -21,7 +29,7 @@ const TitlePage = styled(Typography)({
     marginBottom: '1.5rem',
     letterSpacing: 'initial'
   }
-});
+}));
 
 const CustomButton = styled(Button)({
   color: '#bc2e1d',
@@ -35,23 +43,10 @@ const CustomButton = styled(Button)({
   }
 });
 
-const NotFound = ({ bgColor, message, color }: { bgColor: string; message: string; color: string }) => {
+const NotFound = ({ message, color }: { message: string; color: string }) => {
   return (
-    <Layout
-      paddingNav={MODE_CV}
-      scrollBar={true}
-      flexMiddle={true}
-      styles={{
-        backgroundColor: bgColor,
-        paddingTop: '75px',
-        paddingBottom: '150px',
-        height: '100vh',
-        width: '100%',
-        color,
-        flexDirection: 'column'
-      }}
-    >
-      <TitlePage variant={'h1'}>
+    <NotFoundComponent>
+      <TitlePage variant={'h1'} color={color}>
         404 <p dangerouslySetInnerHTML={{ __html: message }} />
       </TitlePage>
 
@@ -62,7 +57,7 @@ const NotFound = ({ bgColor, message, color }: { bgColor: string; message: strin
           </NavLink>
         </Grid>
       </Grid>
-    </Layout>
+    </NotFoundComponent>
   );
 };
 

@@ -13,10 +13,10 @@ const rotate = keyframes`
 
 const LoadingIcon = styled('div')`
   padding-bottom: 100px;
+  flex: 1 1 auto;
   display: flex;
   justify-content: center;
   align-content: center;
-  height: 100vh;
   align-items: center;
 `;
 

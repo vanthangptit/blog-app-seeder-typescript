@@ -7,14 +7,12 @@ interface IFLoginState {
   message: string
   dataPost?: IPost
   errorCode?: string
-  loading: boolean
 }
 
 const initialState: IFLoginState = {
   message: '',
   dataPost: undefined,
-  errorCode: undefined,
-  loading: false
+  errorCode: undefined
 };
 
 export const getAllPostApi = createAsyncThunk<any>(POST.ACTION_TYPES.GET_ALL_POST, async (_, thunkAPI) => {
@@ -73,39 +71,32 @@ export const appPostSlice = createSlice({
     builder
       .addCase(createPostApi.fulfilled, (state, action:PayloadAction<any>) => {
         state.message = action.payload.message;
-        state.loading = false;
 
         if (action.payload?.errorCode && action.payload.status !== 200) {
           state.errorCode = action.payload.errorCode;
         }
       })
       .addCase(createPostApi.pending, (state) => {
-        state.loading = true;
         state.errorCode = undefined;
       })
       .addCase(createPostApi.rejected, (state, action:PayloadAction<any>) => {
         state.errorCode = action.payload.errorCode;
-        state.loading = false;
       })
       .addCase(editPostApi.fulfilled, (state, action:PayloadAction<any>) => {
         state.message = action.payload.message;
-        state.loading = false;
 
         if (action.payload.errorCode && action.payload.status !== 200) {
           state.errorCode = action.payload.errorCode;
         }
       })
       .addCase(editPostApi.pending, (state) => {
-        state.loading = true;
         state.errorCode = undefined;
       })
       .addCase(editPostApi.rejected, (state, action:PayloadAction<any>) => {
         state.errorCode = action.payload.errorCode;
-        state.loading = false;
       })
       .addCase(getPostByShortUrlApi.fulfilled, (state, action:PayloadAction<any>) => {
         state.message = action.payload.message;
-        state.loading = false;
 
         if (action.payload.errorCode && action.payload.status !== 200) {
           state.errorCode = action.payload.errorCode;
@@ -114,12 +105,10 @@ export const appPostSlice = createSlice({
         }
       })
       .addCase(getPostByShortUrlApi.pending, (state) => {
-        state.loading = true;
         state.errorCode = undefined;
       })
       .addCase(getPostByShortUrlApi.rejected, (state, action:PayloadAction<any>) => {
         state.errorCode = action.payload.errorCode;
-        state.loading = false;
       });
   }
 });

@@ -12,8 +12,7 @@ export const usePost = () => {
   const {
     message,
     dataPost,
-    errorCode,
-    loading
+    errorCode
   } = useAppSelector((state: RootState) => state.post);
 
   const getAllPostApi = () => {
@@ -36,7 +35,6 @@ export const usePost = () => {
     message,
     dataPost,
     errorCode,
-    loading,
     getAllPostApi,
     getPostByShortUrlApi,
     createPostApi,

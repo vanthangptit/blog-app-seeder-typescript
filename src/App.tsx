@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { BrowserRouter as Router, Navigate, Route, Routes } from 'react-router-dom';
 import Header from '@components/Header';
+import Footer from '@components/Footer';
 import Home from './pages/Home';
 import Blog from './pages/Blogs';
 import BlogDetail from './pages/BlogDetail';
@@ -36,13 +37,7 @@ function App() {
             </>
           )}
 
-          <Route path={SITES_URL.BLOG}
-            element={
-              <PrivateRoute path={SITES_URL.BLOG}>
-                <Blog />
-              </PrivateRoute>
-            }
-          />
+          <Route path={SITES_URL.BLOG}  element={<Blog />} />
 
           <Route path={SITES_URL.BLOG_DETAIL}
             element={
@@ -89,6 +84,8 @@ function App() {
           <Route path='*' element={<NotFoundPage />} />
         </Routes>
       </main>
+
+      <Footer />
     </Router>
   );
 }
