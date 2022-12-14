@@ -35,28 +35,24 @@ const CustomButton = styled(Button)({
   }
 });
 
-const NotFound = () => {
-  React.useEffect(() => {
-    document.title = 'Thang Nguyen | Not Found';
-  }, []);
-
+const NotFound = ({ bgColor, message, color }: { bgColor: string; message: string; color: string }) => {
   return (
     <Layout
       paddingNav={MODE_CV}
       scrollBar={true}
       flexMiddle={true}
       styles={{
-        backgroundColor: '#a71c1c',
+        backgroundColor: bgColor,
         paddingTop: '75px',
         paddingBottom: '150px',
         height: '100vh',
         width: '100%',
-        color: '#fff',
+        color,
         flexDirection: 'column'
       }}
     >
       <TitlePage variant={'h1'}>
-        404 <p>I AM SORRY, BUT THE PAGE YOU REQUESTED WAS NOT FOUND!</p>
+        404 <p dangerouslySetInnerHTML={{ __html: message }} />
       </TitlePage>
 
       <Grid container justifyContent="center" className="bottom-link">

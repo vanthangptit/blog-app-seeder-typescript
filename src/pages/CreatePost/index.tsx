@@ -14,6 +14,8 @@ import { AWS_S3_URL_BLOG, TYPE_BLOG } from '@src/constants';
 import { uploadFile, deleteFile } from '@utils/uploadFile';
 import { usePost } from '@hooks/usePost';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
+import LoadingSection from '@components/LoadingSection';
+import NotFound from '@components/NotFound';
 
 const Heading = styled('h1')({
   textAlign: 'center',
@@ -351,7 +353,15 @@ const CreatePost = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [ dataPost ]);
 
-  return (
+  return shortUrl && loading ? (
+    <LoadingSection />
+  ) : shortUrl && !dataPost ? (
+    <NotFound
+      color={'#212529'}
+      bgColor={'#fff'}
+      message={'I AM SORRY, <br /> BUT THE POST YOU REQUESTED WAS NOT FOUND!'}
+    />
+  ) : (
     <Layout>
       <Heading>Create Post</Heading>
       <SubHeading>What do you want to keep something?</SubHeading>

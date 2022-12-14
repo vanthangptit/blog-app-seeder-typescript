@@ -7,7 +7,7 @@ import BlogDetail from './pages/BlogDetail';
 import Contact from './pages/Contact';
 import Dashboard from './pages/Dashboard';
 import Login from './pages/Login';
-import NotFound from './pages/NotFound';
+import NotFoundPage from './pages/NotFoundPage';
 import Register from './pages/Register';
 import User from './pages/Users';
 import CreatePost from '@src/pages/CreatePost';
@@ -86,7 +86,7 @@ function App() {
 
           <Route path={SITES_URL.LOGIN} element={<Login />} />
           <Route path={SITES_URL.REGISTER} element={<Register />} />
-          <Route path='*' element={<NotFound />} />
+          <Route path='*' element={<NotFoundPage />} />
         </Routes>
       </main>
     </Router>
