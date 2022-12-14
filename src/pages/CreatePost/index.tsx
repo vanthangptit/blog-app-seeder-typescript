@@ -368,6 +368,14 @@ const CreatePost = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [ dataPost ]);
 
+  React.useEffect(() => {
+    if (shortUrl && dataPost) {
+      document.title = 'Edit Post | ' + dataPost.title;
+    } else {
+      document.title = 'Create Post';
+    }
+  }, [ shortUrl, dataPost ]);
+
   return (
     <Layout isStyle={!dataPost || loading}>
       <HeaderSearch />

@@ -112,6 +112,12 @@ const BlogDetail = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [ shortUrl ]);
 
+  React.useEffect(() => {
+    if (dataPost) {
+      document.title = 'Blog | ' + dataPost.title;
+    }
+  }, [dataPost]);
+
   return (
     <Layout isStyle={!dataPost || loading}>
       <HeaderSearch />
