@@ -12,6 +12,7 @@ export const usePost = () => {
   const {
     message,
     dataPost,
+    dataPostArray,
     errorCode
   } = useAppSelector((state: RootState) => state.post);
 
@@ -23,6 +24,10 @@ export const usePost = () => {
     return dispatch(registerStore.getPostByShortUrlApi(params));
   };
 
+  const getPostByCreatorApi = (params: { username: string }) => {
+    return dispatch(registerStore.getPostByCreatorApi(params));
+  };
+
   const createPostApi = (params: IPostParams) => {
     return dispatch(registerStore.createPostApi(params));
   };
@@ -31,13 +36,20 @@ export const usePost = () => {
     return dispatch(registerStore.editPostApi(params));
   };
 
+  const deletePostApi = (params: { postId: string }) => {
+    return dispatch(registerStore.deletePostApi(params));
+  };
+
   return {
     message,
     dataPost,
+    dataPostArray,
     errorCode,
     getAllPostApi,
+    getPostByCreatorApi,
     getPostByShortUrlApi,
     createPostApi,
-    editPostApi
+    editPostApi,
+    deletePostApi
   };
 };

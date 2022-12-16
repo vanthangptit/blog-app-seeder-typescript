@@ -25,13 +25,13 @@ export interface IPostAuthor {
 
 export interface IPost {
   author: IPostAuthor
-  createAt: string
   description?: string
   excerpt: string
   imageUrl: string
   postType: string
   shortUrl: string
   title: string
+  createdAt: string
   updatedAt: string
   __v: any
   _id: string
@@ -39,7 +39,7 @@ export interface IPost {
 
 export interface IPostCreateResponse {
   message: string
-  status: string
+  status: number
   errorCode?: string
   post: IPost
 }

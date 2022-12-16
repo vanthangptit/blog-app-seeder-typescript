@@ -18,6 +18,8 @@ import NotFound from '@components/NotFound';
 import HeaderSearch from '@components/Header/search';
 
 const Layout = styled('div')<{ isStyle: boolean }>(({ isStyle }) => ({
+  padding: '16px',
+
   ...(isStyle && {
     height: 'calc(100vh - 72.5px)',
     display: 'flex',
@@ -188,7 +190,8 @@ const CreatePost = () => {
   const [ errorMessage, setErrorMessage ] = useState<string>();
   const [ errorMessagePostType, setErrorMessagePostType ] = useState<string>();
   const [ errorMessageImageUrl, setErrorMessageImageUrl ] = useState<string>();
-  const [ loading, setLoading ] = useState<boolean>(true);
+  const [ loading, setLoading ] = useState<boolean>(!!shortUrl);
+  const [ submitting, setSubmitting ] = useState<boolean>(false);
 
   const {
     message,
@@ -226,6 +229,7 @@ const CreatePost = () => {
   };
 
   const onSubmit: SubmitHandler<IPostForm> = async data => {
+    setSubmitting(true);
     const callback = (rs?: ManagedUpload.SendData) => {
       if (rs) {
         if (valuePostType && valuePostType.length > 0) {
@@ -240,6 +244,7 @@ const CreatePost = () => {
             editPostApi(newData)
               .unwrap()
               .then(({ status, post }) => {
+                setSubmitting(false);
                 if (status === 200) {
                   navigate(`/blog/${post.shortUrl}`);
                   resetState();
@@ -249,6 +254,7 @@ const CreatePost = () => {
             createPostApi(newData)
               .unwrap()
               .then(({ status, post }) => {
+                setSubmitting(false);
                 if (status === 200) {
                   navigate(`/blog/${post.shortUrl}`);
                   resetState();
@@ -256,6 +262,7 @@ const CreatePost = () => {
               });
           }
         } else {
+          setSubmitting(false);
           setErrorMessagePostType('Post type can not empty.');
         }
       } else {
@@ -271,6 +278,7 @@ const CreatePost = () => {
               })
                 .unwrap()
                 .then(({ status, post }) => {
+                  setSubmitting(false);
                   if (status === 200) {
                     navigate(`/blog/${post.shortUrl}`);
                     resetState();
@@ -285,6 +293,7 @@ const CreatePost = () => {
               })
                 .unwrap()
                 .then(({ status, post }) => {
+                  setSubmitting(false);
                   if (status === 200) {
                     navigate(`/blog/${post.shortUrl}`);
                     resetState();
@@ -293,9 +302,11 @@ const CreatePost = () => {
             }
           } else {
             setErrorMessagePostType('Post type can not empty.');
+            setSubmitting(false);
           }
         } else {
           setErrorMessageImageUrl('The imageUrl field is required.');
+          setSubmitting(false);
         }
       }
     };
@@ -377,7 +388,7 @@ const CreatePost = () => {
   }, [ shortUrl, dataPost ]);
 
   return (
-    <Layout isStyle={!dataPost || loading}>
+    <Layout isStyle={shortUrl ? (!dataPost || loading) : false}>
       <HeaderSearch />
 
       {shortUrl && loading ? (
@@ -510,7 +521,7 @@ const CreatePost = () => {
                   type="submit"
                   fullWidth
                   variant="contained"
-                  {...(loading && { disabled: true })}
+                  {...(submitting && { disabled: true })}
                   sx={{
                     mt: 3,
                     mb: 2,

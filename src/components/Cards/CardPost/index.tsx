@@ -1,41 +1,67 @@
 import React from 'react';
 import { styled } from '@mui/system';
 import { Typography } from '@mui/material';
+import { IPost } from '@models/IPosts';
+import moment from 'moment';
 
-const Card = styled('div')({
+const Card = styled('div')<{ horizontal: boolean }>(({ horizontal }) => ({
   width: '100%',
   display: 'flex',
-  flexDirection: 'column',
+  flex: '1 1 auto',
   transition: 'all 0.3s',
   cursor: 'pointer',
   border: '1px solid #eee',
 
-  '&:hover': {
-    boxShadow: '0px 12px 12px rgb(0 0 0 / 20%)',
+  ...(horizontal && {
+    width: '100%'
+  }),
 
-    '.card-image': {
-      transform: 'scale(1.2)'
+  ...(!horizontal && {
+    flexDirection: 'column',
+
+    '&:hover': {
+      boxShadow: '0px 12px 12px rgb(0 0 0 / 20%)',
+
+      '.card-image': {
+        transform: 'scale(1.2)'
+      }
     }
-  }
-});
+  })
+}));
 
-const CardImage = styled('div')({
+const CardImage = styled('div')<{ horizontal: boolean }>(({ horizontal }) => ({
   display: 'flex',
+  flex: '0 0 280px',
+  height: '290px',
   overflow: 'hidden',
 
   'img': {
     transition: 'all 0.3s'
-  }
-});
+  },
 
-const CardBody = styled('div')({
-  padding: '20px'
-});
+  ...(horizontal && {
+    'img': {
+      width: '100%',
+      height: '100%',
+      objectFit: 'cover'
+    }
+  })
+}));
+
+const CardBody = styled('div')<{ horizontal: boolean }>(({ horizontal }) => ({
+  padding: '20px',
+
+  ...(horizontal && {
+    display: 'flex',
+    flexDirection: 'column',
+    flex: '1 1 auto'
+  })
+}));
 
 const CreateAt = styled('div')({
   fontFamily: 'Roboto-Bold',
   fontSize: '15px',
-  marginTop: '7px',
+  marginBottom: '10px',
 
   '& span': {
     color: '#aaa',
@@ -45,16 +71,20 @@ const CreateAt = styled('div')({
   }
 });
 
-const CardBodyContent = styled('div')({
-  margin: '10px 0 15px'
-});
+const CardBodyContent = styled('div')<{ horizontal: boolean }>(({ horizontal }) => ({
+  marginBottom: '15px',
+
+  ...(horizontal && {
+    flex: '1 1 auto'
+  })
+}));
 
 const CustomTypographyH3 = styled(Typography)({
   fontSize: '23px',
   fontFamily: 'Roboto-Bold, sans-serif',
   display: '-webkit-box',
-  '-webkit-line-clamp': '2',
-  '-webkit-box-orient': 'vertical',
+  lineClamp: '2',
+  boxOrient: 'vertical',
   overflow: 'hidden',
   textOverflow: 'ellipsis',
   marginBottom: '12px',
@@ -68,8 +98,8 @@ const CustomTypographyParagraph = styled(Typography)({
   color: '#aaa',
   fontSize: '15px',
   display: '-webkit-box',
-  '-webkit-line-clamp': '2',
-  '-webkit-box-orient': 'vertical',
+  lineClamp: '2',
+  boxOrient: 'vertical',
   overflow: 'hidden',
   textOverflow: 'ellipsis',
 
@@ -105,23 +135,26 @@ const AuthorInfo = styled('div')({
   }
 });
 
-const CardPost = ({ data }: any) => {
+const CardPost = ({ data, horizontal }: { data: IPost, horizontal: boolean }) => {
   return (
-    <Card>
-      <CardImage>
-        <img src={data.image} alt={data?.image ?? ''} className="card-image"/>
+    <Card horizontal={horizontal}>
+      <CardImage horizontal={horizontal}>
+        <img src={data.imageUrl} alt={data?.imageUrl ?? ''} className="card-image"/>
       </CardImage>
-      <CardBody>
-        <CreateAt>Created at - <span>{data.createdAt}</span></CreateAt>
-        <CardBodyContent>
+      <CardBody horizontal={horizontal}>
+        <CardBodyContent horizontal={horizontal}>
+          <CreateAt>Created at - <span>{moment(data.createdAt).format('ll')}</span></CreateAt>
           <CustomTypographyH3 variant={'h3'}>{data.title}</CustomTypographyH3>
-          <CustomTypographyParagraph variant="body2">{data.desc}</CustomTypographyParagraph>
+          <CustomTypographyParagraph variant="body2">{data.excerpt}</CustomTypographyParagraph>
         </CardBodyContent>
         <Author>
-          <img src={data?.author?.imageUrl} alt={data?.author?.imageUrl ?? ''}/>
+          <img
+            src={'https://cv-front-end.s3.ap-southeast-1.amazonaws.com/images/vanthang.png'}
+            alt={''}
+          />
           <AuthorInfo>
-            <h5>{data?.author?.name}</h5>
-            <p>{data?.author?.position}</p>
+            <h5>{data.author?.lastName + ' ' + data.author?.firstName}</h5>
+            <p>Author</p>
           </AuthorInfo>
         </Author>
       </CardBody>

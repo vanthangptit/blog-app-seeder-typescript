@@ -1,6 +1,6 @@
 import * as React from 'react';
 import SignIn from '@components/SignIn';
-import CardPost from '@components/Cards/CardPost';
+// import CardPost from '@components/Cards/CardPost';
 import SliderBlog from '@components/Slider/SliderBlog';
 import HeaderSearch from '@components/Header/search';
 
@@ -137,7 +137,7 @@ const Blogs = () => {
             <CustomRow>
               {dataBlog?.map((item: any, index: number) => (
                 <Column key={index}>
-                  <CardPost data={item} />
+                  {/*<CardPost data={item} />*/}
                 </Column>
               ))}
             </CustomRow>

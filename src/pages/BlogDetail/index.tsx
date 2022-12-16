@@ -116,7 +116,7 @@ const BlogDetail = () => {
     if (dataPost) {
       document.title = 'Blog | ' + dataPost.title;
     }
-  }, [dataPost]);
+  }, [ dataPost ]);
 
   return (
     <Layout isStyle={!dataPost || loading}>
@@ -138,7 +138,7 @@ const BlogDetail = () => {
               <NavLink to={`/blog?type=${dataPost?.postType}`}>{dataPost?.postType}</NavLink>
             </Breadcrumb>
             <CreateAt>
-              {dataPost?.createAt && formatDatetime(dataPost?.createAt)}
+              {dataPost?.createdAt && formatDatetime(dataPost?.createdAt)}
             </CreateAt>
           </ContentBoxTop>
 

@@ -1,11 +1,13 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import api from '@apis/index';
 import { IPostParams, IPostCreateResponse, IPost } from '@src/models/IPosts';
-import { POST } from '@src/constants';
+import { POST, USERNAME_COOKIE } from '@src/constants';
+import Cookies from 'js-cookie';
 
 interface IFLoginState {
   message: string
   dataPost?: IPost
+  dataPostArray?: IPost[]
   errorCode?: string
 }
 
@@ -18,6 +20,18 @@ const initialState: IFLoginState = {
 export const getAllPostApi = createAsyncThunk<any>(POST.ACTION_TYPES.GET_ALL_POST, async (_, thunkAPI) => {
   try {
     const response: IPostCreateResponse = await api.getAllPostApi();
+
+    return {
+      ...response
+    };
+  } catch (error: any) {
+    return thunkAPI.rejectWithValue({ error: error.data });
+  }
+});
+
+export const getPostByCreatorApi = createAsyncThunk<any,  { username: string }>(POST.ACTION_TYPES.GET_BY_CREATOR_POST, async (params, thunkAPI) => {
+  try {
+    const response: IPostCreateResponse = await api.getPostByCreatorApi(params);
 
     return {
       ...response
@@ -63,6 +77,25 @@ export const editPostApi = createAsyncThunk<any, IPostParams>(POST.ACTION_TYPES.
   }
 });
 
+export const deletePostApi = createAsyncThunk<any, { postId: string }>(POST.ACTION_TYPES.DELETE_POST, async (params, thunkAPI) => {
+  try {
+    const response: IPostCreateResponse = await api.deletePostApi(params);
+
+    if (response.status === 200) {
+      const username = Cookies.get(USERNAME_COOKIE);
+      if (username) {
+        await thunkAPI.dispatch(getPostByCreatorApi({ username }));
+      }
+    }
+
+    return {
+      ...response
+    };
+  } catch (error: any) {
+    return thunkAPI.rejectWithValue({ error: error.data });
+  }
+});
+
 export const appPostSlice = createSlice({
   name: 'appPost',
   initialState,
@@ -80,6 +113,21 @@ export const appPostSlice = createSlice({
         state.errorCode = undefined;
       })
       .addCase(createPostApi.rejected, (state, action:PayloadAction<any>) => {
+        state.errorCode = action.payload.errorCode;
+      })
+      .addCase(getPostByCreatorApi.fulfilled, (state, action:PayloadAction<any>) => {
+        state.message = action.payload.message;
+
+        if (action.payload.status === 200) {
+          state.dataPostArray = action.payload.post;
+        } else {
+          state.errorCode = action.payload.errorCode;
+        }
+      })
+      .addCase(getPostByCreatorApi.pending, (state) => {
+        state.errorCode = undefined;
+      })
+      .addCase(getPostByCreatorApi.rejected, (state, action:PayloadAction<any>) => {
         state.errorCode = action.payload.errorCode;
       })
       .addCase(editPostApi.fulfilled, (state, action:PayloadAction<any>) => {
@@ -108,6 +156,19 @@ export const appPostSlice = createSlice({
         state.errorCode = undefined;
       })
       .addCase(getPostByShortUrlApi.rejected, (state, action:PayloadAction<any>) => {
+        state.errorCode = action.payload.errorCode;
+      })
+      .addCase(deletePostApi.fulfilled, (state, action:PayloadAction<any>) => {
+        state.message = action.payload.message;
+
+        if (action.payload.errorCode && action.payload.status !== 200) {
+          state.errorCode = action.payload.errorCode;
+        }
+      })
+      .addCase(deletePostApi.pending, (state) => {
+        state.errorCode = undefined;
+      })
+      .addCase(deletePostApi.rejected, (state, action:PayloadAction<any>) => {
         state.errorCode = action.payload.errorCode;
       });
   }
