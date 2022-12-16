@@ -34,10 +34,10 @@ function App() {
             <>
               <Route path='/' element={<Home customClass="home-page"/>} />
               <Route path={SITES_URL.ABOUT} element={<Home customClass="about-page"/>} />
-              <Route path={SITES_URL.CONTACT} element={<Contact/>} />
             </>
           )}
 
+          <Route path={SITES_URL.CONTACT} element={<Contact/>} />
           <Route path={SITES_URL.BLOG}  element={<Blog />} />
 
           <Route path={SITES_URL.BLOG_DETAIL}

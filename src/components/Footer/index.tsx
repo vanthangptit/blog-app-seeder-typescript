@@ -1,5 +1,7 @@
 import * as React from 'react';
 import { styled } from '@mui/system';
+import { useLocation } from 'react-router-dom';
+import { SITES_URL } from '@src/constants';
 
 const FooterElement = styled('footer')({
   position: 'relative',
@@ -11,8 +13,21 @@ const FooterElement = styled('footer')({
 });
 
 const Footer = () => {
+  const location = useLocation();
+
   return (
-    <FooterElement>
+    <FooterElement
+      className={
+        location &&
+        (
+          location.pathname === '/'
+          || location.pathname === SITES_URL.ABOUT
+          || location.pathname === SITES_URL.LOGIN
+          || location.pathname === SITES_URL.REGISTER
+          || location.pathname === SITES_URL.CONTACT
+        )
+          ? 'hidden' : ''}
+    >
       2023 Ⓒ nguyenthang - All rights reserved
     </FooterElement>
   );
