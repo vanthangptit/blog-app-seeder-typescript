@@ -162,10 +162,13 @@ const MyPost = () => {
                     <ColumnBox>
                       <CardPost data={item} horizontal={true}/>
                       <ActionButtons>
-                        <NavLink to={`/edit-post/${item.shortUrl}`}>
+                        <NavLink to={`/edit-post/${item.shortUrl}`} style={{ color: '#009109' }}>
                           <AiOutlineEdit size={20} />
                         </NavLink>
-                        <a href="#" onClick={(e) => handleOpenConfirmModal(e, item)}>
+                        <a href="#"
+                          style={{ color: '#bc2e1d' }}
+                          onClick={(e) => handleOpenConfirmModal(e, item)}
+                        >
                           <AiOutlineDelete size={20} />
                         </a>
                       </ActionButtons>
