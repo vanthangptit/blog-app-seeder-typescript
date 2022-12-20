@@ -103,7 +103,7 @@ const dataBlog = [
   }
 ];
 
-const Blogs = () => {
+const Blog = () => {
   const settingSlider = {
     dots: true,
     infinite: false,
@@ -150,4 +150,4 @@ const Blogs = () => {
   );
 };
 
-export default Blogs;
+export default Blog;

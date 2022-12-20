@@ -100,3 +100,6 @@ export const TYPE_BLOG = [
     value: 'poem'
   }
 ];
+
+export const MAINTENANCE_BG_COLOR = '#d85537';
+export const MAINTENANCE_COLOR = '#fff';

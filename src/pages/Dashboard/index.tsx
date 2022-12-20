@@ -1,10 +1,11 @@
 import * as React from 'react';
 import SignIn from '@components/SignIn';
+import Maintenance from '@components/Maintenance';
 
 const Dashboard = () => {
   return (
     <div>
-      <h1>Dashboard Page</h1>
+      <Maintenance />
 
       <SignIn />
     </div>
