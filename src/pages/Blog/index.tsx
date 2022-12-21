@@ -126,11 +126,18 @@ const Blog = () => {
     arrows: false,
     draggable: false
   };
+  const refCustomContainer = React.useRef<any>(null);
 
   const { dataAllPost, getAllPostApi } = usePost();
 
   const onPageChange = (event: React.ChangeEvent<unknown>, page: number) => {
-    getAllPostApi({ page: page - 1, pageSize: PAGE_SIZE_DEFAULT });
+    getAllPostApi({ page: page - 1, pageSize: PAGE_SIZE_DEFAULT })
+      .unwrap()
+      .then((res) => {
+        if (res.status === 200) {
+          refCustomContainer?.current.scrollIntoView();
+        }
+      });
   };
 
   React.useEffect(() => {
@@ -157,7 +164,7 @@ const Blog = () => {
             <SliderBlog config={settingSlider} data={dataBlog}/>
           </SliderPost>
 
-          <CustomContainer styles={{ maxWidth: '1100px', padding: '0' }}>
+          <CustomContainer styles={{ maxWidth: '1100px', padding: '0' }} ref={refCustomContainer}>
             <CustomRow>
               {dataAllPost && dataAllPost.items?.map((item, index) => (
                 <Column key={index}>
@@ -168,6 +175,7 @@ const Blog = () => {
             {dataAllPost && dataAllPost.items.length > 0 && (
               <PaginationBox>
                 <RangePagination
+                  defaultPage={1}
                   count={dataAllPost.pageCount}
                   page={dataAllPost.page + 1}
                   onPageChange={onPageChange}

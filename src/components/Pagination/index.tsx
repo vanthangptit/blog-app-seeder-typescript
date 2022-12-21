@@ -4,16 +4,18 @@ import { Pagination, Stack } from '@mui/material';
 interface IProps {
   color?: 'primary' | 'secondary' | 'standard'
   count: number
+  defaultPage: number
   page: number
   onPageChange: any
 }
 
-export default function RangePagination({ color, count, page, onPageChange }: IProps) {
+export default function RangePagination({ color, count, defaultPage, page, onPageChange }: IProps) {
   return (
     <Stack spacing={2}>
       <Pagination
         count={count}
-        defaultPage={page}
+        defaultPage={defaultPage}
+        page={page}
         siblingCount={0}
         boundaryCount={2}
         onChange={onPageChange}
