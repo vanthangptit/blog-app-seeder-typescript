@@ -140,7 +140,7 @@ const Blog = () => {
                     </Column>
                   ))}
                 </CustomRow>
-                {dataAllPost && dataAllPost.items.length > 0 && (
+                {dataAllPost && dataAllPost.items.length > 0 && dataAllPost.pageCount > 1 && (
                   <PaginationBox>
                     <RangePagination
                       defaultPage={1}
