@@ -3,6 +3,7 @@ import { styled } from '@mui/system';
 import { Typography } from '@mui/material';
 import { IPost } from '@models/IPosts';
 import moment from 'moment';
+import { useNavigate } from 'react-router-dom';
 
 const Card = styled('div')<{ horizontal: boolean }>(({ horizontal }) => ({
   width: '100%',
@@ -36,7 +37,8 @@ const CardImage = styled('div')<{ horizontal: boolean }>(({ horizontal }) => ({
   overflow: 'hidden',
 
   'img': {
-    transition: 'all 0.3s'
+    transition: 'all 0.3s',
+    objectFit: 'cover'
   },
 
   ...(horizontal && {
@@ -135,9 +137,17 @@ const AuthorInfo = styled('div')({
   }
 });
 
-const CardPost = ({ data, horizontal }: { data: IPost, horizontal: boolean }) => {
+const CardPost = ({ data, horizontal, redirectBlogDetail }: { data: IPost, horizontal: boolean, redirectBlogDetail?: boolean }) => {
+  const navigate = useNavigate();
+
+  const handleOnClick = () => {
+    if (redirectBlogDetail) {
+      navigate(`/blog/${data.shortUrl}`)
+    }
+  };
+
   return (
-    <Card horizontal={horizontal}>
+    <Card horizontal={horizontal} onClick={handleOnClick}>
       <CardImage horizontal={horizontal}>
         <img src={data.imageUrl} alt={data?.imageUrl ?? ''} className="card-image"/>
       </CardImage>

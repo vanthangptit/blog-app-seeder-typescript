@@ -32,6 +32,8 @@ const Footer = () => {
         location.pathname === SITES_URL.CONTACT
       ) {
         setHideFooter('hidden');
+      } else {
+        setHideFooter('');
       }
 
       if (location.pathname === SITES_URL.DASHBOARD) {

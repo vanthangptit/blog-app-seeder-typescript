@@ -83,7 +83,7 @@ const MyPost = () => {
   const [ errorMessageDelete, setErrorMessageDelete ] =  React.useState<string>();
 
   const {
-    dataPostArray,
+    dataCreatorPosts,
     getPostByCreatorApi,
     deletePostApi
   } = usePost();
@@ -142,7 +142,7 @@ const MyPost = () => {
   }, []);
 
   return (
-    <Layout isStyle={loading || !dataPostArray || !dataPostArray.length}>
+    <Layout isStyle={loading || !dataCreatorPosts || !dataCreatorPosts.length}>
       <HeaderSearch />
 
       {loading ? (
@@ -157,7 +157,7 @@ const MyPost = () => {
 
             <CustomContainer styles={{ maxWidth: '1100px', padding: '0' }}>
               <CustomRow>
-                {dataPostArray && dataPostArray.length > 0 ? dataPostArray.map((item, index) => (
+                {dataCreatorPosts && dataCreatorPosts.length > 0 ? dataCreatorPosts.map((item, index) => (
                   <Column key={index}>
                     <ColumnBox>
                       <CardPost data={item} horizontal={true}/>

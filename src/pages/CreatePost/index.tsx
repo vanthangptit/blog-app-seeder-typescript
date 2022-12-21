@@ -2,7 +2,7 @@ import React, { useEffect, useState, useRef } from 'react';
 import RichTextEditor from '@components/RichTextEditor';
 import { ManagedUpload } from 'aws-sdk/clients/s3';
 import SignIn from '@components/SignIn';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 
 import { styled } from '@mui/system';
 import { Box, Button, TextField, TextareaAutosize, InputLabel, MenuItem, FormControl  } from '@mui/material';
@@ -172,6 +172,7 @@ const ButtonBox = styled('div')({
 });
 
 const CreatePost = () => {
+  const location: any = useLocation();
   const navigate = useNavigate();
   const { shortUrl } = useParams();
   const shortUrlJson = useRef<any>();
@@ -247,7 +248,6 @@ const CreatePost = () => {
                 setSubmitting(false);
                 if (status === 200) {
                   navigate(`/blog/${post.shortUrl}`);
-                  resetState();
                 }
               });
           } else {
@@ -257,7 +257,6 @@ const CreatePost = () => {
                 setSubmitting(false);
                 if (status === 200) {
                   navigate(`/blog/${post.shortUrl}`);
-                  resetState();
                 }
               });
           }
@@ -281,7 +280,6 @@ const CreatePost = () => {
                   setSubmitting(false);
                   if (status === 200) {
                     navigate(`/blog/${post.shortUrl}`);
-                    resetState();
                   }
                 });
             } else {
@@ -296,7 +294,6 @@ const CreatePost = () => {
                   setSubmitting(false);
                   if (status === 200) {
                     navigate(`/blog/${post.shortUrl}`);
-                    resetState();
                   }
                 });
             }
@@ -386,6 +383,10 @@ const CreatePost = () => {
       document.title = 'Create Post';
     }
   }, [ shortUrl, dataPost ]);
+
+  React.useEffect(() => {
+    resetState();
+  }, [ location ]);
 
   return (
     <Layout isStyle={shortUrl ? (!dataPost || loading) : false}>

@@ -1,13 +1,20 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import api from '@apis/index';
-import { IPostParams, IPostCreateResponse, IPost } from '@src/models/IPosts';
+import {
+  IPostParams,
+  IPostCreateResponse,
+  IPost,
+  IPostParamsGetAll,
+  IDataAllPost
+} from '@src/models/IPosts';
 import { POST, USERNAME_COOKIE } from '@src/constants';
 import Cookies from 'js-cookie';
 
 interface IFLoginState {
   message: string
   dataPost?: IPost
-  dataPostArray?: IPost[]
+  dataCreatorPosts?: IPost[]
+  dataAllPost?: IDataAllPost
   errorCode?: string
 }
 
@@ -17,10 +24,9 @@ const initialState: IFLoginState = {
   errorCode: undefined
 };
 
-export const getAllPostApi = createAsyncThunk<any>(POST.ACTION_TYPES.GET_ALL_POST, async (_, thunkAPI) => {
+export const getAllPostApi = createAsyncThunk<any, IPostParamsGetAll>(POST.ACTION_TYPES.GET_ALL_POST, async (params, thunkAPI) => {
   try {
-    const response: IPostCreateResponse = await api.getAllPostApi();
-
+    const response: IPostCreateResponse = await api.getAllPostApi(params);
     return {
       ...response
     };
@@ -102,6 +108,21 @@ export const appPostSlice = createSlice({
   reducers: {},
   extraReducers: builder => {
     builder
+      .addCase(getAllPostApi.fulfilled, (state, action:PayloadAction<any>) => {
+        state.message = action.payload.message;
+
+        if (action.payload.status === 200) {
+          state.dataAllPost = action.payload.data;
+        } else {
+          state.errorCode = action.payload.errorCode;
+        }
+      })
+      .addCase(getAllPostApi.pending, (state) => {
+        state.errorCode = undefined;
+      })
+      .addCase(getAllPostApi.rejected, (state, action:PayloadAction<any>) => {
+        state.errorCode = action.payload.errorCode;
+      })
       .addCase(createPostApi.fulfilled, (state, action:PayloadAction<any>) => {
         state.message = action.payload.message;
 
@@ -119,7 +140,7 @@ export const appPostSlice = createSlice({
         state.message = action.payload.message;
 
         if (action.payload.status === 200) {
-          state.dataPostArray = action.payload.post;
+          state.dataCreatorPosts = action.payload.post;
         } else {
           state.errorCode = action.payload.errorCode;
         }

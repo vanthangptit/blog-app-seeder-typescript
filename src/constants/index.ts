@@ -61,7 +61,7 @@ export const LOGIN = {
 export const SITES_URL = {
   HOME: '/',
   ABOUT: '/about',
-  BLOG: '/blog',
+  BLOG: '/featured',
   CREATE_POST: '/create-post',
   EDIT_POST: '/edit-post/:shortUrl',
   BLOG_DETAIL: '/blog/:shortUrl',
@@ -101,5 +101,7 @@ export const TYPE_BLOG = [
   }
 ];
 
+export const PAGE_SIZE_DEFAULT = 9;
+export const PAGE_DEFAULT = 0;
 export const MAINTENANCE_BG_COLOR = '#d85537';
 export const MAINTENANCE_COLOR = '#fff';

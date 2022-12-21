@@ -1,3 +1,8 @@
+export interface IPostParamsGetAll {
+  page: number
+  pageSize: number
+}
+
 export interface IPostParams {
   title: string
   shortUrl: string
@@ -42,4 +47,12 @@ export interface IPostCreateResponse {
   status: number
   errorCode?: string
   post: IPost
+}
+
+export interface IDataAllPost {
+  count: number
+  items: IPost[]
+  page: number
+  pageCount: number
+  pageSize: number
 }

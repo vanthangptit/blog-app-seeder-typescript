@@ -1,7 +1,7 @@
 import requester from '../requester';
 import { POST } from '@src/constants';
 import { AxiosRequestConfig } from 'axios';
-import { IPostParams } from '@models/IPosts';
+import { IPostParams, IPostParamsGetAll } from '@models/IPosts';
 import { getToken } from '@apis/getToken';
 
 const { URL_API } = POST;
@@ -13,7 +13,7 @@ const config:AxiosRequestConfig = {
 };
 
 const postApi = {
-  getAllPostApi: () => requester.get(URL_API.GET_ALL_POST),
+  getAllPostApi: (params: IPostParamsGetAll) => requester.get(`${URL_API.GET_ALL_POST}?page=${params.page}&pageSize=${params.pageSize}`),
   getPostByShortUrlApi: (params: { shortUrl: string }) => requester.get(`${URL_API.GET_BY_URL_POST}/${params.shortUrl}`, {}, config),
   getPostByCreatorApi: (params: { username: string }) => requester.get(`${URL_API.GET_BY_CREATOR_POST}/${params.username}`, {}, config),
   createPostApi: (params: IPostParams) => requester.post(URL_API.CREATE_POST_API, params, config),

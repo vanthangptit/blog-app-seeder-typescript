@@ -1,11 +1,15 @@
 import * as React from 'react';
 import SignIn from '@components/SignIn';
-// import CardPost from '@components/Cards/CardPost';
+import CardPost from '@components/Cards/CardPost';
 import SliderBlog from '@components/Slider/SliderBlog';
 import HeaderSearch from '@components/Header/search';
+import { usePost } from '@hooks/usePost';
+import { useLocation } from 'react-router-dom';
+import RangePagination from '@components/Pagination';
 
 import { styled } from '@mui/system';
 import { Layout, CustomContainer, CustomRow } from '@components/Common';
+import { PAGE_DEFAULT, PAGE_SIZE_DEFAULT } from '@src/constants';
 
 const BlogPage = styled('div')({
   width: '100%',
@@ -15,7 +19,8 @@ const BlogPage = styled('div')({
 });
 
 const BlogContent = styled('div')({
-  width: '100%'
+  width: '100%',
+  marginBottom: '40px'
 });
 
 const SectionTitle = styled('div')({
@@ -54,6 +59,13 @@ const Column = styled('div')({
     flex: '0 0 100%',
     maxWidth: '100%'
   }
+});
+
+const PaginationBox = styled('div')({
+  display: 'flex',
+  justifyContent: 'center',
+  alignItems: 'center',
+  padding: '20px 0'
 });
 
 const dataBlog = [
@@ -104,6 +116,7 @@ const dataBlog = [
 ];
 
 const Blog = () => {
+  const location: any = useLocation();
   const settingSlider = {
     dots: true,
     infinite: false,
@@ -114,12 +127,23 @@ const Blog = () => {
     draggable: false
   };
 
+  const { dataAllPost, getAllPostApi } = usePost();
+
+  const onPageChange = (event: React.ChangeEvent<unknown>, page: number) => {
+    getAllPostApi({ page: page - 1, pageSize: PAGE_SIZE_DEFAULT });
+  };
+
   React.useEffect(() => {
-    document.title = 'Thang Nguyen | Blog';
+    getAllPostApi({ page: PAGE_DEFAULT, pageSize: PAGE_SIZE_DEFAULT });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [ location ]);
+
+  React.useEffect(() => {
+    document.title = 'Thang Nguyen | Featured';
   }, []);
 
   return (
-    <Layout sx={{ height: 'calc(100vh - 72.5px)' }}>
+    <Layout sx={{ minHeight: 'calc(100vh - 72.5px)' }}>
       <HeaderSearch />
 
       <BlogPage>
@@ -135,12 +159,21 @@ const Blog = () => {
 
           <CustomContainer styles={{ maxWidth: '1100px', padding: '0' }}>
             <CustomRow>
-              {dataBlog?.map((item: any, index: number) => (
+              {dataAllPost && dataAllPost.items?.map((item, index) => (
                 <Column key={index}>
-                  {/*<CardPost data={item} />*/}
+                  <CardPost data={item} horizontal={false} redirectBlogDetail={true}/>
                 </Column>
               ))}
             </CustomRow>
+            {dataAllPost && dataAllPost.items.length > 0 && (
+              <PaginationBox>
+                <RangePagination
+                  count={dataAllPost.pageCount}
+                  page={dataAllPost.page + 1}
+                  onPageChange={onPageChange}
+                />
+              </PaginationBox>
+            )}
           </CustomContainer>
         </BlogContent>
       </BlogPage>

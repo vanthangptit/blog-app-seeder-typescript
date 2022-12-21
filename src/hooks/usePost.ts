@@ -4,7 +4,7 @@ import {
   useAppSelector
 } from '@store/configureStore';
 
-import { IPostParams } from '@src/models/IPosts';
+import { IPostParams, IPostParamsGetAll } from '@src/models/IPosts';
 import * as registerStore from '@store/post';
 
 export const usePost = () => {
@@ -12,12 +12,13 @@ export const usePost = () => {
   const {
     message,
     dataPost,
-    dataPostArray,
+    dataCreatorPosts,
+    dataAllPost,
     errorCode
   } = useAppSelector((state: RootState) => state.post);
 
-  const getAllPostApi = () => {
-    return dispatch(registerStore.getAllPostApi());
+  const getAllPostApi = (params: IPostParamsGetAll) => {
+    return dispatch(registerStore.getAllPostApi(params));
   };
 
   const getPostByShortUrlApi = (params:  { shortUrl: string }) => {
@@ -43,7 +44,8 @@ export const usePost = () => {
   return {
     message,
     dataPost,
-    dataPostArray,
+    dataAllPost,
+    dataCreatorPosts,
     errorCode,
     getAllPostApi,
     getPostByCreatorApi,
