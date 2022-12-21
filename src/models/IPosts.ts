@@ -1,6 +1,7 @@
 export interface IPostParamsGetAll {
   page: number
   pageSize: number
+  type?: string
 }
 
 export interface IPostParams {
@@ -52,6 +53,7 @@ export interface IPostCreateResponse {
 export interface IDataAllPost {
   count: number
   items: IPost[]
+  postLatestOfType?: IPost[]
   page: number
   pageCount: number
   pageSize: number

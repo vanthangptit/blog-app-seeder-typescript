@@ -21,11 +21,7 @@ const Card = styled('div')<{ horizontal: boolean }>(({ horizontal }) => ({
     flexDirection: 'column',
 
     '&:hover': {
-      boxShadow: '0px 12px 12px rgb(0 0 0 / 20%)',
-
-      '.card-image': {
-        transform: 'scale(1.2)'
-      }
+      boxShadow: '0px 12px 12px rgb(0 0 0 / 20%)'
     }
   })
 }));

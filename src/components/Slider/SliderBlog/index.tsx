@@ -102,7 +102,9 @@ const CardImage = styled('div')({
   padding: '0 16px',
 
   'img': {
-    borderRadius: '8px'
+    borderRadius: '8px',
+    height: '350px',
+    objectFit: 'cover'
   }
 });
 
@@ -221,19 +223,24 @@ const SliderBlog = ({ config, data }: IFProps) => {
             <CardSlider key={index}>
               <Card>
                 <CardImage>
-                  <img src={slide.image} alt={slide?.image ?? ''}/>
+                  <img src={slide.imageUrl} alt={slide.imageUrl}/>
                 </CardImage>
                 <CardBody>
-                  <CreateAt>Created at - <span>{slide?.createdAt}</span></CreateAt>
+                  <CreateAt>Created at - <span>{slide.createdAt}</span></CreateAt>
                   <CardBodyContent>
-                    <CustomTypographyH3 variant={'h3'}>{slide?.title}</CustomTypographyH3>
-                    <CustomTypographyParagraph variant="body2">{slide?.desc}</CustomTypographyParagraph>
+                    <CustomTypographyH3 variant={'h3'}>{slide.title}</CustomTypographyH3>
+                    {slide?.description && (
+                      <CustomTypographyParagraph variant="body2">{slide.description}</CustomTypographyParagraph>
+                    )}
                   </CardBodyContent>
                   <Author>
-                    <img src={slide?.author?.imageUrl} alt={slide?.author?.imageUrl ?? ''}/>
+                    <img
+                      src={'https://cv-front-end.s3.ap-southeast-1.amazonaws.com/images/vanthang.png'}
+                      alt={'https://cv-front-end.s3.ap-southeast-1.amazonaws.com/images/vanthang.png'}
+                    />
                     <AuthorInfo>
-                      <h5>{slide?.author?.name}</h5>
-                      <p>{slide?.author?.position}</p>
+                      <h5>{slide.author?.lastName + ' ' + slide.author?.firstName}</h5>
+                      <p>Author</p>
                     </AuthorInfo>
                   </Author>
                 </CardBody>

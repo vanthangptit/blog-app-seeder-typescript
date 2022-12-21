@@ -9,7 +9,7 @@ import RangePagination from '@components/Pagination';
 
 import { styled } from '@mui/system';
 import { Layout, CustomContainer, CustomRow } from '@components/Common';
-import { PAGE_DEFAULT, PAGE_SIZE_DEFAULT } from '@src/constants';
+import { PAGE_DEFAULT, PAGE_SIZE_DEFAULT, TYPE_BLOG } from '@src/constants';
 
 const BlogPage = styled('div')({
   width: '100%',
@@ -68,53 +68,6 @@ const PaginationBox = styled('div')({
   padding: '20px 0'
 });
 
-const dataBlog = [
-  {
-    image: 'https://cv-front-end.s3.ap-southeast-1.amazonaws.com/images/image-banner.jpeg',
-    createdAt: 'July 2, 2022',
-    title: 'Title 1',
-    desc: 'Desc 2',
-    author: {
-      imageUrl: 'https://cv-front-end.s3.ap-southeast-1.amazonaws.com/images/vanthang.png',
-      name: 'daniel',
-      position: 'Author'
-    }
-  },
-  {
-    image: 'https://cv-front-end.s3.ap-southeast-1.amazonaws.com/images/image-banner.jpeg',
-    createdAt: 'July 2, 2022',
-    title: 'Title 1',
-    desc: 'Desc 2',
-    author: {
-      imageUrl: 'https://cv-front-end.s3.ap-southeast-1.amazonaws.com/images/vanthang.png',
-      name: 'daniel',
-      position: 'Author'
-    }
-  },
-  {
-    image: 'https://cv-front-end.s3.ap-southeast-1.amazonaws.com/images/image-banner.jpeg',
-    createdAt: 'July 2, 2022',
-    title: 'Title 1',
-    desc: 'Desc 2',
-    author: {
-      imageUrl: 'https://cv-front-end.s3.ap-southeast-1.amazonaws.com/images/vanthang.png',
-      name: 'daniel',
-      position: 'Author'
-    }
-  },
-  {
-    image: 'https://cv-front-end.s3.ap-southeast-1.amazonaws.com/images/image-banner.jpeg',
-    createdAt: 'July 2, 2022',
-    title: 'Title 1',
-    desc: 'Desc 2',
-    author: {
-      imageUrl: 'https://cv-front-end.s3.ap-southeast-1.amazonaws.com/images/vanthang.png',
-      name: 'daniel',
-      position: 'Author'
-    }
-  }
-];
-
 const Blog = () => {
   const location: any = useLocation();
   const settingSlider = {
@@ -128,10 +81,19 @@ const Blog = () => {
   };
   const refCustomContainer = React.useRef<any>(null);
 
-  const { dataAllPost, getAllPostApi } = usePost();
+  const types = () => {
+    return TYPE_BLOG.map((item) => item.value);
+  };
+
+  const typeCallback = React.useCallback(() => types().toString(), []);
+
+  const {
+    dataAllPost,
+    getAllPostApi
+  } = usePost();
 
   const onPageChange = (event: React.ChangeEvent<unknown>, page: number) => {
-    getAllPostApi({ page: page - 1, pageSize: PAGE_SIZE_DEFAULT })
+    getAllPostApi({ page: page - 1, pageSize: PAGE_SIZE_DEFAULT, type: typeCallback() })
       .unwrap()
       .then((res) => {
         if (res.status === 200) {
@@ -141,7 +103,11 @@ const Blog = () => {
   };
 
   React.useEffect(() => {
-    getAllPostApi({ page: PAGE_DEFAULT, pageSize: PAGE_SIZE_DEFAULT });
+    getAllPostApi({
+      page: PAGE_DEFAULT,
+      pageSize: PAGE_SIZE_DEFAULT,
+      type: typeCallback()
+    });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [ location ]);
 
@@ -160,29 +126,33 @@ const Blog = () => {
             <p>Place to keep memories</p>
           </SectionTitle>
 
-          <SliderPost>
-            <SliderBlog config={settingSlider} data={dataBlog}/>
-          </SliderPost>
+          {dataAllPost && dataAllPost.postLatestOfType && dataAllPost.items.length > 0 && dataAllPost?.postLatestOfType.length > 0 && (
+            <>
+              <SliderPost>
+                <SliderBlog config={settingSlider} data={dataAllPost.postLatestOfType}/>
+              </SliderPost>
 
-          <CustomContainer styles={{ maxWidth: '1100px', padding: '0' }} ref={refCustomContainer}>
-            <CustomRow>
-              {dataAllPost && dataAllPost.items?.map((item, index) => (
-                <Column key={index}>
-                  <CardPost data={item} horizontal={false} redirectBlogDetail={true}/>
-                </Column>
-              ))}
-            </CustomRow>
-            {dataAllPost && dataAllPost.items.length > 0 && (
-              <PaginationBox>
-                <RangePagination
-                  defaultPage={1}
-                  count={dataAllPost.pageCount}
-                  page={dataAllPost.page + 1}
-                  onPageChange={onPageChange}
-                />
-              </PaginationBox>
-            )}
-          </CustomContainer>
+              <CustomContainer styles={{ maxWidth: '1100px', padding: '0' }} ref={refCustomContainer}>
+                <CustomRow>
+                  {dataAllPost && dataAllPost.items?.map((item, index) => (
+                    <Column key={index}>
+                      <CardPost data={item} horizontal={false} redirectBlogDetail={true}/>
+                    </Column>
+                  ))}
+                </CustomRow>
+                {dataAllPost && dataAllPost.items.length > 0 && (
+                  <PaginationBox>
+                    <RangePagination
+                      defaultPage={1}
+                      count={dataAllPost.pageCount}
+                      page={dataAllPost.page + 1}
+                      onPageChange={onPageChange}
+                    />
+                  </PaginationBox>
+                )}
+              </CustomContainer>
+            </>
+          )}
         </BlogContent>
       </BlogPage>
 
