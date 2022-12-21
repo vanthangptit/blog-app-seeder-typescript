@@ -3,16 +3,17 @@ import SignIn from '@components/SignIn';
 import HeaderSearch from '@components/Header/search';
 import CardPost from '@components/Cards/CardPost';
 import LoadingSection from '@components/LoadingSection';
-import { NavLink, useLocation } from 'react-router-dom';
+import { NavLink, useLocation, useNavigate } from 'react-router-dom';
 import { usePost } from '@hooks/usePost';
 import Cookies from 'js-cookie';
 
-import { USERNAME_COOKIE } from '@src/constants';
+import { USERNAME_COOKIE, SITES_URL } from '@src/constants';
 import { styled } from '@mui/system';
 import { CustomContainer, CustomRow } from '@components/Common';
 import { AiOutlineEdit, AiOutlineDelete } from 'react-icons/ai';
 import ConfirmModal from '@components/Modal/ModalConfirm';
 import { IPost } from '@models/IPosts';
+import { Button } from '@mui/material';
 
 const Layout = styled('div')<{ isStyle: boolean }>(({ isStyle }) => ({
   ...(isStyle && {
@@ -72,6 +73,7 @@ const ActionButtons = styled('div')({
 });
 
 const MyPost = () => {
+  const navigate = useNavigate();
   const location: any = useLocation();
   const username = Cookies.get(USERNAME_COOKIE);
   const usernameJson = React.useRef<any>();
@@ -181,6 +183,18 @@ const MyPost = () => {
                 ) : (
                   <Column>
                     <h3>Your has no post.</h3>
+                    <Button
+                      onClick={() => navigate(SITES_URL.CREATE_POST)}
+                      size="large"
+                      type="submit"
+                      variant="outlined"
+                      sx={{
+                        textTransform: 'upercase',
+                        marginTop: '20px'
+                      }}
+                    >
+                      Create post
+                    </Button>
                   </Column>
                 )}
               </CustomRow>

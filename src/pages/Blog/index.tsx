@@ -126,7 +126,7 @@ const Blog = () => {
             <p>Place to keep memories</p>
           </SectionTitle>
 
-          {dataAllPost && dataAllPost.postLatestOfType && dataAllPost.items.length > 0 && dataAllPost?.postLatestOfType.length > 0 && (
+          {dataAllPost && dataAllPost.postLatestOfType && dataAllPost.items.length > 0 && dataAllPost?.postLatestOfType.length > 0 ? (
             <>
               <SliderPost>
                 <SliderBlog config={settingSlider} data={dataAllPost.postLatestOfType}/>
@@ -151,6 +151,10 @@ const Blog = () => {
                   </PaginationBox>
                 )}
               </CustomContainer>
+            </>
+          ) : (
+            <>
+              <h3>Has no post.</h3>
             </>
           )}
         </BlogContent>
