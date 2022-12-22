@@ -414,9 +414,9 @@ const CreatePost = () => {
                       label="Enter a title.."
                       autoComplete="title"
                       autoFocus
-                      {...register('title', { minLength: 5, pattern: /^[a-zA-Z0-9!?&.\-\s]+$/ })}
+                      {...register('title', { required: true, minLength: 5, maxLength: 50 })}
                     />
-                    {errors.title && <MessageError style={{ margin: '0' }}>Excerpt must between 5 - 255 .</MessageError>}
+                    {errors.title && <MessageError style={{ margin: '0' }}>Title required and must between 5 - 255 characters.</MessageError>}
                   </GroupField>
 
                   <GroupField>
