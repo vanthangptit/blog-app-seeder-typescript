@@ -109,6 +109,10 @@ export const TYPE_BLOG = [
     value: 'learn'
   },
   {
+    label: 'Technology',
+    value: 'technology'
+  },
+  {
     label: 'True Love',
     value: 'love'
   },
