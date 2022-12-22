@@ -88,6 +88,7 @@ const BoxImage = styled('div')({
   justifyContent: 'center',
 
   'img': {
+    width: '100%',
     objectFit: 'cover'
   }
 });
