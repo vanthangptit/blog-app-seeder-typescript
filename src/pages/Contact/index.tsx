@@ -13,7 +13,7 @@ import {
 } from '@mui/material';
 import { BiLock } from 'react-icons/bi';
 import { styled } from '@mui/system';
-import { SITES_URL } from '@src/constants';
+import { SITES_URL, MODE_CV } from '@src/constants';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { useContact } from '@hooks/useContact';
 import { IGuestContactParams } from '@models/IContact';
@@ -98,7 +98,7 @@ const Contact = () => {
 
   return (
     <Layout
-      paddingNav={true}
+      paddingNav={MODE_CV && true}
       scrollBar={true}
       flexMiddle={true}
       styles={{ backgroundColor: '#1e464a' }}

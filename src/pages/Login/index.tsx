@@ -4,7 +4,7 @@ import { NavLink, useNavigate, useLocation } from 'react-router-dom';
 import { useTokenUser } from '@hooks/useTokenUser';
 import { useLogin } from '@hooks/useLogin';
 import { useUser } from '@hooks/useRegister';
-import { SITES_URL } from '@src/constants';
+import { MODE_CV, SITES_URL } from '@src/constants';
 
 import {
   Avatar,
@@ -80,10 +80,11 @@ const Login = () => {
 
   return (
     <Layout
-      paddingNav={true}
+      paddingNav={MODE_CV && true}
       scrollBar={true}
       flexMiddle={true}
       styles={{ backgroundColor: '#1e464a' }}
+      style={{ paddingTop: '89px' }}
     >
       <CustomContainer
         styles={{
