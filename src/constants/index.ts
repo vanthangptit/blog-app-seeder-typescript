@@ -93,20 +93,32 @@ export const TYPE_BLOG = [
     value: 'life'
   },
   {
-    label: 'True Love',
-    value: 'love'
-  },
-  {
-    label: 'Healthy',
-    value: 'healthy'
-  },
-  {
     label: 'Society',
     value: 'society'
   },
   {
+    label: 'History',
+    value: 'history'
+  },
+  {
+    label: 'Travelling',
+    value: 'travel'
+  },
+  {
+    label: 'Learn about',
+    value: 'learn'
+  },
+  {
+    label: 'True Love',
+    value: 'love'
+  },
+  {
     label: 'Poems',
     value: 'poem'
+  },
+  {
+    label: 'Review',
+    value: 'review'
   }
 ];
 
