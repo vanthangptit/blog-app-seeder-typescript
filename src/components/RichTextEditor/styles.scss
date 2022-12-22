@@ -33,6 +33,20 @@ $font-size: (
   }
 }
 
+.ql-align {
+  &-right {
+    text-align: right;
+  }
+
+  &-justify {
+    text-align: justify;
+  }
+
+  &-center {
+    text-align: center;
+  }
+}
+
 .ql-snow .ql-picker.ql-size {
   width: 60px;
 }

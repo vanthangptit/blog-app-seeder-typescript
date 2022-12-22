@@ -83,7 +83,13 @@ const Breadcrumb = styled('div')({
 });
 
 const BoxImage = styled('div')({
-  marginBottom: '20px'
+  marginBottom: '20px',
+  display: 'flex',
+  justifyContent: 'center',
+
+  'img': {
+    objectFit: 'cover'
+  }
 });
 
 const Content = styled('div')({});
