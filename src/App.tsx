@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { BrowserRouter as Router, Navigate, Route, Routes } from 'react-router-dom';
 import Header from '@components/Header';
+import HeaderSearch from '@components/Header/search';
 import Footer from '@components/Footer';
 import Home from './pages/Home';
 import Blog from './pages/Blog';
@@ -26,7 +27,7 @@ const PrivateRoute = ({ children, path }: any) => {
 function App() {
   return (
     <Router>
-      {MODE_CV && <Header />}
+      {MODE_CV ? <Header /> : <HeaderSearch />}
 
       <main className="main">
         <Routes>

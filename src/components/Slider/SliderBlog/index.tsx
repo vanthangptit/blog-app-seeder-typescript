@@ -74,9 +74,9 @@ const BoxSlider = styled('div')({
   },
 
   '@media (max-width: 768px)': {
-    '.slick-list': {
-      marginLeft: '-20px'
-    },
+    // '.slick-list': {
+    //   marginLeft: '-20px'
+    // },
 
     '.slick-slide': {
       paddingLeft: '20px'
@@ -91,8 +91,8 @@ const BoxSlider = styled('div')({
 const CardSlider = styled('div')({});
 
 const Card = styled('div')({
-  width: '100%',
   display: 'flex',
+  flexWrap: 'wrap',
   margin: '0 -16px'
 });
 
@@ -105,13 +105,23 @@ const CardImage = styled('div')({
     borderRadius: '8px',
     height: '350px',
     objectFit: 'cover'
+  },
+
+  '@media (max-width: 991px)': {
+    flex: '0 0 100%',
+    maxWidth: '100%'
   }
 });
 
 const CardBody = styled('div')({
   flex: '0 0 60%',
   maxWidth: '60%',
-  padding: '0 16px'
+  padding: '0 16px',
+
+  '@media (max-width: 991px)': {
+    flex: '0 0 100%',
+    maxWidth: '100%'
+  }
 });
 
 const CreateAt = styled('div')({
@@ -130,43 +140,43 @@ const CardBodyContent = styled('div')({
   margin: '15px 0 20px'
 });
 
-const CustomTypographyH3 = styled(Typography)({
-  fontSize: '44px',
-  fontFamily: 'Roboto-Black, sans-serif',
-  display: '-webkit-box',
-  lineClamp: '2',
-  boxOrient: 'vertical',
-  overflow: 'hidden',
-  textOverflow: 'ellipsis',
-  marginBottom: '12px',
+const CustomTypographyH3 = styled(Typography)`
+  font-size: 44px;
+  font-family: 'Roboto-Black', sans-serif;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin-bottom: '12px',
 
   '@media (min-width: 768px) and (max-width: 991px)': {
-    fontSize: 'calc(22px + (44 - 22) * (100vw - 768px) / (991 - 768))'
+    font-size: calc(22px + (44 - 22) * (100vw - 768px) / (991 - 768));
   },
 
-  '@media (max-width: 767px)': {
-    fontSize: 'calc(18px + (23 - 18) * (100vw - 360px) / (767 - 360))'
+  @media (max-width: 767px) {
+    font-size: calc(18px + (23 - 18) * (100vw - 360px) / (767 - 360));
   }
-});
+`;
 
-const CustomTypographyParagraph = styled(Typography)({
-  color: '#aaa',
-  fontSize: '18px',
-  fontFamily: 'Roboto-Bold, sans-serif',
-  display: '-webkit-box',
-  lineClamp: '2',
-  boxOrient: 'vertical',
-  overflow: 'hidden',
-  textOverflow: 'ellipsis',
+const Description = styled('div')`
+  font-size: #aaa;
+  font-size: 18px;
+  font-family: 'Roboto-Bold', sans-serif;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
 
-  '@media (min-width: 768px) and (max-width: 991px)': {
-    fontSize: 'calc(14px + (18 - 14) * (100vw - 768px) / (991 - 768))'
-  },
-
-  '@media (max-width: 767px)': {
-    fontSize: '14px'
+  @media (min-width: 768px) and (max-width: 991px) {
+    font-size: calc(14px + (18 - 14) * (100vw - 768px) / (991 - 768));
   }
-});
+
+  @media (max-width: 767px): {
+    font-size: '14px'
+  }
+`;
 
 const Author = styled('div')({
   display: 'flex',
@@ -230,7 +240,7 @@ const SliderBlog = ({ config, data }: IFProps) => {
                   <CardBodyContent>
                     <CustomTypographyH3 variant={'h3'}>{slide.title}</CustomTypographyH3>
                     {slide?.description && (
-                      <CustomTypographyParagraph variant="body2">{slide.description}</CustomTypographyParagraph>
+                      <Description dangerouslySetInnerHTML={{ __html: slide.description }} />
                     )}
                   </CardBodyContent>
                   <Author>

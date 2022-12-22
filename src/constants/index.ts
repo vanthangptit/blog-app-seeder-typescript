@@ -12,6 +12,15 @@ export const MODE_CV = process.env.REACT_APP_MODE_CV === 'true';
 export const ACCESS_TOKEN = 'accessToken';
 export const USERNAME_COOKIE = 'username';
 
+export const SEARCH = {
+  ACTION_TYPES: {
+    SEARCH_POST: 'APPS/SEARCH_POST'
+  },
+  URL_API: {
+    SEARCH_POST: `${API_POST_URL}/search`
+  }
+};
+
 export const POST = {
   ACTION_TYPES: {
     GET_ALL_POST: 'APPS/GET_ALL_POST',

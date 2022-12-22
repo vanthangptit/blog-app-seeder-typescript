@@ -1,6 +1,5 @@
 import * as React from 'react';
 import SignIn from '@components/SignIn';
-import HeaderSearch from '@components/Header/search';
 import CardPost from '@components/Cards/CardPost';
 import LoadingSection from '@components/LoadingSection';
 import { NavLink, useLocation, useNavigate } from 'react-router-dom';
@@ -16,6 +15,8 @@ import { IPost } from '@models/IPosts';
 import { Button } from '@mui/material';
 
 const Layout = styled('div')<{ isStyle: boolean }>(({ isStyle }) => ({
+  padding: '89px 16px 0',
+
   ...(isStyle && {
     height: 'calc(100vh - 72.5px)',
     display: 'flex',
@@ -145,8 +146,6 @@ const MyPost = () => {
 
   return (
     <Layout isStyle={loading || !dataCreatorPosts || !dataCreatorPosts.length}>
-      <HeaderSearch />
-
       {loading ? (
         <LoadingSection />
       ) : (

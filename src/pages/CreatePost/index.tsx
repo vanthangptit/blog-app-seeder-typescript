@@ -15,10 +15,9 @@ import { usePost } from '@hooks/usePost';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 import LoadingSection from '@components/LoadingSection';
 import NotFound from '@components/NotFound';
-import HeaderSearch from '@components/Header/search';
 
 const Layout = styled('div')<{ isStyle: boolean }>(({ isStyle }) => ({
-  padding: '16px',
+  padding: '89px 16px 0',
 
   ...(isStyle && {
     height: 'calc(100vh - 72.5px)',
@@ -390,8 +389,6 @@ const CreatePost = () => {
 
   return (
     <Layout isStyle={shortUrl ? (!dataPost || loading) : false}>
-      <HeaderSearch />
-
       {shortUrl && loading ? (
         <LoadingSection />
       ) : shortUrl && !dataPost ? (

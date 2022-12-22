@@ -5,12 +5,13 @@ import { usePost } from '@hooks/usePost';
 import LoadingSection from '@components/LoadingSection';
 import { styled } from '@mui/system';
 import NotFound from '@components/NotFound';
-import HeaderSearch from '@components/Header/search';
 import { formatDatetime } from '@utils/formatDatetime';
 
 import { AiOutlineRight } from 'react-icons/ai';
 
 const Layout = styled('div')<{ isStyle: boolean }>(({ isStyle }) => ({
+  padding: '89px 16px 0',
+
   ...(isStyle && {
     height: 'calc(100vh - 72.5px)',
     display: 'flex',
@@ -33,7 +34,7 @@ const Heading = styled('h1')({
 
 const ContentBox = styled('div')({
   maxWidth: '900px',
-  margin: '120px auto 80px',
+  margin: '100px auto 80px',
   boxShadow: '0 0 15px rgb(0 0 0 / 12%)',
   padding: '20px'
 });
@@ -120,8 +121,6 @@ const BlogDetail = () => {
 
   return (
     <Layout isStyle={!dataPost || loading}>
-      <HeaderSearch />
-
       {loading ? (
         <LoadingSection />
       ) : !dataPost ? (

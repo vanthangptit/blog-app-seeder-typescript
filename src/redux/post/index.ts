@@ -10,7 +10,7 @@ import {
 import { POST, USERNAME_COOKIE } from '@src/constants';
 import Cookies from 'js-cookie';
 
-interface IFLoginState {
+interface IFPostState {
   message: string
   dataPost?: IPost
   dataCreatorPosts?: IPost[]
@@ -18,7 +18,7 @@ interface IFLoginState {
   errorCode?: string
 }
 
-const initialState: IFLoginState = {
+const initialState: IFPostState = {
   message: '',
   dataPost: undefined,
   errorCode: undefined

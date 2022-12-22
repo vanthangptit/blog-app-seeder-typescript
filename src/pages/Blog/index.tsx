@@ -2,7 +2,6 @@ import * as React from 'react';
 import SignIn from '@components/SignIn';
 import CardPost from '@components/Cards/CardPost';
 import SliderBlog from '@components/Slider/SliderBlog';
-import HeaderSearch from '@components/Header/search';
 import { usePost } from '@hooks/usePost';
 import { useLocation } from 'react-router-dom';
 import RangePagination from '@components/Pagination';
@@ -41,7 +40,11 @@ const SectionTitle = styled('div')({
 
 const SliderPost = styled('div')({
   width: '100%',
-  overflow: 'hidden'
+  overflow: 'hidden',
+
+  '@media (max-width: 991px)': {
+    marginBottom: '40px'
+  }
 });
 
 const Column = styled('div')({
@@ -116,9 +119,7 @@ const Blog = () => {
   }, []);
 
   return (
-    <Layout sx={{ minHeight: 'calc(100vh - 72.5px)' }}>
-      <HeaderSearch />
-
+    <Layout sx={{ minHeight: 'calc(100vh - 72.5px)', padding: '89px 16px 0' }}>
       <BlogPage>
         <BlogContent>
           <SectionTitle>

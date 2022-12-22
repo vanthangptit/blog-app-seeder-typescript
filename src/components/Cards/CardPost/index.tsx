@@ -77,34 +77,34 @@ const CardBodyContent = styled('div')<{ horizontal: boolean }>(({ horizontal }) 
   })
 }));
 
-const CustomTypographyH3 = styled(Typography)({
-  fontSize: '23px',
-  fontFamily: 'Roboto-Bold, sans-serif',
-  display: '-webkit-box',
-  lineClamp: '2',
-  boxOrient: 'vertical',
-  overflow: 'hidden',
-  textOverflow: 'ellipsis',
-  marginBottom: '12px',
+const CustomTypographyH3 = styled(Typography)`
+  font-size: 23px;
+  font-family: 'Roboto-Bold, sans-serif';
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin-bottom: 12px;
 
-  '@media (max-width: 767px)': {
-    fontSize: 'calc(18px + (23 - 18) * (100vw - 360px) / (767 - 360))'
+  @media (max-width: 767px) {
+    font-size: calc(18px + (23 - 18) * (100vw - 360px) / (767 - 360));
   }
-});
+`;
 
-const CustomTypographyParagraph = styled(Typography)({
-  color: '#aaa',
-  fontSize: '15px',
-  display: '-webkit-box',
-  lineClamp: '2',
-  boxOrient: 'vertical',
-  overflow: 'hidden',
-  textOverflow: 'ellipsis',
+const CustomTypographyParagraph = styled(Typography)`
+  color: #aaa;
+  font-size: 15px;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
 
-  '@media (max-width: 767px)': {
-    fontSize: '14px'
+  @media (max-width: 767px) {
+    fontSize: 14px;
   }
-});
+`;
 
 const Author = styled('div')({
   display: 'flex',
