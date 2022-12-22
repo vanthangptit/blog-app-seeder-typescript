@@ -53,11 +53,11 @@ const Login = () => {
             username: rs.data.username,
             accessToken: rs.data.accessToken
           });
-          navigate(navigateTo ?? SITES_URL.DASHBOARD);
           reset({
             account: '',
             password: ''
           });
+          navigate(navigateTo ?? SITES_URL.DASHBOARD);
         }
       });
   };

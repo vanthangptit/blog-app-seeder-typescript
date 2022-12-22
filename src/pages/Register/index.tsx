@@ -4,7 +4,7 @@ import { useForm, SubmitHandler } from 'react-hook-form';
 import { useUser } from '@hooks/useRegister';
 import { MessageError } from '@components/MessageError';
 import { CustomContainer, Layout } from '@components/Common';
-import { SITES_URL } from '@src/constants';
+import { MODE_CV, SITES_URL } from '@src/constants';
 
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
@@ -26,7 +26,8 @@ const Register = () => {
       errors
     },
     handleSubmit,
-    reset
+    reset,
+    getValues
   } = useForm<IUserParams>();
 
   const {
@@ -42,14 +43,16 @@ const Register = () => {
       .unwrap()
       .then((rs) => {
         if (rs.status === 200) {
-          navigate(SITES_URL.LOGIN);
-
           reset({
             firstName: '',
             lastName: '',
             username: '',
-            email: ''
+            email: '',
+            password: '',
+            confirmPassword: ''
           });
+
+          navigate(SITES_URL.LOGIN);
         }
       });
   };
@@ -60,7 +63,7 @@ const Register = () => {
 
   return (
     <Layout
-      paddingNav={true}
+      paddingNav={MODE_CV && true}
       scrollBar={true}
       flexMiddle={true}
       styles={{ backgroundColor: '#1e464a' }}
@@ -148,6 +151,22 @@ const Register = () => {
                   {...register('password', { required: true, minLength: 8, pattern: /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z]{8,}$/ })}
                 />
                 {errors.email && <MessageError sx={{ mt: 1 }}>Password must contain at least one lower case, upper case letter and number.</MessageError>}
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  margin="normal"
+                  required
+                  fullWidth
+                  label="Repeat Password"
+                  type="password"
+                  id="confirmPassword"
+                  autoComplete="current-password"
+                  {...register('confirmPassword', {
+                    validate: (value) =>
+                      value === getValues('password')
+                  })}
+                />
+                {errors.confirmPassword && <MessageError>Passwords do not match</MessageError>}
               </Grid>
             </Grid>
             <Button

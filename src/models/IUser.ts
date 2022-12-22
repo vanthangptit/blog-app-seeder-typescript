@@ -5,6 +5,7 @@ export interface IUserParams {
   username: any
   email: string
   password: any
+  confirmPassword: any
 }
 
 export interface IUserResponse {

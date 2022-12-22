@@ -57,6 +57,7 @@ const ListBox = styled(List)({
   padding: '10px 0',
   borderRadius: '3px',
   width: '100%',
+  minWidth: '150px',
   maxHeight: '280px',
   overflowX: 'hidden',
   overflowY: 'auto',
