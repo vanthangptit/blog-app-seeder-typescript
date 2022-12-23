@@ -161,7 +161,7 @@ const MyPost = () => {
                 {dataCreatorPosts && dataCreatorPosts.length > 0 ? dataCreatorPosts.map((item, index) => (
                   <Column key={index}>
                     <ColumnBox>
-                      <CardPost data={item} horizontal={true}/>
+                      <CardPost data={item} horizontal={true} redirectBlogDetail={true}/>
                       <ActionButtons>
                         <NavLink to={`/edit-post/${item.shortUrl}`} style={{ color: '#009109' }}>
                           <AiOutlineEdit size={20} />
