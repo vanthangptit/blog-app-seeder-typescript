@@ -36,7 +36,7 @@ const ContentBox = styled('div')({
   maxWidth: '900px',
   margin: '100px auto 80px',
   boxShadow: '0 0 15px rgb(0 0 0 / 12%)',
-  padding: '20px'
+  padding: '30px 20px'
 });
 
 const ContentBoxTop = styled('div')({
@@ -83,7 +83,7 @@ const Breadcrumb = styled('div')({
 });
 
 const BoxImage = styled('div')({
-  marginBottom: '20px',
+  marginBottom: '25px',
   display: 'flex',
   justifyContent: 'center',
 
@@ -93,7 +93,12 @@ const BoxImage = styled('div')({
   }
 });
 
-const Content = styled('div')({});
+const Content = styled('div')({
+  '*': {
+    padding: 0,
+    margin: 0
+  }
+});
 
 const BlogDetail = () => {
   const { shortUrl } = useParams();
