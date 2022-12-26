@@ -447,7 +447,7 @@ const CreatePost = () => {
                       </GroupField>
                     </ColumnField>
                     <ColumnField>
-                      <GroupField sx={{ pb: 0 }}>
+                      <GroupField>
                         <LabelField>Post Type</LabelField>
                         <FormControl fullWidth>
                           <InputLabel id="post-type-select-label">Type</InputLabel>

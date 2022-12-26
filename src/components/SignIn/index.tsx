@@ -171,6 +171,7 @@ const SignIn = () => {
     <UserContainer>
       <FeaturedLink type='button' to={SITES_URL.BLOG}>Featured</FeaturedLink>
       <FeaturedLink type='button' to={'#'} onClick={(e) => e.preventDefault()}>FAQ</FeaturedLink>
+      <FeaturedLink type='button' to={SITES_URL.CONTACT}>Contact</FeaturedLink>
 
       {accessToken && username ? (
         <UserBox ref={userBoxNode}>
