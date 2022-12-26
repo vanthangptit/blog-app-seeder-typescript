@@ -115,7 +115,7 @@ export const appPostSlice = createSlice({
           const data = action.payload.data;
           const shortUrlOfPostLatest: string[] = [];
           data.postLatestOfType?.forEach((itemLatest: IPost) => {
-            shortUrlOfPostLatest.push(itemLatest.shortUrl)
+            shortUrlOfPostLatest.push(itemLatest.shortUrl);
           });
           data.items = data.items?.filter((item: IPost) => shortUrlOfPostLatest.indexOf(item.shortUrl) === -1);
           state.dataAllPost = data;
