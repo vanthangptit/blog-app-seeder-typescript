@@ -104,6 +104,7 @@ const CustomTypographyParagraph = styled(Typography)`
     color: #aaa;
     font-size: 15px;
     font-size: Roboto-Regular, sans-serif;
+    margin: 0;
 
     @media (max-width: 767px) {
       fontSize: 14px;

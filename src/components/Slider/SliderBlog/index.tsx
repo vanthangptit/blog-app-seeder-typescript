@@ -171,6 +171,7 @@ const Description = styled('div')`
     color: #aaa;
     font-size: 18px;
     font-family: Roboto-Bold, sans-serif;
+    margin: 0;
 
     @media (min-width: 768px) and (max-width: 991px) {
       font-size: calc(14px + (18 - 14) * (100vw - 768px) / (991 - 768));
