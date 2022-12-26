@@ -1,10 +1,12 @@
 import * as React from 'react';
 import SignIn from '@components/SignIn';
+import Maintenance from '@components/Maintenance';
 
 const Users = () => {
   return (
     <div>
-      <h1>Users Page</h1>
+      <Maintenance />
+
       <SignIn />
     </div>
   );

@@ -144,15 +144,21 @@ const CustomTypographyH3 = styled(Typography)`
   font-size: 44px;
   font-family: 'Roboto-Black', sans-serif;
   display: -webkit-box;
-  -webkit-line-clamp: 2;
+  -webkit-line-clamp: 4;
   -webkit-box-orient: vertical;
   overflow: hidden;
   text-overflow: ellipsis;
-  margin-bottom: '12px',
+  margin-bottom: 12px;
 
-  '@media (min-width: 768px) and (max-width: 991px)': {
+  * {
+    text-align: left;
+    margin: 0;
+    padding: 0;
+  }
+
+  @media (min-width: 768px) and (max-width: 991px): {
     font-size: calc(22px + (44 - 22) * (100vw - 768px) / (991 - 768));
-  },
+  };
 
   @media (max-width: 767px) {
     font-size: calc(18px + (23 - 18) * (100vw - 360px) / (767 - 360));

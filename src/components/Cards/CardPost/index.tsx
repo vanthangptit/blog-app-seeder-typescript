@@ -40,6 +40,7 @@ const CardImage = styled('div')<{ horizontal: boolean }>(({ horizontal }) => ({
 
   ...(horizontal && {
     'img': {
+      width: '100%',
       height: '100%',
       objectFit: 'cover'
     }
@@ -93,16 +94,20 @@ const CustomTypographyH3 = styled(Typography)`
 `;
 
 const CustomTypographyParagraph = styled(Typography)`
-  color: #aaa;
-  font-size: 15px;
   display: -webkit-box;
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
   overflow: hidden;
   text-overflow: ellipsis;
 
-  @media (max-width: 767px) {
-    fontSize: 14px;
+  pre {
+    color: #aaa;
+    font-size: 15px;
+    font-size: 'Roboto-Regular, sans-serif';
+
+    @media (max-width: 767px) {
+      fontSize: 14px;
+    }
   }
 `;
 
@@ -151,7 +156,9 @@ const CardPost = ({ data, horizontal, redirectBlogDetail }: { data: IPost, horiz
         <CardBodyContent horizontal={horizontal}>
           <CreateAt>Created at - <span>{moment(data.createdAt).format('ll')}</span></CreateAt>
           <CustomTypographyH3 variant={'h3'}>{data.title}</CustomTypographyH3>
-          <CustomTypographyParagraph variant="body2">{data.excerpt}</CustomTypographyParagraph>
+          <CustomTypographyParagraph variant="body2">
+            <pre dangerouslySetInnerHTML={{ __html: data.excerpt }} />
+          </CustomTypographyParagraph>
         </CardBodyContent>
         <Author>
           <img
