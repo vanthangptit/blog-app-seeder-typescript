@@ -80,7 +80,7 @@ const CardBodyContent = styled('div')<{ horizontal: boolean }>(({ horizontal }) 
 
 const CustomTypographyH3 = styled(Typography)`
   font-size: 23px;
-  font-family: 'Roboto-Bold, sans-serif';
+  font-family: Roboto-Bold, sans-serif;
   display: -webkit-box;
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
@@ -103,7 +103,7 @@ const CustomTypographyParagraph = styled(Typography)`
   pre {
     color: #aaa;
     font-size: 15px;
-    font-size: 'Roboto-Regular, sans-serif';
+    font-size: Roboto-Regular, sans-serif;
 
     @media (max-width: 767px) {
       fontSize: 14px;

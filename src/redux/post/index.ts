@@ -112,7 +112,13 @@ export const appPostSlice = createSlice({
         state.message = action.payload.message;
 
         if (action.payload.status === 200) {
-          state.dataAllPost = action.payload.data;
+          const data = action.payload.data;
+          const shortUrlOfPostLatest: string[] = [];
+          data.postLatestOfType?.forEach((itemLatest: IPost) => {
+            shortUrlOfPostLatest.push(itemLatest.shortUrl)
+          });
+          data.items = data.items?.filter((item: IPost) => shortUrlOfPostLatest.indexOf(item.shortUrl) === -1);
+          state.dataAllPost = data;
         } else {
           state.errorCode = action.payload.errorCode;
         }

@@ -142,19 +142,13 @@ const CardBodyContent = styled('div')({
 
 const CustomTypographyH3 = styled(Typography)`
   font-size: 44px;
-  font-family: 'Roboto-Black', sans-serif;
+  font-family: Roboto-Black, sans-serif;
   display: -webkit-box;
   -webkit-line-clamp: 4;
   -webkit-box-orient: vertical;
   overflow: hidden;
   text-overflow: ellipsis;
   margin-bottom: 12px;
-
-  * {
-    text-align: left;
-    margin: 0;
-    padding: 0;
-  }
 
   @media (min-width: 768px) and (max-width: 991px): {
     font-size: calc(22px + (44 - 22) * (100vw - 768px) / (991 - 768));
@@ -167,20 +161,24 @@ const CustomTypographyH3 = styled(Typography)`
 
 const Description = styled('div')`
   font-size: #aaa;
-  font-size: 18px;
-  font-family: 'Roboto-Bold', sans-serif;
   display: -webkit-box;
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
   overflow: hidden;
   text-overflow: ellipsis;
 
-  @media (min-width: 768px) and (max-width: 991px) {
-    font-size: calc(14px + (18 - 14) * (100vw - 768px) / (991 - 768));
-  }
+  pre {
+    color: #aaa;
+    font-size: 18px;
+    font-family: Roboto-Bold, sans-serif;
 
-  @media (max-width: 767px): {
-    font-size: '14px'
+    @media (min-width: 768px) and (max-width: 991px) {
+      font-size: calc(14px + (18 - 14) * (100vw - 768px) / (991 - 768));
+    }
+
+    @media (max-width: 767px): {
+      font-size: 14px;
+    }
   }
 `;
 
@@ -245,9 +243,9 @@ const SliderBlog = ({ config, data }: IFProps) => {
                   <CreateAt>Created at - <span>{slide.createdAt}</span></CreateAt>
                   <CardBodyContent>
                     <CustomTypographyH3 variant={'h3'}>{slide.title}</CustomTypographyH3>
-                    {slide?.description && (
-                      <Description dangerouslySetInnerHTML={{ __html: slide.description }} />
-                    )}
+                    <Description>
+                      <pre dangerouslySetInnerHTML={{ __html: slide.excerpt }} />
+                    </Description>
                   </CardBodyContent>
                   <Author>
                     <img
