@@ -89,40 +89,44 @@ export const LAYOUT = {
 
 export const TYPE_BLOG = [
   {
-    label: 'Your Life',
-    value: 'life'
-  },
-  {
     label: 'Society',
     value: 'society'
-  },
-  {
-    label: 'History',
-    value: 'history'
-  },
-  {
-    label: 'Travelling',
-    value: 'travel'
-  },
-  {
-    label: 'Learn about',
-    value: 'learn'
   },
   {
     label: 'Technology',
     value: 'technology'
   },
   {
-    label: 'True Love',
-    value: 'love'
+    label: 'Travelling',
+    value: 'travelling'
   },
   {
-    label: 'Poems',
+    label: 'History',
+    value: 'history'
+  },
+  {
+    label: 'Learn About',
+    value: 'learn about'
+  },
+  {
+    label: 'True Love',
+    value: 'true love'
+  },
+  {
+    label: 'Poem',
     value: 'poem'
   },
   {
     label: 'Review',
     value: 'review'
+  },
+  {
+    label: 'Your Life',
+    value: 'your life'
+  },
+  {
+    label: 'Daily Diaries',
+    value: 'daily diaries'
   }
 ];
 
