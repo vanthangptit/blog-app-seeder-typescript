@@ -125,8 +125,8 @@ export const TYPE_BLOG = [
     value: 'your life'
   },
   {
-    label: 'diary',
-    value: 'Diary'
+    label: 'Diary',
+    value: 'diary'
   }
 ];
 
