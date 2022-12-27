@@ -163,7 +163,7 @@ const CardPost = ({ data, horizontal, redirectBlogDetail }: { data: IPost, horiz
         </CardBodyContent>
         <Author>
           <img
-            src={'https://cv-front-end.s3.ap-southeast-1.amazonaws.com/images/vanthang.png'}
+            src={'https://blog-app-seeder.s3.ap-southeast-1.amazonaws.com/images/avatar.svg'}
             alt={''}
           />
           <AuthorInfo>

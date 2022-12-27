@@ -21,6 +21,7 @@ const Layout = styled('div')<{ isStyle: boolean }>(({ isStyle }) => ({
 
   ...(isStyle && {
     height: 'calc(100vh - 72.5px)',
+    minHeight: '500px',
     display: 'flex',
     flexDirection: 'column'
   })

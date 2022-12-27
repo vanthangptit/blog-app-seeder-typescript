@@ -14,6 +14,7 @@ const Layout = styled('div')<{ isStyle: boolean }>(({ isStyle }) => ({
 
   ...(isStyle && {
     height: 'calc(100vh - 72.5px)',
+    minHeight: '500px',
     display: 'flex',
     flexDirection: 'column'
   })
@@ -33,7 +34,7 @@ const Heading = styled('h1')({
 });
 
 const ContentBox = styled('div')({
-  maxWidth: '900px',
+  maxWidth: '850px',
   margin: '100px auto 80px',
   boxShadow: '0 0 15px rgb(0 0 0 / 12%)',
   padding: '30px 20px'
