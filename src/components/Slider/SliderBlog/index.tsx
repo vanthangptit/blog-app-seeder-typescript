@@ -250,8 +250,8 @@ const SliderBlog = ({ config, data }: IFProps) => {
                   </CardBodyContent>
                   <Author>
                     <img
-                      src={'https://cv-front-end.s3.ap-southeast-1.amazonaws.com/images/vanthang.png'}
-                      alt={'https://cv-front-end.s3.ap-southeast-1.amazonaws.com/images/vanthang.png'}
+                      src={'https://blog-app-seeder.s3.ap-southeast-1.amazonaws.com/images/avatar.svg'}
+                      alt={'https://blog-app-seeder.s3.ap-southeast-1.amazonaws.com/images/avatar.svg'}
                     />
                     <AuthorInfo>
                       <h5>{slide.author?.lastName + ' ' + slide.author?.firstName}</h5>
