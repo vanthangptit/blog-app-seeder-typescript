@@ -162,7 +162,7 @@ const CustomTypographyH3 = styled(Typography)`
 const Description = styled('div')`
   font-size: #aaa;
   display: -webkit-box;
-  -webkit-line-clamp: 2;
+  -webkit-line-clamp: 4;
   -webkit-box-orient: vertical;
   overflow: hidden;
   text-overflow: ellipsis;
