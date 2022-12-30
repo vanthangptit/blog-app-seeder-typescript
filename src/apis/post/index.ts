@@ -24,9 +24,9 @@ const postApi = {
     return requester.get(`${URL_API.GET_BY_CREATOR_POST}/${params.username}`, {}, setConfig(config));
   },
   createPostApi: (params: IPostParams) => {
-    return requester.post(URL_API.CREATE_POST_API, params, setConfig(config));
+    return requester.post(URL_API.CREATE_POST_API, params, setConfig({ ...config, isContentType: true }));
   },
-  editPostApi: (params: IPostParams) => requester.put(URL_API.EDIT_POST_API, params, setConfig(config)),
+  editPostApi: (params: IPostParams) => requester.put(URL_API.EDIT_POST_API, params, setConfig({ ...config, isContentType: true })),
   deletePostApi: (params: { postId: string }) => {
     return requester.delete(`${URL_API.DELETE_POST}/${params.postId}`, {}, setConfig(config));
   }
