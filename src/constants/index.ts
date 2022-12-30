@@ -93,6 +93,10 @@ export const TYPE_BLOG = [
     value: 'society'
   },
   {
+    label: 'Sports',
+    value: 'sports'
+  },
+  {
     label: 'Technology',
     value: 'technology'
   },
