@@ -5,10 +5,6 @@ import { setConfig } from '@apis/setConfig';
 
 const { URL_API } = POST;
 
-const config = {
-  isAuthorization: true
-};
-
 const postApi = {
   getAllPostApi: (params: IPostParamsGetAll) => {
     if (params?.type) {
@@ -18,17 +14,17 @@ const postApi = {
     }
   },
   getPostByShortUrlApi: (params: { shortUrl: string }) => {
-    return requester.get(`${URL_API.GET_BY_URL_POST}/${params.shortUrl}`, {}, setConfig(config));
+    return requester.get(`${URL_API.GET_BY_URL_POST}/${params.shortUrl}`, {}, setConfig({ isAuthorization: true }));
   },
   getPostByCreatorApi: (params: { username: string }) => {
-    return requester.get(`${URL_API.GET_BY_CREATOR_POST}/${params.username}`, {}, setConfig(config));
+    return requester.get(`${URL_API.GET_BY_CREATOR_POST}/${params.username}`, {}, setConfig({ isAuthorization: true }));
   },
   createPostApi: (params: IPostParams) => {
-    return requester.post(URL_API.CREATE_POST_API, params, setConfig({ ...config, isContentType: true }));
+    return requester.post(URL_API.CREATE_POST_API, params, setConfig({ isAuthorization: true, isContentType: true }));
   },
-  editPostApi: (params: IPostParams) => requester.put(URL_API.EDIT_POST_API, params, setConfig({ ...config, isContentType: true })),
+  editPostApi: (params: IPostParams) => requester.put(URL_API.EDIT_POST_API, params, setConfig({ isAuthorization: true, isContentType: true })),
   deletePostApi: (params: { postId: string }) => {
-    return requester.delete(`${URL_API.DELETE_POST}/${params.postId}`, {}, setConfig(config));
+    return requester.delete(`${URL_API.DELETE_POST}/${params.postId}`, {}, setConfig({ isAuthorization: true }));
   }
 };
 
