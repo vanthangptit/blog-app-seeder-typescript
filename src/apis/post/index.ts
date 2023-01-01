@@ -1,8 +1,8 @@
 import requester from '../requester';
-import {ACCESS_TOKEN, POST} from '@src/constants';
+import { ACCESS_TOKEN, POST } from '@src/constants';
 import { IPostParams, IPostParamsGetAll } from '@models/IPosts';
 import { setConfig } from '@apis/setConfig';
-import {AxiosRequestConfig} from "axios";
+import { AxiosRequestConfig } from 'axios';
 import Cookies from 'js-cookie';
 
 const { URL_API } = POST;

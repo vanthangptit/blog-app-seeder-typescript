@@ -146,7 +146,7 @@ const Blog = () => {
         <BlogPage>
           <BlogContent>
             <SectionTitle>
-              <h3>ALL BLOG</h3>
+              <h3>ALL Post</h3>
               <p>Place to keep memories</p>
             </SectionTitle>
 

@@ -386,6 +386,7 @@ const CreatePost = () => {
 
   React.useEffect(() => {
     resetState();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [ location ]);
 
   return (
@@ -507,8 +508,8 @@ const CreatePost = () => {
 
               <RichTextEditor
                 label={'Description'}
-                widthEditor={'360px'}
-                toolbarId={'create-post'}
+                heightEditor={'360px'}
+                toolbarId={'create-post-desc'}
                 value={valueDescription}
                 setValueRichText={setValueDescription}
                 setFileUpload={setFileUpload}

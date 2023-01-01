@@ -184,10 +184,10 @@ const SignIn = () => {
           {isOpen && (
             <ListBox>
               <ListItemBox button={false}>
-                <Link to={SITES_URL.My_BLOG}>Your Blog</Link>
+                <Link to={SITES_URL.My_BLOG}>Your Post</Link>
               </ListItemBox>
               <ListItemBox button={false} className="border-bottom">
-                <Link to={SITES_URL.CREATE_POST}>Create Blog</Link>
+                <Link to={SITES_URL.CREATE_POST}>Create Post</Link>
               </ListItemBox>
               <ListItemBox button={false}>
                 <Link to={SITES_URL.DASHBOARD}>Dashboard</Link>

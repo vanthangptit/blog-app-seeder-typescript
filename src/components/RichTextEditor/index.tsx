@@ -11,7 +11,7 @@ import { uploadFile } from '@utils/uploadFile';
 import { ManagedUpload } from 'aws-sdk/clients/s3';
 
 interface IRichTextProps {
-  widthEditor?: string
+  heightEditor?: string
   toolbarId: string
   value?: string
   setValueRichText: any
@@ -21,9 +21,9 @@ interface IRichTextProps {
   setFileUpload?: any
 }
 
-const TextEditor = styled('div')<{ widthEditor?: string}>(({ widthEditor }) => ({
+const TextEditor = styled('div')<{ heightEditor?: string}>(({ heightEditor }) => ({
   '& .ql-editor': {
-    height: `${widthEditor ? widthEditor : '460px'}`,
+    height: `${heightEditor ? heightEditor : '460px'}`,
 
     '&::-webkit-scrollbar': {
       width: '6px'
@@ -131,7 +131,7 @@ const CustomToolbar = ({ toolbarId }: { toolbarId: string }) => {
 
 const RichTextEditor = (props: IRichTextProps) => {
   const {
-    widthEditor,
+    heightEditor,
     toolbarId,
     value,
     setValueRichText,
@@ -191,7 +191,7 @@ const RichTextEditor = (props: IRichTextProps) => {
 
   return (
     <>
-      <TextEditor className={'text-editor ' + (customClass ?? '')} widthEditor={widthEditor}>
+      <TextEditor className={'text-editor ' + (customClass ?? '')} heightEditor={heightEditor}>
         {label ? <TextEditorLabel>{label}</TextEditorLabel> : ''}
         <CustomToolbar toolbarId={toolbarId} />
         <ReactQuill

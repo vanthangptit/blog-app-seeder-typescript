@@ -166,20 +166,15 @@ const Description = styled('div')`
   -webkit-box-orient: vertical;
   overflow: hidden;
   text-overflow: ellipsis;
+  font-size: 18px;
+  font-family: Roboto-Bold, sans-serif;
 
-  pre {
-    color: #aaa;
-    font-size: 18px;
-    font-family: Roboto-Bold, sans-serif;
-    margin: 0;
+  @media (min-width: 768px) and (max-width: 991px) {
+    font-size: calc(14px + (18 - 14) * (100vw - 768px) / (991 - 768));
+  }
 
-    @media (min-width: 768px) and (max-width: 991px) {
-      font-size: calc(14px + (18 - 14) * (100vw - 768px) / (991 - 768));
-    }
-
-    @media (max-width: 767px): {
-      font-size: 14px;
-    }
+  @media (max-width: 767px): {
+    font-size: 14px;
   }
 `;
 
@@ -244,9 +239,7 @@ const SliderBlog = ({ config, data }: IFProps) => {
                   <CreateAt>Created at - <span>{slide.createdAt}</span></CreateAt>
                   <CardBodyContent>
                     <CustomTypographyH3 variant={'h3'}>{slide.title}</CustomTypographyH3>
-                    <Description>
-                      <pre dangerouslySetInnerHTML={{ __html: slide.excerpt }} />
-                    </Description>
+                    <Description dangerouslySetInnerHTML={{ __html: slide.excerpt }} />
                   </CardBodyContent>
                   <Author>
                     <img

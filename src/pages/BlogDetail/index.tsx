@@ -145,7 +145,7 @@ const BlogDetail = () => {
         <ContentBox>
           <ContentBoxTop>
             <Breadcrumb>
-              <NavLink to={'/blog'} >Blog</NavLink>
+              <NavLink to={'/blog'} >Post</NavLink>
               <AiOutlineRight size={14} />
               <NavLink to={`/blog?type=${dataPost?.postType}`}>{dataPost?.postType}</NavLink>
             </Breadcrumb>

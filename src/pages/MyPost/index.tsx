@@ -153,7 +153,7 @@ const MyPost = () => {
         <BlogPage>
           <BlogContent>
             <SectionTitle>
-              <h3>YOUR BLOG</h3>
+              <h3>YOUR POST</h3>
               <p>Place to keep memories</p>
             </SectionTitle>
 
