@@ -23,7 +23,7 @@ const postApi = {
     return requester.post(URL_API.CREATE_POST_API, params, setConfig({ isAuthorization: true, isContentType: true }));
   },
   editPostApi: (params: IPostParams) => {
-    return requester.put(URL_API.EDIT_POST_API, params, setConfig({ isAuthorization: true, isContentType: true }))
+    return requester.put(URL_API.EDIT_POST_API, params, setConfig({ isAuthorization: true, isContentType: true }));
   },
   deletePostApi: (params: { postId: string }) => {
     return requester.delete(`${URL_API.DELETE_POST}/${params.postId}`, {}, setConfig({ isAuthorization: true }));
