@@ -22,5 +22,8 @@ export const setConfig = ({ isAuthorization, isContentType } : IParams) => {
     };
   }
 
+  // eslint-disable-next-line no-console
+  console.log('config: ', config);
+
   return config;
 };
