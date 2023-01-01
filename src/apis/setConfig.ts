@@ -12,12 +12,14 @@ export const setConfig = ({ isAuthorization, isContentType } : IParams) => {
 
   if (isAuthorization) {
     config.headers = {
+      ...config?.headers,
       Authorization: 'Bearer ' + Cookies.get(ACCESS_TOKEN)
     };
   }
 
   if (isContentType) {
     config.headers = {
+      ...config?.headers,
       'content-type': 'application/json'
     };
   }
