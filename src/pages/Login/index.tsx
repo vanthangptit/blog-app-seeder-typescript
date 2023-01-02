@@ -4,10 +4,7 @@ import { NavLink, useNavigate, useLocation } from 'react-router-dom';
 import { useTokenUser } from '@hooks/useTokenUser';
 import { useLogin } from '@hooks/useLogin';
 import { useUser } from '@hooks/useRegister';
-import {
-  MODE_CV,
-  SITES_URL,
-} from '@src/constants';
+import { MODE_CV, SITES_URL } from '@src/constants';
 
 import {
   Avatar,
