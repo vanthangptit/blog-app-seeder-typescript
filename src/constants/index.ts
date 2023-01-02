@@ -26,6 +26,7 @@ export const POST = {
     GET_ALL_POST: 'APPS/GET_ALL_POST',
     GET_BY_URL_POST: 'APPS/GET_BY_URL_POST',
     GET_BY_CREATOR_POST: 'APPS/GET_BY_CREATOR_POST',
+    GET_BY_TYPE_POST: 'APPS/GET_BY_TYPE_POST',
     CREATE_POST: 'APPS/CREATE_POST',
     EDIT_POST: 'APPS/EDIT_POST',
     DELETE_POST: 'APPS/DELETE_POST'
@@ -34,6 +35,7 @@ export const POST = {
     GET_ALL_POST: `${API_POST_URL}/all`,
     GET_BY_URL_POST: `${API_POST_URL}/get-by-short-url`,
     GET_BY_CREATOR_POST: `${API_POST_URL}/get-by-creator`,
+    GET_BY_TYPE_POST: `${API_POST_URL}/get-by-type`,
     CREATE_POST_API: `${API_POST_URL}/create-blog`,
     EDIT_POST_API: `${API_POST_URL}/edit-blog`,
     DELETE_POST: `${API_POST_URL}/delete-blog`
@@ -73,7 +75,7 @@ export const SITES_URL = {
   BLOG: '/featured',
   CREATE_POST: '/create-post',
   EDIT_POST: '/edit-post/:shortUrl',
-  BLOG_DETAIL: '/blog/:shortUrl',
+  BLOG_DETAIL: '/post/:shortUrl',
   My_BLOG: '/my-blog',
   CONTACT: '/contact',
   LOGIN: '/login',

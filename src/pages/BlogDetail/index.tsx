@@ -8,6 +8,7 @@ import NotFound from '@components/NotFound';
 import { formatDatetime } from '@utils/formatDatetime';
 
 import { AiOutlineRight } from 'react-icons/ai';
+import { SITES_URL } from '@src/constants';
 
 const Layout = styled('div')<{ isStyle: boolean }>(({ isStyle }) => ({
   padding: '89px 16px 0',
@@ -128,7 +129,7 @@ const BlogDetail = () => {
 
   React.useEffect(() => {
     if (dataPost) {
-      document.title = 'Blog | ' + dataPost.title;
+      document.title = 'Featured | ' + dataPost.title;
     }
   }, [ dataPost ]);
 
@@ -145,9 +146,9 @@ const BlogDetail = () => {
         <ContentBox>
           <ContentBoxTop>
             <Breadcrumb>
-              <NavLink to={'/blog'} >Post</NavLink>
+              <NavLink to={SITES_URL.BLOG} >Post</NavLink>
               <AiOutlineRight size={14} />
-              <NavLink to={`/blog?type=${dataPost?.postType}`}>{dataPost?.postType}</NavLink>
+              <NavLink to={`${SITES_URL.BLOG}?type=${dataPost?.postType}`}>{dataPost?.postType}</NavLink>
             </Breadcrumb>
             <CreateAt>
               {dataPost?.createdAt && formatDatetime(dataPost?.createdAt)}

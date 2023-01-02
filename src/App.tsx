@@ -40,6 +40,7 @@ function App() {
 
           <Route path={SITES_URL.CONTACT} element={<Contact/>} />
           <Route path={SITES_URL.BLOG}  element={<Blog />} />
+          <Route path={`${SITES_URL.BLOG}/:postType`}  element={<Blog />} />
 
           <Route path={SITES_URL.BLOG_DETAIL}
             element={

@@ -21,6 +21,9 @@ const postApi = {
     requester.get(`${URL_API.GET_BY_URL_POST}/${params.shortUrl}`, {}, setConfig(config)),
   getPostByCreatorApi: (params: { username: string }) =>
     requester.get(`${URL_API.GET_BY_CREATOR_POST}/${params.username}`, {}, setConfig(config)),
+  getPostByTypeApi: (params: IPostParamsGetAll) => {
+    return requester.get(`${URL_API.GET_BY_TYPE_POST}?page=${params.page}&pageSize=${params.pageSize}&type=${params.type}`);
+  },
   createPostApi: (params: IPostParams) =>
     requester.post(URL_API.CREATE_POST_API, params, setConfig({ ...config, isContentType: true })),
   editPostApi: (params: IPostParams) =>

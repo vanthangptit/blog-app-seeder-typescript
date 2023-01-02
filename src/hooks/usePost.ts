@@ -29,6 +29,10 @@ export const usePost = () => {
     return dispatch(registerStore.getPostByCreatorApi(params));
   };
 
+  const getPostByTypeApi = (params: IPostParamsGetAll) => {
+    return dispatch(registerStore.getPostByTypeApi(params));
+  };
+
   const createPostApi = (params: IPostParams) => {
     return dispatch(registerStore.createPostApi(params));
   };
@@ -52,6 +56,7 @@ export const usePost = () => {
     getPostByShortUrlApi,
     createPostApi,
     editPostApi,
-    deletePostApi
+    deletePostApi,
+    getPostByTypeApi
   };
 };

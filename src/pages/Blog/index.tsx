@@ -3,7 +3,7 @@ import SignIn from '@components/SignIn';
 import CardPost from '@components/Cards/CardPost';
 import SliderBlog from '@components/Slider/SliderBlog';
 import { usePost } from '@hooks/usePost';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useSearchParams } from 'react-router-dom';
 import RangePagination from '@components/Pagination';
 import LoadingSection from '@components/LoadingSection';
 
@@ -96,6 +96,8 @@ const Blog = () => {
   };
   const [ loading, setLoading ] = React.useState<boolean>(false);
   const refCustomContainer = React.useRef<any>(null);
+  const [ searchParams ] = useSearchParams();
+  const postType = searchParams.get('type');
 
   const types = () => {
     return TYPE_BLOG.map((item) => item.value);
@@ -105,7 +107,8 @@ const Blog = () => {
 
   const {
     dataAllPost,
-    getAllPostApi
+    getAllPostApi,
+    getPostByTypeApi
   } = usePost();
 
   const onPageChange = (event: React.ChangeEvent<unknown>, page: number) => {
@@ -120,19 +123,33 @@ const Blog = () => {
 
   React.useEffect(() => {
     setLoading(true);
-    getAllPostApi({
-      page: PAGE_DEFAULT,
-      pageSize: PAGE_SIZE_DEFAULT,
-      type: typeCallback()
-    })
-      .unwrap()
-      .finally(() => {
-        setTimeout(() => {
-          setLoading(false);
-        }, 1000);
-      });
+    if (postType) {
+      getPostByTypeApi({
+        page: PAGE_DEFAULT,
+        pageSize: PAGE_SIZE_DEFAULT,
+        type: postType
+      })
+        .unwrap()
+        .finally(() => {
+          setTimeout(() => {
+            setLoading(false);
+          }, 1000);
+        });
+    } else {
+      getAllPostApi({
+        page: PAGE_DEFAULT,
+        pageSize: PAGE_SIZE_DEFAULT,
+        type: typeCallback()
+      })
+        .unwrap()
+        .finally(() => {
+          setTimeout(() => {
+            setLoading(false);
+          }, 1000);
+        });
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [ location ]);
+  }, [ location, postType ]);
 
   React.useEffect(() => {
     document.title = 'Thang Nguyen | Featured';
@@ -146,15 +163,17 @@ const Blog = () => {
         <BlogPage>
           <BlogContent>
             <SectionTitle>
-              <h3>ALL Post</h3>
+              <h3>All Post</h3>
               <p>Place to keep memories</p>
             </SectionTitle>
 
-            {dataAllPost && dataAllPost.postLatestOfType && dataAllPost.items.length > 0 && dataAllPost?.postLatestOfType.length > 0 ? (
+            {dataAllPost && dataAllPost.items.length > 0 ? (
               <>
-                <SliderPost>
-                  <SliderBlog config={settingSlider} data={dataAllPost.postLatestOfType}/>
-                </SliderPost>
+                {dataAllPost.postLatestOfType && dataAllPost?.postLatestOfType.length > 0 && (
+                  <SliderPost>
+                    <SliderBlog config={settingSlider} data={dataAllPost.postLatestOfType}/>
+                  </SliderPost>
+                )}
 
                 <CustomContainer styles={{ maxWidth: '1100px', padding: '0' }} ref={refCustomContainer}>
                   <CustomRow>

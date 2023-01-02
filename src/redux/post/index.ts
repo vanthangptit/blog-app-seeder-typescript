@@ -47,6 +47,18 @@ export const getPostByCreatorApi = createAsyncThunk<any,  { username: string }>(
   }
 });
 
+export const getPostByTypeApi = createAsyncThunk<any, IPostParamsGetAll>(POST.ACTION_TYPES.GET_BY_TYPE_POST, async (params, thunkAPI) => {
+  try {
+    const response: IPostCreateResponse = await api.getPostByTypeApi(params);
+
+    return {
+      ...response
+    };
+  } catch (error: any) {
+    return thunkAPI.rejectWithValue({ error: error.data });
+  }
+});
+
 export const getPostByShortUrlApi = createAsyncThunk<any, { shortUrl: string }>(POST.ACTION_TYPES.GET_BY_URL_POST, async (params, thunkAPI) => {
   try {
     const response: IPostCreateResponse = await api.getPostByShortUrlApi(params);
@@ -149,6 +161,21 @@ export const appPostSlice = createSlice({
         state.errorCode = undefined;
       })
       .addCase(getPostByCreatorApi.rejected, (state, action:PayloadAction<any>) => {
+        state.errorCode = action.payload.errorCode;
+      })
+      .addCase(getPostByTypeApi.fulfilled, (state, action:PayloadAction<any>) => {
+        state.message = action.payload.message;
+
+        if (action.payload.status === 200) {
+          state.dataAllPost = action.payload.data;
+        } else {
+          state.errorCode = action.payload.errorCode;
+        }
+      })
+      .addCase(getPostByTypeApi.pending, (state) => {
+        state.errorCode = undefined;
+      })
+      .addCase(getPostByTypeApi.rejected, (state, action:PayloadAction<any>) => {
         state.errorCode = action.payload.errorCode;
       })
       .addCase(editPostApi.fulfilled, (state, action:PayloadAction<any>) => {
