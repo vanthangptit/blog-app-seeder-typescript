@@ -53,10 +53,7 @@ const SectionTitle = styled('div')({
 const SliderPost = styled('div')({
   width: '100%',
   overflow: 'hidden',
-
-  '@media (max-width: 991px)': {
-    marginBottom: '40px'
-  }
+  marginBottom: '80px'
 });
 
 const Column = styled('div')({
