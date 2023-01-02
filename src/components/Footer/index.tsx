@@ -36,7 +36,7 @@ const Footer = () => {
         setHideFooter('');
       }
 
-      if (location.pathname === SITES_URL.DASHBOARD) {
+      if (location.pathname === SITES_URL.DASHBOARD || location.pathname === SITES_URL.ACCOUNT) {
         setAtDashBoard(true);
       } else {
         setAtDashBoard(false);
