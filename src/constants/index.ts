@@ -11,6 +11,7 @@ export const MODE_CV = process.env.REACT_APP_MODE_CV === 'true';
 
 export const ACCESS_TOKEN = 'accessToken';
 export const USERNAME_COOKIE = 'username';
+// export const REMEMBER_ME_COOKIE = 'rememberMe';
 
 export const SEARCH = {
   ACTION_TYPES: {

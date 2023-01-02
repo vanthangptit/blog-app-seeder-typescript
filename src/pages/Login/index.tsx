@@ -4,14 +4,17 @@ import { NavLink, useNavigate, useLocation } from 'react-router-dom';
 import { useTokenUser } from '@hooks/useTokenUser';
 import { useLogin } from '@hooks/useLogin';
 import { useUser } from '@hooks/useRegister';
-import { MODE_CV, SITES_URL } from '@src/constants';
+import {
+  MODE_CV,
+  SITES_URL,
+} from '@src/constants';
 
 import {
   Avatar,
   Button,
   TextField,
-  FormControlLabel,
-  Checkbox,
+  // FormControlLabel,
+  // Checkbox,
   Grid,
   Box,
   Typography
@@ -132,15 +135,15 @@ const Login = () => {
               label="Password"
               type="password"
               id="password"
-              autoComplete="current-password"
+              autoComplete="password"
               {...(user && { autoFocus: true })}
               {...register('password', { required: true })}
             />
             {errors.password && <MessageError>Password must contain at least one lower case, upper case letter and number.</MessageError>}
-            <FormControlLabel
-              control={<Checkbox value="remember" color="primary" />}
-              label="Remember me"
-            />
+            {/*<FormControlLabel*/}
+            {/*  control={<Checkbox value="remember" color="primary" />}*/}
+            {/*  label="Remember me"*/}
+            {/*/>*/}
             <Button
               size="large"
               type="submit"

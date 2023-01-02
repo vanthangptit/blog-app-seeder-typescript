@@ -1,5 +1,10 @@
 import * as React from 'react';
-import { BrowserRouter as Router, Navigate, Route, Routes } from 'react-router-dom';
+import {
+  BrowserRouter as Router,
+  Navigate,
+  Route,
+  Routes, useLocation
+} from 'react-router-dom';
 import Header from '@components/Header';
 import HeaderSearch from '@components/Header/search';
 import Footer from '@components/Footer';
@@ -20,10 +25,11 @@ import SignIn from '@components/SignIn';
 import { ACCESS_TOKEN, MODE_CV, SITES_URL } from '@src/constants';
 import Cookies from 'js-cookie';
 
-const PrivateRoute = ({ children, path }: any) => {
+const PrivateRoute = ({ children }: { children: any }) => {
+  const location: any = useLocation();
   const accessToken = Cookies.get(ACCESS_TOKEN);
 
-  return accessToken ? children : <Navigate to={SITES_URL.LOGIN} replace state={{ path }}/>;
+  return accessToken ? children : <Navigate to={SITES_URL.LOGIN} replace state={{ path: location.pathname }}/>;
 };
 
 function App() {
@@ -46,7 +52,7 @@ function App() {
 
           <Route path={SITES_URL.BLOG_DETAIL}
             element={
-              <PrivateRoute path={SITES_URL.BLOG_DETAIL}>
+              <PrivateRoute>
                 <BlogDetail />
               </PrivateRoute>
             }
@@ -54,7 +60,7 @@ function App() {
 
           <Route path={SITES_URL.My_BLOG}
             element={
-              <PrivateRoute path={SITES_URL.My_BLOG}>
+              <PrivateRoute>
                 <MyPost />
               </PrivateRoute>
             }
@@ -62,7 +68,7 @@ function App() {
 
           <Route path={SITES_URL.CREATE_POST}
             element={
-              <PrivateRoute path={SITES_URL.CREATE_POST}>
+              <PrivateRoute>
                 <CreatePost />
               </PrivateRoute>
             }
@@ -70,7 +76,7 @@ function App() {
 
           <Route path={SITES_URL.EDIT_POST}
             element={
-              <PrivateRoute path={SITES_URL.EDIT_POST}>
+              <PrivateRoute>
                 <CreatePost />
               </PrivateRoute>
             }
@@ -78,7 +84,7 @@ function App() {
 
           <Route path={SITES_URL.ACCOUNT}
             element={
-              <PrivateRoute path={SITES_URL.ACCOUNT}>
+              <PrivateRoute>
                 <User />
               </PrivateRoute>
             }
@@ -86,7 +92,7 @@ function App() {
 
           <Route path={SITES_URL.DASHBOARD}
             element={
-              <PrivateRoute path={SITES_URL.DASHBOARD}>
+              <PrivateRoute>
                 <Dashboard />
               </PrivateRoute>
             }
