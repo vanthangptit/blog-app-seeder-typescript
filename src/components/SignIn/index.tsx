@@ -119,15 +119,6 @@ const ListItemBox = styled(ListItem)({
   }
 });
 
-const FeaturedLink = styled(Link)({
-  color: '#333333',
-  whiteSpace: 'nowrap',
-
-  '&:hover': {
-    color: '#0b9b99'
-  }
-});
-
 const UseName = styled('span')({
   maxWidth: '150px',
   textOverflow: 'ellipsis',
@@ -169,10 +160,6 @@ const SignIn = () => {
 
   return (
     <UserContainer>
-      <FeaturedLink type='button' to={SITES_URL.BLOG}>Featured</FeaturedLink>
-      <FeaturedLink type='button' to={'#'} onClick={(e) => e.preventDefault()}>FAQ</FeaturedLink>
-      <FeaturedLink type='button' to={SITES_URL.CONTACT}>Contact</FeaturedLink>
-
       {accessToken && username ? (
         <UserBox ref={userBoxNode}>
           <Link type='button' to={'#'} onClick={(e) => handleShowAccountInfo(e)}>

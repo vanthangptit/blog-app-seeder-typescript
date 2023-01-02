@@ -66,7 +66,7 @@ const Register = () => {
       paddingNav={MODE_CV && true}
       scrollBar={true}
       flexMiddle={true}
-      styles={{ backgroundColor: '#1e464a' }}
+      styles={{ backgroundColor: '#1e464a', paddingLeft: '16px' }}
     >
       <CustomContainer
         styles={{

@@ -1,5 +1,4 @@
 import * as React from 'react';
-import SignIn from '@components/SignIn';
 import CardPost from '@components/Cards/CardPost';
 import SliderBlog from '@components/Slider/SliderBlog';
 import { usePost } from '@hooks/usePost';
@@ -200,8 +199,6 @@ const Blog = () => {
           </BlogContent>
         </BlogPage>
       )}
-
-      <SignIn />
     </Layout>
   );
 };

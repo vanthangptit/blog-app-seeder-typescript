@@ -2,7 +2,6 @@ import * as React from 'react';
 import NotFound from '@components/NotFound';
 
 import { styled } from '@mui/system';
-import SignIn from '@components/SignIn';
 
 const NotFoundBox = styled('div')({
   // backgroundColor: '#a71c1c'
@@ -22,8 +21,6 @@ const NotFoundPage = () => {
         color={'#000'}
         message={'I AM SORRY,<br /> BUT THE PAGE YOU REQUESTED WAS NOT FOUND!'}
       />
-
-      <SignIn />
     </NotFoundBox>
   );
 };

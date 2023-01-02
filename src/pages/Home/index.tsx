@@ -1,5 +1,4 @@
 import * as React from 'react';
-import SignIn from '@components/SignIn';
 import Typed from 'react-typed';
 import { AWS_S3_URL } from '@src/constants';
 import { styled } from '@mui/system';
@@ -733,8 +732,6 @@ const Home = (props: Props) => {
           </Layout>
         )
       }
-
-      <SignIn />
     </section>
   );
 };

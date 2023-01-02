@@ -1,6 +1,5 @@
 import * as React from 'react';
 import { NavLink } from 'react-router-dom';
-import SignIn from '@components/SignIn';
 import { MessageError } from '@components/MessageError';
 import { Layout, CustomContainer } from '@components/Common';
 import {
@@ -195,8 +194,6 @@ const Contact = () => {
           </MessageSuccess>
         </CustomContainer>
       }
-
-      <SignIn />
     </Layout>
   );
 };

@@ -1,5 +1,4 @@
 import * as React from 'react';
-import SignIn from '@components/SignIn';
 import CardPost from '@components/Cards/CardPost';
 import LoadingSection from '@components/LoadingSection';
 import { NavLink, useLocation, useNavigate } from 'react-router-dom';
@@ -202,8 +201,6 @@ const MyPost = () => {
           </BlogContent>
         </BlogPage>
       )}
-
-      <SignIn />
       <ConfirmModal
         isOpen={isOpen}
         deletedSuccessful={deletedSuccessful}

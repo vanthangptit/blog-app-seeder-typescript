@@ -1,7 +1,6 @@
 import React, { useEffect, useState, useRef } from 'react';
 import RichTextEditor from '@components/RichTextEditor';
 import { ManagedUpload } from 'aws-sdk/clients/s3';
-import SignIn from '@components/SignIn';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
 
 import { styled } from '@mui/system';
@@ -539,8 +538,6 @@ const CreatePost = () => {
           </FormContainer>
         </>
       )}
-
-      <SignIn />
     </Layout>
   );
 };

@@ -84,7 +84,11 @@ const Login = () => {
       scrollBar={true}
       flexMiddle={true}
       styles={{ backgroundColor: '#1e464a' }}
-      style={{ paddingTop: '89px' }}
+      style={
+        location && (location.pathname === SITES_URL.LOGIN || location.pathname === SITES_URL.REGISTER)
+          ? { paddingTop: '0' }
+          : { paddingTop: '89px' }
+      }
     >
       <CustomContainer
         styles={{

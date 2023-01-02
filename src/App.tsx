@@ -15,6 +15,8 @@ import User from './pages/Users';
 import CreatePost from '@src/pages/CreatePost';
 import MyPost from '@src/pages/MyPost';
 
+import SignIn from '@components/SignIn';
+
 import { ACCESS_TOKEN, MODE_CV, SITES_URL } from '@src/constants';
 import Cookies from 'js-cookie';
 
@@ -94,6 +96,8 @@ function App() {
           <Route path={SITES_URL.REGISTER} element={<Register />} />
           <Route path='*' element={<NotFoundPage />} />
         </Routes>
+
+        <SignIn />
       </main>
 
       <Footer />

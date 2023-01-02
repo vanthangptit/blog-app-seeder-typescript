@@ -1,5 +1,4 @@
 import * as React from 'react';
-import SignIn from '@components/SignIn';
 import { NavLink, useParams } from 'react-router-dom';
 import { usePost } from '@hooks/usePost';
 import LoadingSection from '@components/LoadingSection';
@@ -162,8 +161,6 @@ const BlogDetail = () => {
           <Content dangerouslySetInnerHTML={{ __html: dataPost?.description ?? '' }} />
         </ContentBox>
       )}
-
-      <SignIn />
     </Layout>
   );
 };
