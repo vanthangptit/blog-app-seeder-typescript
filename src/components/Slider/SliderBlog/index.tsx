@@ -114,8 +114,8 @@ const CardImage = styled('div')({
 });
 
 const CardBody = styled('div')<{ isImageUrl: boolean }>(({ isImageUrl }) => ({
-  flex: `0 0 ${isImageUrl ? '100%' : '60%'}`,
-  maxWidth: `${isImageUrl ? '100%' : '60%'}`,
+  flex: `0 0 ${isImageUrl ? '60%' : '100%'}`,
+  maxWidth: `${isImageUrl ? '60%' : '100%'}`,
   padding: '0 16px',
 
   '@media (max-width: 991px)': {
@@ -229,6 +229,9 @@ const SliderBlog = ({ config, data }: IFProps) => {
     <BoxSlider ref={boxSliderElement}>
       <Slider {...configSlide} ref={refSlider}>
         {data.map((slide, index) => {
+          // eslint-disable-next-line no-console
+          console.log(index, !!slide?.imageUrl);
+
           return (
             <CardSlider key={index}>
               <Card>
