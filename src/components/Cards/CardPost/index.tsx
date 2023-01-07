@@ -146,9 +146,11 @@ const CardPost = ({ data, horizontal, redirectBlogDetail }: { data: IPost, horiz
 
   return (
     <Card horizontal={horizontal} onClick={handleOnClick}>
-      <CardImage horizontal={horizontal}>
-        <img src={data.imageUrl} alt={data?.imageUrl ?? ''} className="card-image"/>
-      </CardImage>
+      {data?.imageUrl && (
+        <CardImage horizontal={horizontal}>
+          <img src={data.imageUrl} alt={data.imageUrl ?? ''} className="card-image"/>
+        </CardImage>
+      )}
       <CardBody horizontal={horizontal}>
         <CardBodyContent horizontal={horizontal}>
           <CreateAt>Created at - <span>{moment(data.createdAt).format('ll')}</span></CreateAt>

@@ -113,16 +113,16 @@ const CardImage = styled('div')({
   }
 });
 
-const CardBody = styled('div')({
-  flex: '0 0 60%',
-  maxWidth: '60%',
+const CardBody = styled('div')<{ isImageUrl: boolean }>(({ isImageUrl }) => ({
+  flex: `0 0 ${isImageUrl ? '100%' : '60%'}`,
+  maxWidth: `${isImageUrl ? '100%' : '60%'}`,
   padding: '0 16px',
 
   '@media (max-width: 991px)': {
     flex: '0 0 100%',
     maxWidth: '100%'
   }
-});
+}));
 
 const CreateAt = styled('div')({
   fontFamily: 'Roboto-Bold',
@@ -232,10 +232,12 @@ const SliderBlog = ({ config, data }: IFProps) => {
           return (
             <CardSlider key={index}>
               <Card>
-                <CardImage>
-                  <img src={slide.imageUrl} alt={slide.imageUrl}/>
-                </CardImage>
-                <CardBody>
+                {slide?.imageUrl && (
+                  <CardImage>
+                    <img src={slide.imageUrl} alt={slide.imageUrl}/>
+                  </CardImage>
+                )}
+                <CardBody isImageUrl={!!slide?.imageUrl}>
                   <CreateAt>Created at - <span>{slide.createdAt}</span></CreateAt>
                   <CardBodyContent>
                     <CustomTypographyH3 variant={'h3'}>{slide.title}</CustomTypographyH3>

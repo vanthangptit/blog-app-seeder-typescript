@@ -9,7 +9,7 @@ export interface IPostParams {
   shortUrl: string
   excerpt: string
   postType: string
-  imageUrl: string
+  imageUrl?: string
   description?: string
   postId?: string
 }

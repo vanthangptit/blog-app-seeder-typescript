@@ -155,9 +155,11 @@ const BlogDetail = () => {
           </ContentBoxTop>
 
           <Heading>{dataPost?.title}</Heading>
-          <BoxImage>
-            <img src={dataPost?.imageUrl} alt={dataPost?.imageUrl ?? ''} />
-          </BoxImage>
+          {dataPost?.imageUrl && (
+            <BoxImage>
+              <img src={dataPost.imageUrl} alt={dataPost.imageUrl ?? ''} />
+            </BoxImage>
+          )}
           <Content dangerouslySetInnerHTML={{ __html: dataPost?.description ?? '' }} />
         </ContentBox>
       )}

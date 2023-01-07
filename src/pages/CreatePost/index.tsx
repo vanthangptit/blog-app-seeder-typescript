@@ -264,44 +264,39 @@ const CreatePost = () => {
           setErrorMessagePostType('Post type can not empty.');
         }
       } else {
-        if (srcImage) {
-          if (valuePostType && valuePostType.length > 0) {
-            if (shortUrl) {
-              editPostApi({
-                ...data,
-                imageUrl: srcImage,
-                description: valueDescription,
-                postType: valuePostType,
-                postId
-              })
-                .unwrap()
-                .then(({ status, post }) => {
-                  setSubmitting(false);
-                  if (status === 200) {
-                    navigate(`/blog/${post.shortUrl}`);
-                  }
-                });
-            } else {
-              createPostApi({
-                ...data,
-                imageUrl: srcImage,
-                description: valueDescription,
-                postType: valuePostType
-              })
-                .unwrap()
-                .then(({ status, post }) => {
-                  setSubmitting(false);
-                  if (status === 200) {
-                    navigate(`/blog/${post.shortUrl}`);
-                  }
-                });
-            }
+        if (valuePostType && valuePostType.length > 0) {
+          if (shortUrl) {
+            editPostApi({
+              ...data,
+              imageUrl: srcImage ?? '',
+              description: valueDescription,
+              postType: valuePostType,
+              postId
+            })
+              .unwrap()
+              .then(({ status, post }) => {
+                setSubmitting(false);
+                if (status === 200) {
+                  navigate(`/blog/${post.shortUrl}`);
+                }
+              });
           } else {
-            setErrorMessagePostType('Post type can not empty.');
-            setSubmitting(false);
+            createPostApi({
+              ...data,
+              imageUrl: srcImage ?? '',
+              description: valueDescription,
+              postType: valuePostType
+            })
+              .unwrap()
+              .then(({ status, post }) => {
+                setSubmitting(false);
+                if (status === 200) {
+                  navigate(`/blog/${post.shortUrl}`);
+                }
+              });
           }
         } else {
-          setErrorMessageImageUrl('The imageUrl field is required.');
+          setErrorMessagePostType('Post type can not empty.');
           setSubmitting(false);
         }
       }
@@ -490,7 +485,6 @@ const CreatePost = () => {
                         <PostImage src={srcImage} alt={'Post image'} />
                       )}
                     </DivBoxImage>
-                    {errorMessageImageUrl && <MessageError>This is a required field.</MessageError>}
                     <DivImageNote>
                       <p>
                         Formats supported:
