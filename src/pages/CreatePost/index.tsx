@@ -189,7 +189,6 @@ const CreatePost = () => {
 
   const [ errorMessage, setErrorMessage ] = useState<string>();
   const [ errorMessagePostType, setErrorMessagePostType ] = useState<string>();
-  const [ errorMessageImageUrl, setErrorMessageImageUrl ] = useState<string>();
   const [ loading, setLoading ] = useState<boolean>(!!shortUrl);
   const [ submitting, setSubmitting ] = useState<boolean>(false);
 
