@@ -230,7 +230,7 @@ const HeaderSearch = () => {
                 {data && data?.items.length > 0 ? data.items?.map((item, index) => {
                   return (
                     <li key={index} onClick={() => {
-                      navigate(`/blog/${item.shortUrl}`);
+                      navigate(`/post/${item.shortUrl}`);
                       handleToggleDropdown();
                     }}>
                       <span>{item?.title + ' '} ({item?.author.lastName})</span>

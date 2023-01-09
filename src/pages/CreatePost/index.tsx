@@ -245,7 +245,7 @@ const CreatePost = () => {
               .then(({ status, post }) => {
                 setSubmitting(false);
                 if (status === 200) {
-                  navigate(`/blog/${post.shortUrl}`);
+                  navigate(`/post/${post.shortUrl}`);
                 }
               });
           } else {
@@ -254,7 +254,7 @@ const CreatePost = () => {
               .then(({ status, post }) => {
                 setSubmitting(false);
                 if (status === 200) {
-                  navigate(`/blog/${post.shortUrl}`);
+                  navigate(`/post/${post.shortUrl}`);
                 }
               });
           }
@@ -276,7 +276,7 @@ const CreatePost = () => {
               .then(({ status, post }) => {
                 setSubmitting(false);
                 if (status === 200) {
-                  navigate(`/blog/${post.shortUrl}`);
+                  navigate(`/post/${post.shortUrl}`);
                 }
               });
           } else {
@@ -290,7 +290,7 @@ const CreatePost = () => {
               .then(({ status, post }) => {
                 setSubmitting(false);
                 if (status === 200) {
-                  navigate(`/blog/${post.shortUrl}`);
+                  navigate(`/post/${post.shortUrl}`);
                 }
               });
           }

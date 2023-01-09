@@ -140,7 +140,7 @@ const CardPost = ({ data, horizontal, redirectBlogDetail }: { data: IPost, horiz
 
   const handleOnClick = () => {
     if (redirectBlogDetail) {
-      navigate(`/blog/${data.shortUrl}`);
+      navigate(`/post/${data.shortUrl}`);
     }
   };
 
